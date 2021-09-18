@@ -6,7 +6,7 @@ tags: ["Spring Boot", "Thymeleaf"]
 
 imagePreview: "img/projects/calendate-00.png"
 codePreview: "https://github.com/deveuge/calendate"
-livePreview: ""
+livePreview: "https://calen-date.herokuapp.com"
 
 image01: "img/projects/calendate-00.png"
 image02: "img/projects/calendate-01.png"
@@ -14,7 +14,24 @@ image03: "img/projects/calendate-02.png"
 ---
 
 # Calendate (Work In Progress)
-**Calendate** es una aplicación web basada en Spring Boot y Thymeleaf que facilia la gestión de eventos.
+**Calendate** es una aplicación web basada en Spring Boot y Thymeleaf que facilita la gestión de eventos.
+
+[![Ver demo](https://img.shields.io/badge/Ver%20demo-430098?style=for-the-badge&logo=heroku&logoColor=white)](https://calen-date.herokuapp.com)
+
+> **Nota acerca de la previsualización:**<br/>
+> <small>Tenga en cuenta que debido a que Heroku es una plataforma de aplicaciones en la nube gratuita, los tiempos de carga pueden ser algo elevados y no tienen nada que ver con la aplicación en sí.</small><br/>
+><br/>
+> Puede iniciar sesión con las siguientes credenciales:
+> * Usuario: user
+> * Contraseña: 12345678
+>
+> Los eventos creados por el usuario "user" pueden reservarse en el siguiente enlace:<br/>
+> https://calen-date.herokuapp.com/user/{URLEvento}<br/>
+> P.ej.: https://calen-date.herokuapp.com/user/info<br/>
+><br/>
+> Puede cambiar el idioma de la aplicación desde el menú de configuración.
+
+
 
 ## Características
 - Los usuarios registrados podrán crear tipos de eventos que pueden reservarse con ellos especificando la siguiente información:
@@ -64,3 +81,10 @@ image03: "img/projects/calendate-02.png"
 - La aplicación cuenta con la internacionalización de todos sus mensajes, haciendo posible visualizarla tanto en inglés como en castellano y pudiendo cada usuario configurar su lenguaje de preferencia.
 - Para el envío de correos de recordatorio, se establece una tarea programada cada hora que consulta los eventos próximos a ocurrir en la próxima hora y se envía el email tanto al organizado como al asistente.
 - El envío de correos está establecido dentro de un método asíncrono para no influir en el flujo normal de la página.
+- Pese a que inicialmente la aplicación se pensó para utilizar MySQL como base de datos, con el despliegue en Heroku se necesitó el migrado a PostgreSQL.
+- Actualmente no se hace distinción entre las diferentes zonas horarias, por lo que se usa UTC.
+
+## Ejemplo de notificaciones por email
+![Notificación confirmación](calendate-notif-01.png)
+![Notificación nueva reserva](calendate-notif-02.png)
+![Notificación recordatorio](calendate-notif-03.png)
