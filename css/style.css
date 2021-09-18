@@ -439,6 +439,41 @@ pre {
 	background-color: var(--background-color);
 }
 
+blockquote {
+	background: var(--background-color);
+    padding: 1rem;
+    font-family: monospace;
+    font-size: 0.8rem;
+}
+
+blockquote > p,
+blockquote > ul {
+	margin: 0;
+}
+
+blockquote > ul { 
+	margin-bottom: 1rem;
+}
+
+span.gatsby-resp-image-wrapper {
+	width: 100%;
+    display: inline-block !important;
+    height: 10rem;
+	filter: brightness(0.75);
+	transition: 0.25s all linear;
+	overflow: hidden;
+}
+
+span.gatsby-resp-image-wrapper:hover {
+	filter: unset;
+}
+
+
+img.gatsby-resp-image-image {
+	object-fit: cover;
+    object-position: top;
+}
+
 /* SLIDESHOW */
 #slideshow>img {
 	display: block;
@@ -540,5 +575,9 @@ footer {
 
 	#post aside {
 		padding: 3vw !important;
+	}
+	
+	span.gatsby-resp-image-wrapper {
+		width: 33%;
 	}
 }
