@@ -33,7 +33,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         </div>
 
         <div id="article-content">
-          <p dangerouslySetInnerHTML={{ __html: post.html }}></p>
+          <div dangerouslySetInnerHTML={{ __html: post.html }}></div>
 
           <div id="tags">
             {post.frontmatter.tags.map((tag) =>
