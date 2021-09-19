@@ -37,7 +37,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
 
           <div id="tags">
             {post.frontmatter.tags.map((tag) =>
-              <span class="fas fa-code" aria-label={tag}></span>
+              <span className="fas fa-code" key={tag} aria-label={tag}></span>
             )}
           </div>
         </div>

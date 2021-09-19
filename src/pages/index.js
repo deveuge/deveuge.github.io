@@ -27,8 +27,8 @@ const BlogIndex = ({ data, location }) => {
             <p>{node.frontmatter.description}</p>
   					<figcaption>
   						<h2>{title}</h2>
-  						<a href={node.frontmatter.codePreview} target="_blank" rel="noreferrer" aria-label="Ver código" className="hint--top"><span></span></a>
-  						<a href={node.frontmatter.livePreview} target="_blank" rel="noreferrer" aria-label="Previsualizar" className={"hint--top" + (node.frontmatter.livePreview ? "" : " disabled")}><span></span></a>
+  						<a href={node.frontmatter.codePreview} target="_blank" rel="noreferrer" aria-label="Ver código" className={"hint--top" + (node.frontmatter.codePreview ? "" : " disabled")}><span></span></a>
+  						<a href={node.frontmatter.livePreview} target="_blank" rel="noreferrer" aria-label="Ver demo" className={"hint--top" + (node.frontmatter.livePreview ? "" : " disabled")}><span></span></a>
   						<Link to={node.fields.slug} aria-label="Detalles" className="hint--top"><span></span></Link>
   					</figcaption>
   				</figure>

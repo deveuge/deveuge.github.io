@@ -528,6 +528,31 @@ img.gatsby-resp-image-image {
 	padding: 0.5em;
 }
 
+/* 404 */
+#not-found article{
+	padding: 7vw;
+	text-align: center;
+}
+
+#not-found article > img {
+	max-height: 50vh;
+}
+
+#not-found article > a {
+    display: inline-block;
+	background-color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    color: var(--background-color);
+    font-weight: normal;
+    text-decoration: none;
+	margin-top: 1rem;
+}
+
+#not-found article > a:hover {
+	background-color: var(--font-color);
+}
+
+
 /* FOOTER */
 footer {
 	background-color: var(--background-color);

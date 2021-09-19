@@ -16,7 +16,7 @@ image03: "img/projects/calendate-02.png"
 # Calendate (Work In Progress)
 **Calendate** es una aplicación web basada en Spring Boot y Thymeleaf que facilita la gestión de eventos.
 
-[![Ver demo](https://img.shields.io/badge/Ver%20demo-430098?style=for-the-badge&logo=heroku&logoColor=white)](https://calen-date.herokuapp.com)
+<a href="https://calen-date.herokuapp.com" target="_blank">![Ver demo](https://img.shields.io/badge/Ver%20demo-430098?style=for-the-badge&logo=heroku&logoColor=white)</a>
 
 > **Nota acerca de la previsualización:**<br/>
 > <small>Tenga en cuenta que debido a que Heroku es una plataforma de aplicaciones en la nube gratuita, los tiempos de carga pueden ser algo elevados y no tienen nada que ver con la aplicación en sí.</small><br/>

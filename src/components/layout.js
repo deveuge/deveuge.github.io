@@ -81,8 +81,8 @@ const Layout = ({ location, title, children, post }) => {
 				</p>
 				<div id="post-controls">
 					<Link to="/" className="hint--bottom" aria-label="Atrás"><span></span></Link>
-					<a href={post.codePreview} target="_blank" rel="noreferrer" className="hint--bottom" aria-label="Ver código"><span></span></a>
-					<a href={post.livePreview} target="_blank" rel="noreferrer" className={"hint--bottom" + (post.livePreview ? "" : " disabled")} aria-label="Previsualizar"><span></span></a>
+					<a href={post.codePreview} target="_blank" rel="noreferrer" className={"hint--bottom" + (post.codePreview ? "" : " disabled")} aria-label="Ver código"><span></span></a>
+					<a href={post.livePreview} target="_blank" rel="noreferrer" className={"hint--bottom" + (post.livePreview ? "" : " disabled")} aria-label="Ver demo"><span></span></a>
 				</div>
 			</div>
     )

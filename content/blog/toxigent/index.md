@@ -16,7 +16,7 @@ image03: "img/projects/toxigent-02.png"
 # Toxigent
 **Toxigent** es una aplicación web basada en React y creada con [Create React App](https://github.com/facebook/create-react-app) que permite visualizar información sobre plantas que resultan tóxicas para las mascotas. La información es recopilada por un web scraper de desarrollo propio [Poisonous Plants Scraper](https://github.com/deveuge/poisonous-plants-scraper), construido con [Puppeteer](https://pptr.dev), que reúne información sobre plantas venenosas para mascotas y guarda los datos en formato JSON.  
 
-[![View live project](https://img.shields.io/badge/Ver%20demo-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://toxigent.netlify.app)
+<a href="https://toxigent.netlify.app" target="_blank">![Ver demo](https://img.shields.io/badge/Ver%20demo-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)</a>
 
 ## Características
 - Página de inicio que enumera todas las plantas venenosas para perros y gatos y le permite filtrar y/o ordenarlas por:
