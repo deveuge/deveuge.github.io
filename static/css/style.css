@@ -398,6 +398,29 @@ article>img {
 	margin-top: 1em;
 }
 
+#article-content p > img {
+	max-width: 100%;
+}
+
+#article-content table {
+	border-spacing: 0;
+    border-collapse: collapse;
+}
+
+#article-content table td,
+#article-content table th {
+	padding: 0.5em 0.7rem;
+	border: 1px solid #d5d5d5;
+}
+
+#article-content table tr:nth-child(2n) {
+	background-color: var(--background-color);
+}
+
+#article-content summary {
+	cursor: pointer;
+}
+
 #tags {
 	margin-top: 2em;
 }

@@ -25,11 +25,13 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
       <article>
         <div id="slideshow">
           <img src={`../${post.frontmatter.image01}`} alt="Imagen del proyecto" />
+          {post.frontmatter.image02 && (
           <div className="row">
             <img className="col-4" src={`../${post.frontmatter.image01}`} alt="Imagen del proyecto"/>
             <img className="col-4" src={`../${post.frontmatter.image02}`}  alt="Imagen del proyecto"/>
             <img className="col-4" src={`../${post.frontmatter.image03}`}  alt="Imagen del proyecto"/>
           </div>
+          )}
         </div>
 
         <div id="article-content">

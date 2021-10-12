@@ -19,7 +19,7 @@ const BlogIndex = ({ data, location }) => {
       </Helmet>
 
       {posts.map(({ node }, index) => {
-        const isBigProject = index % 3 === 0;
+        const isBigProject = index === 0;
         const title = node.frontmatter.title || node.fields.slug
         return (
           <figure key={node.fields.slug} data-aos="fade-up" className={isBigProject ? "col-12" : "col-lg-6"}>
