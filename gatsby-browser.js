@@ -92,35 +92,37 @@ export const onRouteUpdate = () => {
 
 	/* START_ SCROLL TO TOP */
 	const scrollToTop = () => {
-		var progressPath = document.querySelector('.scroll-to-top path');
-		var pathLength = progressPath.getTotalLength();
-		progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
-		progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
-		progressPath.style.strokeDashoffset = pathLength;
-		progressPath.getBoundingClientRect();
-		progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
-		var updateProgress = function () {
-			var scroll = $(window).scrollTop();
-			var height = $(document).height() - $(window).height();
-			var progress = pathLength - (scroll * pathLength / height);
-			progressPath.style.strokeDashoffset = progress;
-		}
-		updateProgress();
-		$(window).scroll(updateProgress);
-		var offset = 50;
-		var duration = 550;
-		$(window).on('scroll', function () {
-			if ($(this).scrollTop() > offset) {
-				$('.scroll-to-top').addClass('active-progress');
-			} else {
-				$('.scroll-to-top').removeClass('active-progress');
+		if (isBrowser()) {
+			var progressPath = document.querySelector('.scroll-to-top path');
+			var pathLength = progressPath.getTotalLength();
+			progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+			progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+			progressPath.style.strokeDashoffset = pathLength;
+			progressPath.getBoundingClientRect();
+			progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+			var updateProgress = function () {
+				var scroll = $(window).scrollTop();
+				var height = $(document).height() - $(window).height();
+				var progress = pathLength - (scroll * pathLength / height);
+				progressPath.style.strokeDashoffset = progress;
 			}
-		});
-		$('.scroll-to-top').on('click', function (event) {
-			event.preventDefault();
-			$('html, body').animate({ scrollTop: 0 }, duration);
-			return false;
-		})
+			updateProgress();
+			$(window).scroll(updateProgress);
+			var offset = 50;
+			var duration = 550;
+			$(window).on('scroll', function () {
+				if ($(this).scrollTop() > offset) {
+					$('.scroll-to-top').addClass('active-progress');
+				} else {
+					$('.scroll-to-top').removeClass('active-progress');
+				}
+			});
+			$('.scroll-to-top').on('click', function (event) {
+				event.preventDefault();
+				$('html, body').animate({ scrollTop: 0 }, duration);
+				return false;
+			})
+		}
 	};
 	/* END_ SCROLL TO TOP */
 
@@ -136,12 +138,14 @@ export const onRouteUpdate = () => {
 
 	/* START_ READ PROGRESS */
 	const readProgress = () => {
-		let progressBar = $('progress');
-		progressBar.attr('max', $(document).height() - $(window).height());
+		if (isBrowser()) {
+			let progressBar = $('progress');
+			progressBar.attr('max', $(document).height() - $(window).height());
 
-		$(document).on('scroll', function () {
-			progressBar.attr('value', $(window).scrollTop());
-		});
+			$(document).on('scroll', function () {
+				progressBar.attr('value', $(window).scrollTop());
+			});
+		}
 	};
 	/* END_ READ PROGRESS */
 
