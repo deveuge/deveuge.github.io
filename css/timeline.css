@@ -1,0 +1,139 @@
+.timeline {
+  line-height: 1.4em;
+  list-style: none;
+  padding: 1rem;
+}
+
+.timeline-item {
+  padding-left: 2rem;
+  position: relative;
+}
+
+.timeline-info {
+  font-size: 0.75rem;
+  font-weight: bolder;
+  letter-spacing: 3px;
+  margin: 0 0 0.5em 0;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.5;
+}
+
+.timeline-marker {
+  position: absolute;
+  width: 1rem;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.timeline-marker:before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  background: var(--primary-color);
+  border: 2px solid transparent;
+  border-radius: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
+  box-sizing: border-box;
+}
+.timeline-marker:after {
+  content: "";
+  width: 3px;
+  background: #ccd5db;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 1.5px);
+  z-index: -1;
+}
+.timeline-item:last-child .timeline-marker:after {
+  content: none;
+}
+
+.timeline-item:not(.period):hover .timeline-marker:before {
+  background: var(--background-color);
+  border: 2px solid var(--primary-color);
+}
+
+.timeline-content {
+  padding-bottom: 2rem;
+}
+.timeline-content p:last-child {
+  margin-bottom: 0;
+}
+
+.period .timeline-content > h2 {
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+
+.timeline-content > h4 {
+  font-size: 0.9rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.period {
+  padding: 0;
+}
+.period .timeline-info {
+  display: none;
+}
+.period .timeline-marker:before {
+  background: transparent;
+  content: "";
+  width: 100%;
+  height: auto;
+  border: none;
+  border-radius: 0;
+  top: 0;
+  bottom: calc(2rem - 1px);
+  position: absolute;
+  border-top: 3px solid #ccd5db;
+  border-bottom: 3px solid #ccd5db;
+}
+.period .timeline-marker:after {
+  content: "";
+  height: 2rem;
+  top: auto;
+}
+.period .timeline-content {
+  padding: 2rem 0 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .timeline {
+    display: table;
+  }
+  .timeline-item {
+    display: table-row;
+    padding: 0;
+  }
+  .timeline-info,
+  .timeline-marker,
+  .timeline-content,
+  .period .timeline-info {
+    display: table-cell;
+    vertical-align: top;
+  }
+  .timeline-marker {
+    position: relative;
+  }
+  .timeline-content {
+    padding-left: 1rem;
+  }
+  .timeline-info {
+    padding-right: 1rem;
+    text-align: right;
+  }
+  .period .timeline-content > h2 {
+    margin-left: -1rem;
+  }
+}
