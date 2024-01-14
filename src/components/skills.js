@@ -22,20 +22,22 @@ const Skills = ({ children }) => {
     const [filterKey, setFilterKey] = React.useState('*');
 
     React.useEffect(() => {
-        setIsotope(
-            new Isotope('.grid', {
-                itemSelector: '.element-item',
-                getSortData: {
-                    name: '.name',
-                    category: '[data-category]'
-                },
-                masonry: {
-                    columnWidth: 60,
-                    isFitWidth: true
-                }
-            })
-        );
-    }, []);
+        if (isBrowser) {
+            setIsotope(
+                new Isotope('.grid', {
+                    itemSelector: '.element-item',
+                    getSortData: {
+                        name: '.name',
+                        category: '[data-category]'
+                    },
+                    masonry: {
+                        columnWidth: 60,
+                        isFitWidth: true
+                    }
+                })
+            );
+        }
+    }, [isBrowser]);
 
     React.useEffect(() => {
         if (isBrowser && isotope) {
