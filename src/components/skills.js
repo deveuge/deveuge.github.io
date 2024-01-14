@@ -16,6 +16,7 @@ export const SkillItem = ({ name, className, time, icon, unused, year }) => {
 }
 
 const Skills = ({ children }) => {
+    const isBrowser = typeof window !== "undefined";
 
     const [isotope, setIsotope] = React.useState(null);
     const [filterKey, setFilterKey] = React.useState('*');
@@ -37,12 +38,12 @@ const Skills = ({ children }) => {
     }, []);
 
     React.useEffect(() => {
-        if (isotope) {
+        if (isBrowser && isotope) {
             filterKey === '*'
                 ? isotope.arrange({ filter: `*` })
                 : isotope.arrange({ filter: `.${filterKey}` });
         }
-    }, [isotope, filterKey]);
+    }, [isBrowser, isotope, filterKey]);
 
 
     const filters = (
