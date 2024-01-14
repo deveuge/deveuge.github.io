@@ -10,8 +10,8 @@ module.exports = {
     siteUrl: `https://deveuge.github.io/`,
     social: {
       twitter: `deveuge`,
-      github : `deveuge`,
-      email : `deveuge@gmail.com`,
+      github: `deveuge`,
+      email: `deveuge@gmail.com`,
     },
   },
   plugins: [
@@ -45,6 +45,13 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              icon: false,
+              removeAccents: true,
+            }
+          },
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
@@ -63,7 +70,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#573a7d`,
         display: `minimal-ui`,
-        icon: `content/assets/favicon.png`,
+        icon: `content/assets/icon.png`,
       },
     },
     `gatsby-plugin-react-helmet`,

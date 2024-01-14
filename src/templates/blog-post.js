@@ -1,9 +1,11 @@
 import React from "react"
-import Helmet from 'react-helmet'
 import { Link, graphql } from "gatsby"
+import kebabCase from "lodash/kebabCase"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+
+import "../../static/css/post.css"
 
 
 const BlogPostTemplate = ({ data, pageContext, location }) => {
@@ -18,28 +20,38 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         description={post.frontmatter.description || post.excerpt}
       />
 
-      <Helmet>
-          <body className="container-fluid" id="post" />
-      </Helmet>
+      <article id="post">
 
-      <article>
-        <div id="slideshow">
-          <img src={`../${post.frontmatter.image01}`} alt="Imagen del proyecto" />
-          {post.frontmatter.image02 && (
-          <div className="row">
-            <img className="col-4" src={`../${post.frontmatter.image01}`} alt="Imagen del proyecto"/>
-            <img className="col-4" src={`../${post.frontmatter.image02}`}  alt="Imagen del proyecto"/>
-            <img className="col-4" src={`../${post.frontmatter.image03}`}  alt="Imagen del proyecto"/>
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-8" style={{ padding: 0 }}>
+            <div id="header-photo" data-aos="fade-right">
+              {post.frontmatter.images.map((img, i) =>
+                <img key={img} src={`../${img}`} className={i === 0 ? 'current' : ''} alt={post.frontmatter.title} />
+              )}
+
+              <div className="row">
+                <button className="fas fa-angle-left col-2" id="left-slide" aria-label="Previous image" />
+                <button className="fas fa-angle-right col-2" id="right-slide" aria-label="Next image" />
+              </div>
+            </div>
           </div>
-          )}
+          <div className="col-12 col-lg-4" id="post-summary" data-aos="fade-left">
+            <div>
+              <h1>{post.frontmatter.title}</h1>
+              <em>{post.frontmatter.description || post.excerpt}</em>
+            </div>
+            <div id="post-toc">
+              <h2>Contents</h2>
+              <div dangerouslySetInnerHTML={{ __html: post.tableOfContents }}></div>
+            </div>
+          </div>
         </div>
 
-        <div id="article-content">
+        <div id="article-content" data-aos="fade-up">
           <div dangerouslySetInnerHTML={{ __html: post.html }}></div>
-
           <div id="tags">
             {post.frontmatter.tags.map((tag) =>
-              <span className="fas fa-code" key={tag} aria-label={tag}></span>
+              <Link to={`/tags/${kebabCase(tag)}/`} key={tag}>{tag}</Link>
             )}
           </div>
         </div>
@@ -64,7 +76,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         </ul>
       </nav>
 
-    </Layout>
+    </Layout >
   )
 }
 
@@ -81,13 +93,11 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       html
+      tableOfContents
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
         description
-        image01
-        image02
-        image03
+        images
         codePreview
         livePreview
         tags

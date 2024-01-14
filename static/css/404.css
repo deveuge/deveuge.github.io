@@ -1,0 +1,142 @@
+#not-found.main-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+#not-found article {
+  text-align: center;
+}
+
+#not-found article > a {
+  position: relative;
+  padding: 0.5rem 1rem;
+  background: var(--primary-color);
+  color: var(--background-color);
+  text-decoration: none;
+  filter: drop-shadow(1px 3px 1px rgba(0, 0, 0, 0.25));
+  transition: 0.25s;
+}
+
+#not-found article > a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  border-style: solid;
+  border-width: 1.1rem 1rem 1.1rem 0;
+  border-color: transparent var(--primary-color) transparent transparent;
+  transition: 0.25s;
+}
+
+#not-found article > a:hover {
+  background: var(--accent-color);
+}
+#not-found article > a:hover::after {
+  border-color: transparent var(--accent-color) transparent transparent;
+}
+
+#not-found article > p {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  --stacks: 3;
+  animation: float 6s ease-in-out infinite;
+}
+
+.stack > span:nth-child(1) {
+  --index: 0;
+}
+
+.stack > span:nth-child(2) {
+  --index: 1;
+}
+
+.stack > span:nth-child(3) {
+  --index: 2;
+}
+
+.stack span {
+  font-family: "Poppins";
+  font-weight: bold;
+  grid-row-start: 1;
+  grid-column-start: 1;
+  font-size: 4rem;
+  line-height: 4rem;
+  --stack-height: calc(100% / var(--stacks) - 1px);
+  --inverse-index: calc(calc(var(--stacks) - 1) - var(--index));
+  --clip-top: calc(var(--stack-height) * var(--index));
+  --clip-bottom: calc(var(--stack-height) * var(--inverse-index));
+  clip-path: inset(var(--clip-top) 0 var(--clip-bottom) 0);
+  animation: stack 340ms cubic-bezier(0.46, 0.29, 0, 1.24) 1 backwards
+      calc(var(--index) * 120ms),
+    glitch 2s ease infinite 2s alternate-reverse;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(
+    to right,
+    var(--primary-color) 0%,
+    var(--accent-color) 100%
+  );
+}
+
+.stack span:nth-child(odd) {
+  --glitch-translate: 8px;
+}
+.stack span:nth-child(even) {
+  --glitch-translate: -8px;
+}
+
+@keyframes stack {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%);
+    text-shadow: -2px 3px 0 var(--primary-color), 2px -3px 0 var(--accent-color);
+  }
+  60% {
+    opacity: 0.5;
+    transform: translateX(50%);
+  }
+  80% {
+    transform: none;
+    opacity: 1;
+    text-shadow: 2px -3px 0 var(--primary-color), -2px 3px 0 var(--accent-color);
+  }
+  100% {
+    text-shadow: none;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: -2px 3px 0 var(--primary-color), 2px -3px 0 var(--accent-color);
+    transform: translate(var(--glitch-translate));
+  }
+  2% {
+    text-shadow: 2px -3px 0 var(--primary-color), -2px 3px 0 var(--accent-color);
+  }
+  4%,
+  100% {
+    text-shadow: none;
+    transform: none;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0);
+  }
+  50% {
+    transform: translatey(-1rem);
+  }
+  100% {
+    transform: translatey(0);
+  }
+}

@@ -1,28 +1,26 @@
 import React from "react"
-import Helmet from "react-helmet"
 import { Link, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-import NotFoundImage from "../../static/img/404.svg"
+import "../../static/css/404.css"
 
 const NotFoundPage = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title
 
   return (
-    <Layout location={location} title={siteTitle} post="null">
-      <SEO title="404"/>
-
-      <Helmet>
-          <body className="container-fluid" id="not-found" />
-      </Helmet>
+    <Layout id="not-found" location={location} title={siteTitle} post="null">
+      <SEO title="404" />
 
       <article>
-        <img src={NotFoundImage} />
-        <h1>404 - No encontrado</h1>
-        <p>La página que buscas no existe en este sitio web.</p>
-        <Link to="/">Volver al inicio</Link>
+        <div class="stack">
+          <span>PAGE NOT FOUND</span>
+          <span>PAGE NOT FOUND</span>
+          <span>PAGE NOT FOUND</span>
+        </div>
+        <p>Sorry! The page you are looking for does not exist.</p>
+        <Link to="/">Back to home</Link>
       </article>
     </Layout>
   )

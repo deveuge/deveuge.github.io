@@ -1,103 +1,110 @@
 ---
 title: WebDL
 date: "2021-01-01T00:00:00.000Z"
-description: "Aplicación de escritorio Java con controlador de protocolo personalizado para la descarga de páginas web en diferentes formatos"
+description: "Java desktop application with custom protocol driver for downloading web pages in different formats."
 tags: ["Java", "NSIS"]
 
 imagePreview: "img/projects/webdl-00.png"
 codePreview: "https://github.com/deveuge/webDL"
 livePreview: ""
 
-image01: "img/projects/webdl-00.png"
+images: ["img/projects/webdl-00.png"]
 ---
 
 # WebDL
-_Aplicación de escritorio Java con controlador de protocolo personalizado para la descarga de páginas web en diferentes formatos_
 
-[![Descargar](https://img.shields.io/badge/Descargar-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/deveuge/webDL/raw/main/WebDL_1.0.0-SNAPSHOT.exe)
+_Java desktop app - Custom protocol handler for downloading webpages in different formats_
 
-
-## Características
-**WebDL** es una aplicación de escritorio Java creada para descargar páginas web en múltiples formatos a través de un controlador de protocolo personalizado:
-* **HTML**: Descarga la página como un archivo de lenguaje de marcado de hipertexto.
-* **PDF**: Descarga la página en formato PDF.
-* **Imágenes**: Descarga todas las imágenes de una página web específica.
-* **Captura de pantalla**: Toma una captura de pantalla de la página completa.
-* **Video**: Descarga el primer video de una página web específica.
-* **Markdown**: Descarga artículos de Wikipedia como archivos de Markdown. 
-
-## Requisitos
-* Sistema operativo: Windows
-* Google Chrome: para las opciones de captura de pantalla, video y pdf.
-* Conexión a Internet 
+[![Download](https://img.shields.io/badge/Download-0078D6?style=for-the-badge&logo=windows&logoColor=white)](WebDL_1.0.0-SNAPSHOT.exe)
 
 ---
 
-## Uso
-### Instalación
-Ejecute el instalador de WebDL y siga el asistente.
-<details>
-<summary>Mostrar proceso</summary>
+## Features
 
-![Proceso de instalación](./info/Install.gif)
-</details>
+**WebDL** is a Java desktop application built to download webpages in multiple formats through a custom protocol handler:
 
-### Ejecución
-Llame a cualquier página web de su elección usando "webdl://" como protocolo y agregue uno de los siguientes tipos como parámetro de consulta con el nombre "type":
-* HTML: descarga la página como HTML.
-* PDF: descarga la página como PDF.
-* IMG: descarga todas las imágenes de la página en una nueva carpeta.
-* SS: toma una captura de pantalla PNG de página completa.
-* VID: descarga el primer video de la página.
-* MD: descarga artículos de Wikipedia como markdown. 
+- **HTML**: Download the page as a HyperText Markup Language file.
+- **PDF**: Download the page in PDF format.
+- **Images**: Download all images of a specific web page.
+- **Screenshot**: Take a full page screenshot.
+- **Video**: Download the first video of a specific web page.
+- **Markdown**: Download Wikipedia articles as markdown files.
 
-<details>
-<summary>Mostrar proceso</summary>
+## Requirements
 
-![Proceso de ejecución](./info/Execution.gif)
-</details>
-
-### Ejemplos
-| Tipo | URL original | URL WebDL |
-|----------|-------------|------|
-| HTML | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=HTML |
-| PDF | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=PDF |
-| Imágenes | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=IMG |
-| Captura de pantalla | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=SS |
-| Video | https://9gag.com/gag/a07mxVX | webdl://9gag.com/gag/a07mxVX?type=VID |
-| Markdown | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=MD |
-
-### Desinstalación
-Ejecute el desinstalador de WebDL y siga el asistente.
-
-<details>
-<summary>Mostrar proceso</summary>
-
-![Proceso de desinstalación](./info/Uninstall.gif)
-</details>
-
-### Configuración
-De forma predeterminada, las páginas web se guardarán en el directorio de descarga del usuario. Si desea cambiar esta ruta, puede hacerlo modificando el archivo de configuración "application.properties" ubicado dentro del directorio de instalación de WebDL.
-
-El archivo contiene las siguientes propiedades de configuración: 
-* **download.folder**: Carpeta donde se almacenarán las descargas de WebDL.
+- Operating System: Windows
+- Google Chrome: for screenshot, video and pdf options.
+- Internet connection
 
 ---
-## Aspectos técnicos
-WebDL utiliza las siguientes dependencias para realizar sus funciones: 
-* [**jsoup**](https://jsoup.org): Analizador HTML de Java. Se utiliza para descargas de tipo HTML, MD, VID e IMG.
-* [**Selenium**](https://www.selenium.dev): Proyecto de automatización de aplicaciones web. Se utiliza con el driver de Chrome para descargas de tipo SS, VID y PDF. 
-* [**WebDriverManager**](https://github.com/bonigarcia/webdrivermanager): Librería Java que realiza la gestión de los drivers requeridos por Selenium WebDriver. Se utiliza para administrar la descarga del driver de Chrome. 
-* [**Selenium Shutterbug**](https://github.com/assertthat/selenium-shutterbug): Biblioteca de utilidades de Java para realizar capturas de pantalla con Selenium WebDriver. Se usa para tomar una captura de pantalla de página completa en descargas de tipo SS.
 
-El instalador se genera con un script personalizado escrito para [**NSIS**](https://nsis.sourceforge.io/Main_Page) que realiza las siguientes acciones:
-* Registra el protocolo personalizado "webdl://" en el registro de Windows.
-* Incorpora el JRE de 32 bits de Java 1.8 para evitar su instalación independiente y permitir que la aplicación funcione en todos los sistemas Windows, independientemente de su arquitectura.
-* Crea el instalador y desinstalador con una interfaz de usuario visible usando [MUI2](https://nsis.sourceforge.io/Docs/Modern%20UI%202/Readme.html).
+## Usage
 
-En caso de querer compilar el instalador, debe ejecutar el siguiente comando maven: 
+### Installation
+
+Execute the WebDL installer and follow the wizard along.
+
+![Installation process](./info/Install.gif)
+
+### Execution
+
+Call any webpage URL of your choice using "webdl://" as protocol and then, append one of the following types as a query param with the name "type":
+
+- HTML: downloads the page as HTML.
+- PDF: downloads the page as PDF.
+- IMG: downloads all the images of the page in a new folder.
+- SS: takes a full page PNG screenshot.
+- VID: downloads the first video of the page.
+- MD: downloads Wikipedia articles as markdown.
+
+![Execution process](./info/Execution.gif)
+
+#### Examples
+
+| Type       | Original URL                            | WebDL URL                                         |
+| ---------- | --------------------------------------- | ------------------------------------------------- |
+| HTML       | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=HTML |
+| PDF        | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=PDF  |
+| IMG        | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=IMG  |
+| Screenshot | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=SS   |
+| Video      | https://9gag.com/gag/a07mxVX            | webdl://9gag.com/gag/a07mxVX?type=VID             |
+| Markdown   | https://en.wikipedia.org/wiki/The_Byrds | webdl://en.wikipedia.org/wiki/The_Byrds?type=MD   |
+
+### Uninstallation
+
+Execute the WebDL uninstaller and follow the wizard along.
+
+![Uninstallation process](./info/Uninstall.gif)
+
+### Configuration
+
+By default, the web pages will be saved in the user's download directory. If you want to change this path, you can do so by modifying the configuration file "application.properties" located inside the WebDL installation directory.
+
+The file contains the following configuration properties:
+
+- **download.folder**: Folder where WebDL downloads will be stored.
+
+---
+
+## Technical aspects
+
+WebDL uses the following dependencies to perform its functions:
+
+- [**jsoup**](https://jsoup.org): Java HTML Parser. Used for HTML, MD, VID and IMG type downloads.
+- [**Selenium**](https://www.selenium.dev): Project for automating web applications. Used with the Chrome driver for SS, VID and PDF type downloads.
+- [**WebDriverManager**](https://github.com/bonigarcia/webdrivermanager): Java library that carries out the management of the drivers required by Selenium WebDriver. Used to manage Chrome driver download.
+- [**Selenium Shutterbug**](https://github.com/assertthat/selenium-shutterbug): Java utility library for making screenshots using Selenium WebDriver. Used to take a full page screenshot in SS type downloads.
+
+The installer is generated with a custom script written for [**NSIS**](https://nsis.sourceforge.io/Main_Page) that performs the following actions:
+
+- Registers the custom protocol "webdl://" in the Windows registry.
+- It embeds the 32 bit JRE of Java 1.8 to avoid its independent installation and allow the application to work on all windows systems, regardless of their SO architecture.
+- Creates the installer and uninstaller with a visible UI using [MUI2](https://nsis.sourceforge.io/Docs/Modern%20UI%202/Readme.html)
+
+To compile the installer, you need to run the following maven command:
+
 ```
 mvn clean install -P installer -Dnsis.path=${NSIS_PATH} -Djre.path=${JRE_PATH}
 ```
 
-Los registros de la aplicación se almacenan en una nueva carpeta llamada *".webdl"* dentro del directorio del usuario. 
+The application logs are stored in a new folder named _".webdl"_ inside the user's directory.
