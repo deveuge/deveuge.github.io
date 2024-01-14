@@ -8,10 +8,13 @@ import ScrollToTop from "../components/scrollToTop"
 import FooterSection from "../components/footerSection"
 
 const Layout = ({ id, location, children }) => {
+  const isBrowser = typeof window !== "undefined";
 
   useEffect(() => {
-    AOS.init({ once: true });
-  }, []);
+    if (isBrowser) {
+      AOS.init({ once: true });
+    }
+  }, [isBrowser]);
 
   return (
     <React.Fragment>
