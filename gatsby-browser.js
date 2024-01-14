@@ -4,8 +4,11 @@ import './static/css/hint.min.css';
 import './static/css/style.css';
 
 export const onRouteUpdate = () => {
+	const isBrowser = () => typeof window !== "undefined";
 	const $ = require("jquery");
-	window.jQuery = $;
+	if (isBrowser()) {
+		window.jQuery = $;
+	}
 
 	$(document).ready(function () {
 		forceSmallCapsUrls();
@@ -16,9 +19,9 @@ export const onRouteUpdate = () => {
 
 	/* START_ FORCE SMALLCAPS URLS */
 	const forceSmallCapsUrls = () => {
-		let currentURL = window.location.href;
+		let currentURL = isBrowser() ? window.location.href : '';
 		let lowerCaseURL = currentURL.toLowerCase();
-		if (currentURL !== lowerCaseURL) {
+		if (isBrowser() && currentURL !== lowerCaseURL) {
 			window.location.replace(lowerCaseURL);
 		}
 	}
@@ -57,7 +60,7 @@ export const onRouteUpdate = () => {
 		if (localStorage.getItem(storageKey))
 			return localStorage.getItem(storageKey);
 		else
-			return window.matchMedia('(prefers-color-scheme: dark)').matches
+			return isBrowser() && window.matchMedia('(prefers-color-scheme: dark)').matches
 				? 'dark'
 				: 'light';
 	}
@@ -78,11 +81,13 @@ export const onRouteUpdate = () => {
 		});
 	});
 
-	window.matchMedia('(prefers-color-scheme: dark)')
-		.addEventListener('change', ({ matches: isDark }) => {
-			theme.value = isDark ? 'dark' : 'light';
-			setPreference();
-		});
+	if (isBrowser()) {
+		window.matchMedia('(prefers-color-scheme: dark)')
+			.addEventListener('change', ({ matches: isDark }) => {
+				theme.value = isDark ? 'dark' : 'light';
+				setPreference();
+			});
+	}
 	/* END_ THEME TOGGLER */
 
 	/* START_ SCROLL TO TOP */
