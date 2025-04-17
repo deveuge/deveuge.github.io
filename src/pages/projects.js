@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import debounce from "lodash/debounce"
 
 import "../../static/css/index.css"

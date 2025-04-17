@@ -1,6 +1,6 @@
 ---
 title: Quizial
-date: "2021-01-05T00:00:00.000Z"
+date: "2021-01-06T00:00:00.000Z"
 description: "Spring CRUD Application. Create online quizzes, share them with your friends and discover your identity through engaging personality quizzes from other users."
 tags: ["Java", "Spring", "Thymeleaf"]
 

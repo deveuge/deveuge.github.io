@@ -44,6 +44,10 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
               <h2>Contents</h2>
               <div dangerouslySetInnerHTML={{ __html: post.tableOfContents }}></div>
             </div>
+            <div className="project-controls">
+              <a href={post.frontmatter.codePreview} target="_blank" rel="noreferrer" className={(post.frontmatter.codePreview ? "" : " disabled")}><span></span> See code</a>
+              <a href={post.frontmatter.livePreview} target="_blank" rel="noreferrer" className={(post.frontmatter.livePreview ? "" : " disabled")}><span></span> Live preview</a>
+            </div>
           </div>
         </div>
 
@@ -93,7 +97,7 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       html
-      tableOfContents
+      tableOfContents(maxDepth: 2)
       frontmatter {
         title
         description

@@ -202,6 +202,10 @@
   margin-top: auto;
 }
 
+#post .project-controls {
+  margin-top: 2rem;
+}
+
 .project-controls a + a {
   margin-left: 0.5rem;
 }
@@ -265,7 +269,7 @@
   flex-flow: row-reverse;
   max-width: var(--max-width);
   margin: auto;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 #input-search {
@@ -303,6 +307,7 @@
   width: 100%;
   font: inherit;
   background: var(--contrast-color);
+  color: var(--text-color);
   border: 0;
   outline: 0;
   padding: 1rem 1.5rem;

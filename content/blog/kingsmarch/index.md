@@ -1,6 +1,6 @@
 ---
 title: Kingsmarch
-date: "2021-01-04T00:00:00.000Z"
+date: "2021-01-05T00:00:00.000Z"
 description: "Spring Boot Application. Single and multiplayer chess web game. Implements the use of websockets and custom AI logic."
 tags: ["Java", "Spring Boot", "Thymeleaf", "Websockets"]
 

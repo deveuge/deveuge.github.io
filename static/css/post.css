@@ -141,10 +141,15 @@
 #article-content h5,
 #article-content h6 {
   position: relative;
-  text-transform: lowercase;
-  font-variant: small-caps;
+  text-transform: uppercase;
   letter-spacing: 0.1rem;
   z-index: -1;
+}
+
+#article-content h4 + p,
+#article-content h5 + p,
+#article-content h6 + p {
+  margin-top: 0;
 }
 
 #article-content h1::before,
@@ -158,6 +163,12 @@
   height: 3em;
   margin-top: -3em;
   visibility: hidden;
+}
+
+#article-content hr {
+  opacity: 0.5;
+  border-bottom: none;
+  margin: 1rem 0;
 }
 
 #article-content a {
@@ -181,6 +192,21 @@
 
 #article-content ul > li > p {
   margin: 0;
+}
+
+#article-content table {
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
+#article-content table th,
+#article-content table td {
+  padding: 5px;
+  border: 1px solid var(--primary-color);
+}
+
+.language-text {
+  overflow: auto;
 }
 
 #tags {

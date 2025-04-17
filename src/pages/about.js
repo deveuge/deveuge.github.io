@@ -49,7 +49,7 @@ const AboutMePage = ({ data, location }) => {
         <TimelineExperienceItem
           period="SEP 2018 – MAY 2019"
           title="Full Stack Web Developer & Android Developer"
-          company="Movilgest Intersoft – Madrid (Spain)"
+          company="Movilges Intersoft – Madrid (Spain)"
           desc="Development of web and Android applications communicated with each other through web services, oriented to mobility and logistics. Working with clients such as Iveco, Renault or Viscofan and communication with their ERP SAP."
           technologies="HTML5, CSS3, Javascript and JQuery with Thymeleaf and Bootstrap. Java Spring (MVC, Security, JPA), SOAP and REST web services. Android Studio, SQL Server, ZPL markup language, barcode treatment, Leaflet." />
         <TimelineExperienceItem

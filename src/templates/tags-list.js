@@ -6,7 +6,7 @@ import SEO from "../components/seo"
 import ProjectsList from "../components/projectList"
 
 // Components
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 
 const Tags = ({ pageContext, data, location }) => {
   const siteTitle = data.site.siteMetadata.title

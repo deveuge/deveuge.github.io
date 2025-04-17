@@ -9,7 +9,7 @@ const Navbar = ({ location }) => {
 
     const logoElement = (
         <Link className="logo" to="/">
-            <img src={logo} alt="Logo" />
+            <img src={logo} alt="Logo" width="32px" />
             <span>deveuge</span>
         </Link>
     )
