@@ -33,6 +33,22 @@
 /* END: SCROLLBAR */
 
 /* START: PLACEHOLDER */
+input::-webkit-input-placeholder {
+  color: var(--text-color);
+}
+
+input::-moz-placeholder {
+  color: var(--text-color);
+}
+
+input:-ms-input-placeholder {
+  color: var(--text-color);
+}
+
+input:-moz-placeholder {
+  color: var(--text-color);
+}
+
 input:focus::-webkit-input-placeholder {
   opacity: 0;
 }
