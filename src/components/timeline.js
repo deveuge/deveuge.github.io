@@ -28,6 +28,21 @@ export const TimelineEducationItem = ({ title, school, desc, withHonors, grade }
     )
 }
 
+export const TimelineCertificateItem = ({ title, company, date }) => {
+    return (
+        <li className="timeline-item" data-aos="fade-up">
+            <div className="timeline-info">
+                <span>{date}</span>
+            </div>
+            <div className="timeline-marker"></div>
+            <div className="timeline-content">
+                <h3>{title}</h3>
+                <h4>{company}</h4>
+            </div>
+        </li>
+    )
+}
+
 export const TimelineExperienceItem = ({ period, title, company, desc, technologies }) => {
     return (
         <li className="timeline-item" data-aos="fade-up">

@@ -6,7 +6,6 @@ tags: ["Java", "Spring", "System design"]
 
 imagePreview: "img/projects/relink-00.png"
 codePreview: "https://github.com/deveuge/relink"
-livePreview: "https://relink-app.onrender.com/"
 
 images:
   [

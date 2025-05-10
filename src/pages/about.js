@@ -8,7 +8,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 import HeaderSection from "../components/headerSection"
-import Timeline, { TimelinePeriod, TimelineExperienceItem, TimelineEducationItem } from "../components/timeline"
+import Timeline, { TimelinePeriod, TimelineExperienceItem, TimelineEducationItem, TimelineCertificateItem } from "../components/timeline"
 import Skills, { SkillItem } from "../components/skills"
 
 import { CurrentSkills } from "../templates/current-skills"
@@ -35,26 +35,26 @@ const AboutMePage = ({ data, location }) => {
         <TimelinePeriod name="Experience" />
         <TimelineExperienceItem
           period="FEB 2022 – PRESENT"
-          title="Full Stack Web & Desktop Developer"
+          title="Senior Java Software Engineer"
           company="Bahia Software – Galicia (Spain)"
           desc="Current lead developer of a new web centralized application written in Java for the billing of the Galician public health system, while making punctual maintenance of the current billing desktop application.
           Maintenance and development of new functionalities in multiple applications of the Galician public health system (pathological anatomy, kidney patients and hematopoietic progenitors)."
           technologies="Java Spring, Struts, Hibernate, Apache Camel, SOAP and REST web services, JUnit. Informix and Oracle Databases. VB6 on specific occasions." />
         <TimelineExperienceItem
           period="JUN 2019 – FEB 2022"
-          title="Full Stack Web & Desktop Developer"
+          title="Java Software Engineer"
           company="Indra Minsait – Galicia (Spain)"
           desc="Analyst-programmer in architecture project for the Public Administration. Functions of development, analysis, support, documentation, testing, establishment of standards, patterns and archetypes for the architecture and research of new technologies for its evolution."
           technologies="Spring (MVC and Boot), Hibernate, Websockets, Apache CXF and Camel, SOAP and REST web services, SQL Server, JMeter, JUnit. Thymeleaf and React for the front-end. .NET on specific occasions." />
         <TimelineExperienceItem
           period="SEP 2018 – MAY 2019"
-          title="Full Stack Web Developer & Android Developer"
+          title="Java Software Developer"
           company="Movilges Intersoft – Madrid (Spain)"
           desc="Development of web and Android applications communicated with each other through web services, oriented to mobility and logistics. Working with clients such as Iveco, Renault or Viscofan and communication with their ERP SAP."
           technologies="HTML5, CSS3, Javascript and JQuery with Thymeleaf and Bootstrap. Java Spring (MVC, Security, JPA), SOAP and REST web services. Android Studio, SQL Server, ZPL markup language, barcode treatment, Leaflet." />
         <TimelineExperienceItem
           period="APR 2018 – JUL 2018"
-          title="Full Stack Web Developer"
+          title="Full Stack Developer"
           company="QR Group – Madrid (Spain)"
           desc="Development of a web ERP for project management aimed at the construction, installation and renovation sectors."
           technologies="PHP, HTML5, CSS3, Javascript, JQuery and MySQL." />
@@ -72,6 +72,23 @@ const AboutMePage = ({ data, location }) => {
           software for web, mobile and desktop applications. Candidate for the Extraordinary Vocational Training Awards for the 2017 - 2018 academic year of the Community of Madrid."
           withHonors={true}
           grade="9.5" />
+        <TimelinePeriod name="Certificates" />
+        <TimelineCertificateItem
+          title="Microsoft Certified: Azure AI Fundamentals"
+          company="Microsoft"
+          date="MAY 2024" />
+        <TimelineCertificateItem
+          title="Spring Boot and Spring Cloud – Cloud Microservices Architecture"
+          company="Xunta de Galicia"
+          date="MAY 2024" />
+        <TimelineCertificateItem
+          title="Cambridge English Advanced (C1)"
+          company="Cambridge Assessment English"
+          date="DEC 2023" />
+        <TimelineCertificateItem
+          title="ITIL Foundation"
+          company="AXELOS Global Best Practice"
+          date="AUG 2022" />
         <TimelinePeriod name="Skills" />
       </Timeline>
     )
