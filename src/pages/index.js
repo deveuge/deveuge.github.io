@@ -18,7 +18,7 @@ const BlogIndex = ({ data, location }) => {
         <div className="col-11 col-lg-8">
           <div id="about-section">
             <blockquote data-aos="fade-up"><p>Passionate full stack web developer, I am dedicated to building applications to offer robust, flexible, scalable, secure and easily maintainable solutions, adapted to each client.</p></blockquote>
-            <Link to="/about" data-aos="fade-left">See my professional background <span class="fa-solid fa-angles-right"></span></Link>
+            <Link to="/about/" data-aos="fade-left">Professional background <span className="fa-solid fa-angles-right"></span></Link>
           </div>
         </div>
       </div>
@@ -45,19 +45,26 @@ const BlogIndex = ({ data, location }) => {
     )
   }
 
+  const NavButtons = () => {
+    return (
+      <div id="btn-all-projects" className="index">
+        <a href="https://deveuge.gitbook.io/projects" data-aos="fade-right" target="_blank" rel="noreferrer"><span className="fa-solid fa-book"></span> Project Wiki</a>
+        <Link to="/projects/" data-aos="fade-left">All projects <span className="fa-solid fa-angles-right"></span></Link>
+      </div>
+    )
+  }
+
   const FeaturedProjects = ({ posts }) => {
     return (
       <div className="row justify-content-center">
         <div className="col-11 col-lg-8">
-          <h2 class="index-title" data-content="Featured projects">Featured projects</h2>
+          <h2 className="index-title" data-content="Featured projects">Featured projects</h2>
           {posts.map(({ node }, index) => {
             return (
               index < 3 ? <FeaturedProject node={node} key={index} /> : null
             )
           })}
-          <div id="btn-all-projects" data-aos="fade-left">
-            <Link to="/projects">See all my projects <span class="fa-solid fa-angles-right"></span></Link>
-          </div>
+          <NavButtons />
         </div>
       </div>
     )

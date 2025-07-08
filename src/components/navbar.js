@@ -79,8 +79,9 @@ const Navbar = ({ location }) => {
         <aside id="nav-container" className="col-10 col-md-5 col-lg-4">
             <ul id="navigation">
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/projects">Projects</Link></li>
+                <li><Link to="/about/">About</Link></li>
+                <li><Link to="/projects/">Projects</Link></li>
+                <li><a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">Wiki</a></li>
             </ul>
         </aside>
     )

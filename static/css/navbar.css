@@ -190,6 +190,7 @@
   transform: translateZ(0);
   transform: translateX(100%);
   transition: transform 0.5s cubic-bezier(0.07, 0.23, 0.34, 1);
+  max-width: 450px;
 
   display: -ms-flexbox !important;
   display: flex !important;
@@ -224,6 +225,24 @@
   transition: 0.3s;
 }
 
+#navigation a[aria-current="page"] {
+  background-color: var(--accent-color);
+  color: var(--background-color);
+  pointer-events: none;
+}
+
+#navigation a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 1em;
+  background: var(--background-color);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  z-index: 0;
+}
+
 #navigation a:hover {
   color: var(--background-color);
   padding-right: 1em;
@@ -233,7 +252,7 @@
   content: "";
   background: var(--primary-color);
   color: var(--background-color);
-  mix-blend-mode: color;
+  mix-blend-mode: hue;
   height: 100%;
   width: 0;
   position: absolute;

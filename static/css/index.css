@@ -233,12 +233,14 @@
 }
 
 #btn-all-projects > a:hover,
+#btn-all-projects > a:last-of-type,
 .project-controls > a:last-of-type,
 .project-controls > a:hover {
   background-color: var(--primary-color);
   color: var(--background-color);
 }
 
+#btn-all-projects > a:last-of-type:hover,
 .project-controls > a:last-of-type:hover {
   background-color: transparent;
   color: var(--primary-color);
@@ -266,10 +268,28 @@
 
 #btn-all-projects {
   display: flex;
-  flex-flow: row-reverse;
-  max-width: var(--max-width);
+  justify-content: space-between;
   margin: auto;
   margin-top: 2rem;
+}
+
+#btn-all-projects.index {
+  max-width: var(--max-width);
+}
+
+#btn-all-projects > a::before {
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px dotted var(--primary-color);
+  opacity: 0.5;
+  position: absolute;
+}
+
+#btn-all-projects > a .fa-book {
+  margin-right: 0.25rem;
 }
 
 #input-search {

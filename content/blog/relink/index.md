@@ -1,6 +1,6 @@
 ---
 title: Relink
-date: "2021-01-04T00:00:00.000Z"
+date: "2021-01-05T00:00:00.000Z"
 description: "Java Spring based shortening service. Allows you to convert long URLs into shorter, more manageable versions."
 tags: ["Java", "Spring", "System design"]
 
@@ -245,10 +245,10 @@ We can cache URLs that are frequently accessed. We can use some off-the-shelf so
 
 ## Bibliography
 
-- [https://www.geeksforgeeks.org/system-design-url-shortening-service/](https://www.geeksforgeeks.org/system-design-url-shortening-service/)
-- [https://medium.com/@sandeep4.verma/system-design-scalable-url-shortener-service-like-tinyurl-106f30f23a82](https://medium.com/@sandeep4.verma/system-design-scalable-url-shortener-service-like-tinyurl-106f30f23a82)
-- [https://dev.to/karanpratapsingh/system-design-url-shortener-10i5](https://dev.to/karanpratapsingh/system-design-url-shortener-10i5)
-- [https://www.enjoyalgorithms.com/blog/design-a-url-shortening-service-like-tiny-url](https://www.enjoyalgorithms.com/blog/design-a-url-shortening-service-like-tiny-url)
-- [https://systemdesign.one/url-shortening-system-design/#url-shortener-api](https://systemdesign.one/url-shortening-system-design/#url-shortener-api)
-- [https://sagarvasa.medium.com/url-shortener-service-a-basic-system-design-approach-96c9c371c197](https://sagarvasa.medium.com/url-shortener-service-a-basic-system-design-approach-96c9c371c197)
-- [https://monday9pm.com/building-a-url-shorter-server-part-1-dancing-with-base62-de1af40f604c](https://monday9pm.com/building-a-url-shorter-server-part-1-dancing-with-base62-de1af40f604c)
+- [URL Shortner (bit.ly, TinyURL, ZipZy.in, etc) - System Design - GeeksforGeeks](https://www.geeksforgeeks.org/system-design-url-shortening-service/)
+- [System Design : Scalable URL shortener service like TinyURL | by Sandeep Verma | Medium](https://medium.com/@sandeep4.verma/system-design-scalable-url-shortener-service-like-tinyurl-106f30f23a82)
+- [System Design: URL Shortener - DEV Community](https://dev.to/karanpratapsingh/system-design-url-shortener-10i5)
+- [URL Shortener System Design](https://www.enjoyalgorithms.com/blog/design-a-url-shortening-service-like-tiny-url)
+- [URL Shortening System Design - System Design](https://systemdesign.one/url-shortening-system-design/#url-shortener-api)
+- [URL Shortener Service | System Design | by Sagar Vasa | Medium](https://sagarvasa.medium.com/url-shortener-service-a-basic-system-design-approach-96c9c371c197)
+- [Building a URL Shortner Server: Part 1 — Dancing with Base62 | by Jaeyeoul Ahn | Monday9pm](https://monday9pm.com/building-a-url-shorter-server-part-1-dancing-with-base62-de1af40f604c)

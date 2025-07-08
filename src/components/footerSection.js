@@ -12,8 +12,9 @@ const FooterSection = () => {
     const footerLinks = (
         <ul className="footer-links">
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/projects">Projects</Link></li>
+            <li><Link to="/about/">About</Link></li>
+            <li><Link to="/projects/">Projects</Link></li>
+            <li><a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">Wiki</a></li>
         </ul>
     )
 
@@ -22,6 +23,11 @@ const FooterSection = () => {
             <li>
                 <a href="https://github.com/deveuge" target="_blank" rel="noreferrer" className="hint--top" aria-label="Github">
                     <span className="fa-brands fa-github-alt"></span>
+                </a>
+            </li>
+            <li>
+                <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer" className="hint--top" aria-label="Gitbook">
+                    <span className="fa-solid fa-book"></span>
                 </a>
             </li>
         </ul>

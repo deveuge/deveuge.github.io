@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 import debounce from "lodash/debounce"
 
 import "../../static/css/index.css"
@@ -48,6 +48,19 @@ const Projects = ({ data, location }) => {
     })
   }, 300);
 
+  const NavButtons = () => {
+    return (
+      <div className="row justify-content-center">
+        <div className="col-11 col-lg-8">
+          <div id="btn-all-projects">
+            <Link to="/" data-aos="fade-right"><span className="fa-solid fa-angles-left"></span> Home</Link>
+            <a href="https://deveuge.gitbook.io/projects" data-aos="fade-left" target="_blank" rel="noreferrer"><span className="fa-solid fa-book"></span> Project Wiki</a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="Projects" />
@@ -64,6 +77,7 @@ const Projects = ({ data, location }) => {
         </div>
       </div>
       <ProjectsList posts={posts} />
+      <NavButtons />
     </Layout >
   )
 }
