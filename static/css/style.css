@@ -253,7 +253,7 @@ html[data-theme="dark"] .home-title > div > img {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 25vh;
+  height: 22vh;
   overflow: hidden;
   z-index: -1;
 }

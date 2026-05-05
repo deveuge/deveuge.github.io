@@ -16,7 +16,7 @@ const Project = ({ node }) => {
                     <div className="project-controls">
                         <a href={node.frontmatter.codePreview} target="_blank" rel="noreferrer" aria-label="See code" className={"hint--top" + (node.frontmatter.codePreview ? "" : " disabled")}><span></span></a>
                         <a href={node.frontmatter.livePreview} target="_blank" rel="noreferrer" aria-label="Live demo" className={"hint--top" + (node.frontmatter.livePreview ? "" : " disabled")}><span></span></a>
-                        <Link to={node.fields.slug} aria-label="Details" className="hint--top">Learn more</Link>
+                        <Link to={node.fields.slug} aria-label="Learn more" className="hint--top">Details</Link>
                     </div>
                 </div>
             </div>

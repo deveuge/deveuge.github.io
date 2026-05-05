@@ -17,7 +17,7 @@ const BlogIndex = ({ data, location }) => {
       <div className="row justify-content-center">
         <div className="col-11 col-lg-8">
           <div id="about-section">
-            <blockquote data-aos="fade-up"><p>Passionate full stack web developer, I am dedicated to building applications to offer robust, flexible, scalable, secure and easily maintainable solutions, adapted to each client.</p></blockquote>
+            <blockquote data-aos="fade-up"><p>Building and evolving complex enterprise systems with focus on architecture, scalability and production stability.</p></blockquote>
             <Link to="/about/" data-aos="fade-left">Professional background <span className="fa-solid fa-angles-right"></span></Link>
           </div>
         </div>
