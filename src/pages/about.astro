@@ -1,0 +1,70 @@
+---
+import "devicon/devicon.min.css"
+import Layout from "@/layouts/Layout.astro"
+import HeaderSection from "@/components/HeaderSection.astro"
+import Timeline from "@/components/Timeline.astro"
+import SkillsFilter from "@/components/islands/SkillsFilter"
+import { skills } from "@/lib/skills"
+---
+
+<Layout title="About me">
+  <HeaderSection title="About me" subtitle="Curriculum Vitae" />
+
+  <div class="cv-links">
+    <a href="https://drive.google.com/file/d/1b0u6c3pwhoY1xpmOcDiYXAbxkgR9Sklt/view?usp=sharing" target="_blank" rel="noreferrer">
+      <span class="fa-regular fa-file-pdf"></span> Descargar CV
+    </a>
+    <a href="https://drive.google.com/file/d/1ZCOJ7zBwYxlsNO0ajXR4Rz31T2FY4OYw/view?usp=sharing" target="_blank" rel="noreferrer">
+      Download CV <span class="fa-solid fa-file-pdf"></span>
+    </a>
+  </div>
+
+  <Timeline />
+
+  <div class="skills-section">
+    <SkillsFilter skills={skills} client:visible />
+  </div>
+
+  <div class="cv-links">
+    <a href="https://drive.google.com/file/d/1b0u6c3pwhoY1xpmOcDiYXAbxkgR9Sklt/view?usp=sharing" target="_blank" rel="noreferrer">
+      <span class="fa-regular fa-file-pdf"></span> Descargar CV
+    </a>
+    <a href="https://drive.google.com/file/d/1ZCOJ7zBwYxlsNO0ajXR4Rz31T2FY4OYw/view?usp=sharing" target="_blank" rel="noreferrer">
+      Download CV <span class="fa-solid fa-file-pdf"></span>
+    </a>
+  </div>
+</Layout>
+
+<style>
+  .cv-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .cv-links > a {
+    border: 1px solid var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.25s;
+  }
+
+  .cv-links > a:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+  }
+
+  .skills-section {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+</style>

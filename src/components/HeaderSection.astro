@@ -1,0 +1,92 @@
+---
+interface Props {
+  title: string
+  subtitle: string
+}
+
+const { title, subtitle } = Astro.props
+---
+
+<header id="header-section">
+  <div class="waves"></div>
+  <div>
+    <h1>{title}</h1>
+    <p>{subtitle}</p>
+  </div>
+</header>
+
+<style>
+  #header-section {
+    position: relative;
+    background-image: url(/img/header.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22vh;
+    overflow: hidden;
+    margin-bottom: -2rem;
+  }
+
+  #header-section > div {
+    z-index: 1;
+    text-align: center;
+  }
+
+  #header-section h1 {
+    text-transform: lowercase;
+  }
+
+  #header-section p {
+    font-size: 0.75em;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin: 0;
+  }
+
+  .waves {
+    transition: 500ms;
+  }
+
+  .waves::before,
+  .waves::after {
+    content: "";
+    width: 150vw;
+    height: 150vw;
+    position: absolute;
+    left: 50%;
+    margin-top: 90%;
+  }
+
+  .waves::before {
+    border-radius: 44%;
+    background: var(--color-background);
+    animation: header-section-waves 8s linear infinite;
+  }
+
+  .waves::after {
+    border-radius: 42%;
+    background: var(--color-background);
+    animation: header-section-waves 15s linear infinite;
+    opacity: 0.5;
+  }
+
+  @keyframes header-section-waves {
+    0% {
+      transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -75%) rotate(360deg);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .waves::before,
+    .waves::after {
+      margin-top: 100%;
+    }
+  }
+</style>

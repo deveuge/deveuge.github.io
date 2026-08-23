@@ -46,6 +46,8 @@
 @import "./scroll-to-top.css";
 @import "./project-search.css";
 @import "./post.css";
+@import "./timeline.css";
+@import "./skills.css";
 
 @layer base {
   html {

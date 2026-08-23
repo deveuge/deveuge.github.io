@@ -1,0 +1,104 @@
+#filters {
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+#filters button {
+  background: transparent;
+  font-weight: bold;
+  font: inherit;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+#filters button:hover,
+#filters button.is-checked {
+  background: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.element-item {
+  --border-size: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 6rem;
+  height: 7rem;
+  margin: 0.25rem;
+  padding: 0.4rem;
+  text-align: center;
+  border-top-left-radius: 20%;
+  border-bottom-right-radius: 20%;
+  transition: 0.5s;
+  cursor: default;
+
+  border: 1px solid var(--border-color);
+  border-bottom-width: 3px;
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+.element-item.language {
+  --border-color: #fbc753;
+}
+
+.element-item.database {
+  --border-color: #70b8f5;
+}
+
+.element-item.library {
+  --border-color: #6fc55a;
+}
+
+.element-item.server {
+  --border-color: #d96b6b;
+}
+
+.element-item.unused {
+  --border-color: #b1b1b1;
+}
+
+.element-item:hover {
+  background-color: var(--border-color);
+  border-color: var(--color-text);
+}
+
+.element-item > span {
+  font-size: 2rem;
+  text-shadow: -2px 2px 3px #00000030;
+  transition: 0.25s;
+}
+
+.element-item:hover > span {
+  font-size: 2.5rem;
+  color: var(--color-text);
+}
+
+.element-item > .name {
+  font-weight: normal;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.element-item > em {
+  font-size: 0.75em;
+}
