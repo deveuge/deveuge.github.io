@@ -1,0 +1,20 @@
+---
+interface Props {
+  href: string
+  variant?: "primary" | "accent"
+}
+
+const { href, variant = "primary" } = Astro.props
+
+const variantClasses = {
+  primary: "border-primary text-primary hover:bg-primary hover:text-background",
+  accent: "border-accent bg-accent text-on-accent hover:opacity-90",
+}
+---
+
+<a
+  href={href}
+  class={`inline-block border px-4 py-2 text-sm font-bold uppercase tracking-wide transition-colors duration-200 ${variantClasses[variant]}`}
+>
+  <slot />
+</a>

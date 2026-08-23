@@ -1,1 +1,43 @@
 @import "tailwindcss";
+
+/*
+ * Dark mode is toggled via a `data-theme="dark"` attribute on <html>
+ * (set from localStorage / prefers-color-scheme in Phase 3), not the
+ * `.dark` class Tailwind uses by default — matches the pre-existing
+ * theme-toggler behavior so no markup/script changes are needed here.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --font-sans: "Lato", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --color-primary: #9d6fbb;
+  --color-accent: #f3bc34;
+  --color-text: #252525;
+  --color-background: #f5f5f5;
+  --color-surface: #ffffff;
+  /* Accent is the same hue in both themes; text isn't, so text-on-accent
+     needs its own fixed token to keep contrast readable in dark mode. */
+  --color-on-accent: #252525;
+}
+
+[data-theme="dark"] {
+  --color-primary: #b084cd;
+  --color-accent: #f3bc34;
+  --color-text: #f5f5f5;
+  --color-background: #262626;
+  --color-surface: #3e3e3e;
+  --color-on-accent: #252525;
+}
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-accent: var(--color-accent);
+  --color-text: var(--color-text);
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-on-accent: var(--color-on-accent);
+}
