@@ -9,7 +9,7 @@ const headerImage = await getImage({ src: headerSrc, width: 1920, format: "webp"
 <header id="home-hero" style={`--header-bg: url(${headerImage.src})`}>
   <div class="waves"></div>
   <div>
-    <Image src={avatar} alt="Deveuge" width={128} height={128} />
+    <Image src={avatar} alt="Deveuge" width={220} height={220} />
     <div class="title">
       <h1>deveuge<span class="fa-solid fa-code fa-beat"></span></h1>
     </div>
@@ -31,7 +31,7 @@ const headerImage = await getImage({ src: headerSrc, width: 1920, format: "webp"
     justify-content: center;
     overflow: hidden;
     padding-top: 2rem;
-    margin-bottom: -0.5rem;
+    margin-bottom: 2rem;
   }
 
   #home-hero > div {
@@ -43,21 +43,42 @@ const headerImage = await getImage({ src: headerSrc, width: 1920, format: "webp"
     margin: 0 auto;
     border-radius: 100%;
     box-shadow: 0 2px 5px -3px black;
+    background: #d0b1e3;
     border: 5px solid #b390c9;
     background-image: linear-gradient(to top, #ddc5ed 0%, #81599b 100%);
+    animation-name: home-hero-avatar-bounce;
+    animation-duration: 1s;
+    animation-delay: 4s;
   }
 
   :global([data-theme="dark"] #home-hero img) {
+    background: #e8a502;
     border-color: var(--color-accent);
     background-image: linear-gradient(to top, #ffdc84 0%, #e7a400 100%);
   }
 
+  @keyframes home-hero-avatar-bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-30px);
+    }
+    60% {
+      transform: translateY(-15px);
+    }
+  }
+
   .title,
   .role {
+    width: 100%;
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 
   .title::after,
@@ -79,10 +100,11 @@ const headerImage = await getImage({ src: headerSrc, width: 1920, format: "webp"
   }
 
   .title > h1 {
+    width: 100%;
     position: relative;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: space-between;
     text-transform: lowercase;
     animation: home-hero-fade-in 2s forwards;
     animation-delay: 1.6s;

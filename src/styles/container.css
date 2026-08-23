@@ -1,0 +1,35 @@
+/*
+ * Fluid, percentage-based content widths — replicate Bootstrap's grid
+ * columns from the original site (no absolute max-width, unlike a
+ * typical Tailwind `max-w-*` cap).
+ */
+
+/* col-11 col-lg-8: home hero/about blurb, projects search/grid/nav */
+.container-66 {
+  width: 91.6667%;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .container-66 {
+    width: 66.6667%;
+  }
+}
+
+/* col-sm-10 col-lg-6: about CV links, timeline, skills */
+.container-50 {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container-50 {
+    width: 83.3333%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-50 {
+    width: 50%;
+  }
+}

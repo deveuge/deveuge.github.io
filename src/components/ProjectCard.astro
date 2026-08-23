@@ -40,7 +40,10 @@ const search = `${title} ${description} ${tags.join(" ")}`.toLowerCase()
         aria-label="Live demo"
         class:list={["hint--top", { disabled: !livePreview }]}><span></span></a
       >
-      <a href={href}>Learn more<span class="sr-only"> about {title}</span></a>
+      <a href={href} aria-label={variant === "featured" ? "Details" : "Learn more"} class="hint--top">
+        {variant === "featured" ? "Learn more" : "Details"}
+        <span class="sr-only"> about {title}</span>
+      </a>
     </div>
   </div>
 </article>

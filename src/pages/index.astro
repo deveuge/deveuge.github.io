@@ -11,7 +11,7 @@ const featuredProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.da
 <Layout title="Home">
   <HomeHero />
 
-  <div class="row">
+  <div class="row container-66">
     <blockquote data-reveal="up">
       <p>
         Building and evolving complex enterprise systems with focus on architecture, scalability and production
@@ -21,7 +21,7 @@ const featuredProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.da
     <a href="/about/" data-reveal="left">Professional background <span class="fa-solid fa-angles-right"></span></a>
   </div>
 
-  <div class="row">
+  <div class="row container-66">
     <h2 class="index-title" data-content="Featured projects">Featured projects</h2>
     {featuredProjects.map(project => <ProjectCard project={project} variant="featured" />)}
 
@@ -66,21 +66,54 @@ const featuredProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.da
   }
 
   .row > a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    position: relative;
     padding: 0.75rem 1rem;
     color: var(--color-primary);
     text-decoration: none;
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 0.1rem;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
     font-size: 0.85rem;
+    line-height: 0.85rem;
   }
 
   .row > a:hover {
     color: var(--color-accent);
+  }
+
+  .row > a::before,
+  .row > a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--color-primary);
+    transition:
+      transform 0.3s,
+      opacity 0.3s;
+  }
+
+  .row > a:hover::before,
+  .row > a:focus::before {
+    opacity: 0;
+    transform: translateY(5px) translateX(-5px);
+  }
+
+  .row > a::after {
+    border-color: var(--color-accent);
+    opacity: 0;
+    transform: translateY(-7px) translateX(6px);
+  }
+
+  .row > a:hover::after,
+  .row > a:focus::after {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
   }
 
   .index-title {
@@ -90,16 +123,41 @@ const featuredProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.da
     letter-spacing: 0.1rem;
     color: var(--color-primary);
     text-shadow: 2px 2px var(--color-surface);
-    max-width: 900px;
     margin: 0 auto 2rem;
     position: relative;
     opacity: 0.75;
   }
 
+  .index-title::before {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    content: attr(data-content);
+    background-color: var(--color-background);
+    color: var(--color-background);
+    z-index: -1;
+    padding-right: 0.25em;
+  }
+
+  .index-title::after {
+    position: absolute;
+    content: "";
+    display: block;
+    left: 0;
+    right: 0;
+    top: 50%;
+    background-color: var(--color-primary);
+    box-shadow: 2px 2px var(--color-surface);
+    height: 0.1em;
+    min-height: 1px;
+    z-index: -2;
+  }
+
   #nav-buttons {
     display: flex;
     justify-content: space-between;
-    max-width: 900px;
     margin: 2rem auto 0;
   }
 

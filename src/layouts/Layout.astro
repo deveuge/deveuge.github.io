@@ -37,6 +37,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lato:300,400|Poppins:300,400,800&display=swap"
+    />
+
     <link rel="stylesheet" href="/css/fontawesome-all.min.css" />
     <link rel="stylesheet" href="/css/hint.min.css" />
     <slot name="head" />
@@ -49,7 +56,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       document.documentElement.setAttribute("data-theme", preferred)
     </script>
   </head>
-  <body class="bg-background text-text font-sans">
+  <body class="text-text font-sans">
     <Navbar />
 
     <main id="main">
@@ -84,7 +91,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
                 observer.unobserve(entry.target)
               }
             },
-            { threshold: 0.15 },
+            { rootMargin: "0px 0px -10% 0px" },
           )
           revealEls.forEach(el => observer.observe(el))
         } else {

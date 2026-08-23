@@ -16,10 +16,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--color-surface);
+  /* Own dark value (#1a1a1a), darker than --color-surface — not tied to a shared token. */
+  background-color: white;
   box-shadow: 0 0 5px -3px black;
   padding: 1em;
   z-index: 10;
+}
+
+[data-theme="dark"] .navbar {
+  background-color: #1a1a1a;
 }
 
 .navbar > .logo {

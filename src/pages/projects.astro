@@ -9,17 +9,17 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.date.va
 ---
 
 <Layout title="Projects">
-  <div class="row">
+  <div class="row container-66">
     <ProjectSearch client:load />
   </div>
 
-  <div class="row">
+  <div class="row container-66">
     <ProjectGrid>
       {projects.map(project => <ProjectCard project={project} variant="grid" />)}
     </ProjectGrid>
   </div>
 
-  <div id="nav-buttons">
+  <div id="nav-buttons" class="container-66">
     <a href="/" data-reveal="right"><span class="fa-solid fa-angles-left"></span> Home</a>
     <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer" data-reveal="left">
       <span class="fa-solid fa-book"></span> Project Wiki
@@ -29,7 +29,6 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.date.va
 
 <style>
   .row {
-    max-width: 900px;
     margin: 0 auto;
     padding: 0 1rem;
   }
@@ -37,7 +36,6 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.date.va
   #nav-buttons {
     display: flex;
     justify-content: space-between;
-    max-width: 900px;
     margin: 2rem auto;
     padding: 0 1rem;
   }

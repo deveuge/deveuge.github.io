@@ -49,6 +49,7 @@
 @import "./timeline.css";
 @import "./skills.css";
 @import "./reveal.css";
+@import "./container.css";
 
 @layer base {
   html {
@@ -57,11 +58,73 @@
 
   body {
     margin: 0;
+    /* Distinct from --color-background (used by #main and the nav overlay):
+       gives the content card a visible backdrop, same in both themes. */
+    background-color: #d7d7d7;
+  }
+
+  /*
+   * Tailwind's preflight resets heading font-size/font-weight to `inherit`.
+   * The original site relied on the browser's default heading sizes/weight
+   * for headings without their own explicit rule (e.g. Timeline job titles),
+   * so restore those defaults here — components with an explicit rule still
+   * win the cascade.
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: bold;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1.17em;
+  }
+
+  h4 {
+    font-size: 1em;
+  }
+
+  h5 {
+    font-size: 0.83em;
+  }
+
+  h6 {
+    font-size: 0.67em;
   }
 
   ::selection {
     color: var(--color-text);
     background: var(--color-accent);
+  }
+
+  strong {
+    position: relative;
+  }
+
+  strong::after {
+    content: "";
+    position: absolute;
+    bottom: -0.2rem;
+    left: -0.25rem;
+    right: -0.25rem;
+    height: 0.5rem;
+    z-index: -1;
+    background-image: url("/img/underline.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   ::-webkit-scrollbar {

@@ -36,7 +36,7 @@ const count = matchingProjects.length
 <Layout title={`Tagged: ${tag}`}>
   <h1 class="tag-header">{count} project{count === 1 ? "" : "s"} tagged with "{tag}"</h1>
 
-  <div class="row">
+  <div class="row container-66">
     <ProjectGrid>
       {matchingProjects.map(project => <ProjectCard project={project} variant="grid" />)}
     </ProjectGrid>
@@ -50,7 +50,6 @@ const count = matchingProjects.length
   }
 
   .row {
-    max-width: 900px;
     margin: 0 auto;
     padding: 0 1rem;
   }

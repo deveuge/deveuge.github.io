@@ -14,7 +14,7 @@ import { skills } from "@/lib/skills"
 
   <HeaderSection title="About me" subtitle="Curriculum Vitae" />
 
-  <div class="cv-links" data-reveal="up">
+  <div class="cv-links container-50" data-reveal="up">
     <a href="https://drive.google.com/file/d/1b0u6c3pwhoY1xpmOcDiYXAbxkgR9Sklt/view?usp=sharing" target="_blank" rel="noreferrer">
       <span class="fa-regular fa-file-pdf"></span> Descargar CV
     </a>
@@ -25,11 +25,11 @@ import { skills } from "@/lib/skills"
 
   <Timeline />
 
-  <div class="skills-section" data-reveal="up">
+  <div class="skills-section container-50" data-reveal="up">
     <SkillsFilter skills={skills} client:visible />
   </div>
 
-  <div class="cv-links" data-reveal="up">
+  <div class="cv-links container-50" data-reveal="up">
     <a href="https://drive.google.com/file/d/1b0u6c3pwhoY1xpmOcDiYXAbxkgR9Sklt/view?usp=sharing" target="_blank" rel="noreferrer">
       <span class="fa-regular fa-file-pdf"></span> Descargar CV
     </a>
@@ -45,7 +45,6 @@ import { skills } from "@/lib/skills"
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
-    max-width: 600px;
     margin: 2rem auto;
     padding: 0 1rem;
   }
@@ -67,7 +66,6 @@ import { skills } from "@/lib/skills"
   }
 
   .skills-section {
-    max-width: 700px;
     margin: 0 auto 3rem;
     padding: 0 1rem;
   }
