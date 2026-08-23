@@ -41,3 +41,37 @@
   --color-surface: var(--color-surface);
   --color-on-accent: var(--color-on-accent);
 }
+
+@import "./navbar.css";
+@import "./scroll-to-top.css";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  ::selection {
+    color: var(--color-text);
+    background: var(--color-accent);
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.5em;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+  }
+}

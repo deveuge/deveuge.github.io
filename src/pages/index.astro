@@ -1,29 +1,12 @@
 ---
-import "../styles/global.css"
-import Button from "../components/Button.astro"
-import Card from "../components/Card.astro"
+import Layout from "@/layouts/Layout.astro"
+import Button from "@/components/Button.astro"
+import Card from "@/components/Card.astro"
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>deveuge.github.io — Astro migration scaffold</title>
-    <script is:inline>
-      if (localStorage.getItem("theme") === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark")
-      }
-    </script>
-  </head>
-  <body class="bg-background text-text font-sans min-h-screen p-8">
-    <button
-      id="theme-toggle"
-      class="border-text mb-8 border px-3 py-1 text-sm"
-    >
-      Toggle theme
-    </button>
-
-    <h1 class="font-heading mb-6 text-3xl">Design system preview — Phase 2</h1>
+<Layout title="Home">
+  <div class="p-8">
+    <h1 class="font-heading mb-6 text-3xl">Layout skeleton — Phase 3</h1>
 
     <div class="flex flex-wrap gap-4">
       <Card title="Sample card">
@@ -34,13 +17,5 @@ import Card from "../components/Card.astro"
         </div>
       </Card>
     </div>
-
-    <script is:inline>
-      document.getElementById("theme-toggle").addEventListener("click", () => {
-        const isDark = document.documentElement.getAttribute("data-theme") === "dark"
-        document.documentElement.setAttribute("data-theme", isDark ? "light" : "dark")
-        localStorage.setItem("theme", isDark ? "light" : "dark")
-      })
-    </script>
-  </body>
-</html>
+  </div>
+</Layout>

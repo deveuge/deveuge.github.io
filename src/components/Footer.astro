@@ -1,0 +1,141 @@
+---
+import { SITE } from "@/lib/site"
+---
+
+<div id="footer-section">
+  <div class="waves"></div>
+</div>
+
+<footer class="flex flex-wrap items-center justify-center bg-[#252525] p-8 text-white">
+  <div class="order-last w-full md:w-1/4">
+    <ul class="footer-links m-0 list-none p-0 md:text-right">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/projects/">Projects</a></li>
+      <li><a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">Wiki</a></li>
+    </ul>
+  </div>
+  <div class="w-full md:w-1/2">
+    <ul class="social-icons m-0 mb-1 list-none p-0">
+      <li>
+        <a
+          href={`https://github.com/${SITE.social.github}`}
+          target="_blank"
+          rel="noreferrer"
+          class="hint--top"
+          aria-label="Github"
+        >
+          <span class="fa-brands fa-github-alt"></span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://deveuge.gitbook.io/projects"
+          target="_blank"
+          rel="noreferrer"
+          class="hint--top"
+          aria-label="Gitbook"
+        >
+          <span class="fa-solid fa-book"></span>
+        </a>
+      </li>
+    </ul>
+    <small class="inline-block opacity-50"
+      >Copyright &copy; 2022 - {new Date().getFullYear()}. All Rights Reserved.</small
+    >
+  </div>
+</footer>
+
+<style>
+  .footer-links a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.9em;
+  }
+
+  .footer-links a:hover {
+    opacity: 0.5;
+  }
+
+  .social-icons li {
+    display: inline-block;
+  }
+
+  .social-icons a {
+    background-color: #eceeef;
+    color: #818a91;
+    display: inline-block;
+    line-height: 2em;
+    width: 2em;
+    height: 2em;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-right: 0.5em;
+    border-radius: 100%;
+    transition: all 0.2s linear;
+  }
+
+  .social-icons a:hover {
+    color: #fff;
+    background-color: transparent;
+  }
+
+  #footer-section {
+    position: relative;
+    background-image: url(/img/header.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22vh;
+    overflow: hidden;
+    z-index: -1;
+    margin-top: -15vh;
+  }
+
+  .waves {
+    transition: 500ms;
+  }
+
+  .waves::before,
+  .waves::after {
+    content: "";
+    width: 150vw;
+    height: 150vw;
+    position: absolute;
+    left: 50%;
+    margin-top: -15%;
+  }
+
+  .waves::before {
+    border-radius: 44%;
+    background: var(--color-background);
+    animation: footer-waves 8s linear infinite;
+  }
+
+  .waves::after {
+    border-radius: 42%;
+    background: var(--color-background);
+    animation: footer-waves 15s linear infinite;
+    opacity: 0.5;
+  }
+
+  @keyframes footer-waves {
+    0% {
+      transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -75%) rotate(360deg);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .waves::before,
+    .waves::after {
+      margin-top: -25%;
+    }
+  }
+</style>

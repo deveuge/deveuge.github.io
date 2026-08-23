@@ -1,0 +1,62 @@
+#to-top {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  z-index: 5;
+}
+
+.scroll-to-top {
+  cursor: pointer;
+  display: block;
+  border-radius: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem);
+  transition: all 200ms linear;
+}
+
+[data-theme="light"] #to-top:not(:hover) {
+  mix-blend-mode: difference;
+  filter: invert(1);
+}
+
+.scroll-to-top.active-progress {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top::after {
+  content: "\f062";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-family: "Font Awesome 6 Free";
+  font-weight: bold;
+  text-align: center;
+  color: var(--color-text);
+  cursor: pointer;
+  z-index: 1;
+  transition: all 200ms linear;
+}
+
+.scroll-to-top:hover::after,
+.scroll-to-top:hover svg path {
+  color: var(--color-primary);
+  stroke: var(--color-primary);
+}
+
+.scroll-to-top svg path {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 4;
+  box-sizing: border-box;
+  transition: all 200ms linear;
+}
