@@ -45,6 +45,7 @@
 @import "./navbar.css";
 @import "./scroll-to-top.css";
 @import "./project-search.css";
+@import "./post.css";
 
 @layer base {
   html {

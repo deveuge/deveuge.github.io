@@ -1,0 +1,57 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content"
+import Layout from "@/layouts/Layout.astro"
+import ProjectCard from "@/components/ProjectCard.astro"
+import ProjectGrid from "@/components/ProjectGrid.astro"
+import { slugifyTag } from "@/lib/tags"
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects")
+
+  const tagsBySlug = new Map<string, string>()
+  for (const project of projects) {
+    for (const tag of project.data.tags) {
+      tagsBySlug.set(slugifyTag(tag), tag)
+    }
+  }
+
+  return Array.from(tagsBySlug, ([slug, tag]) => {
+    const matchingProjects = projects
+      .filter(project => project.data.tags.includes(tag))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+
+    return { params: { tag: slug }, props: { tag, matchingProjects } }
+  })
+}
+
+interface Props {
+  tag: string
+  matchingProjects: CollectionEntry<"projects">[]
+}
+
+const { tag, matchingProjects } = Astro.props
+const count = matchingProjects.length
+---
+
+<Layout title={`Tagged: ${tag}`}>
+  <h1 class="tag-header">{count} project{count === 1 ? "" : "s"} tagged with "{tag}"</h1>
+
+  <div class="row">
+    <ProjectGrid>
+      {matchingProjects.map(project => <ProjectCard project={project} variant="grid" />)}
+    </ProjectGrid>
+  </div>
+</Layout>
+
+<style>
+  .tag-header {
+    margin: 2rem;
+    text-align: center;
+  }
+
+  .row {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+</style>

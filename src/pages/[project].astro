@@ -1,0 +1,112 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content"
+import { getImage } from "astro:assets"
+import Layout from "@/layouts/Layout.astro"
+import TableOfContents from "@/components/TableOfContents.astro"
+import ImageSlideshow from "@/components/islands/ImageSlideshow"
+import { slugifyTag } from "@/lib/tags"
+
+export async function getStaticPaths() {
+  const projects = (await getCollection("projects")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+
+  return projects.map((project, index) => ({
+    params: { project: project.id },
+    props: {
+      project,
+      newerProject: index > 0 ? projects[index - 1] : undefined,
+      olderProject: index < projects.length - 1 ? projects[index + 1] : undefined,
+    },
+  }))
+}
+
+interface Props {
+  project: CollectionEntry<"projects">
+  newerProject?: CollectionEntry<"projects">
+  olderProject?: CollectionEntry<"projects">
+}
+
+const { project, newerProject, olderProject }: Props = Astro.props
+const { title, description, images, codePreview, livePreview, tags } = project.data
+const { Content, headings } = await render(project)
+
+const slides = await Promise.all(images.map(image => getImage({ src: image, width: 1600 })))
+const slideshowImages = slides.map(image => ({
+  src: image.src,
+  width: image.attributes.width as number,
+  height: image.attributes.height as number,
+}))
+---
+
+<Layout title={title} description={description}>
+  <article id="post">
+    <div class="hero-row">
+      <div class="hero-image">
+        <ImageSlideshow client:load images={slideshowImages} alt={title} />
+      </div>
+      <div id="post-summary">
+        <div>
+          <h1>{title}</h1>
+          <em>{description}</em>
+        </div>
+        <TableOfContents headings={headings} />
+        <div class="project-controls">
+          <a href={codePreview} target="_blank" rel="noreferrer" aria-label="See code"><span></span> See code</a>
+          <a
+            href={livePreview}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Live preview"
+            class:list={{ disabled: !livePreview }}><span></span> Live preview</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div id="article-content">
+      <Content />
+      <div id="tags">
+        {tags.map(tag => <a href={`/tags/${slugifyTag(tag)}/`}>{tag}</a>)}
+      </div>
+    </div>
+  </article>
+
+  <nav id="pagination">
+    <ul>
+      <li>
+        {
+          newerProject && (
+            <a href={`/${newerProject.id}/`}>
+              <span class="fas fa-angle-left" /> {newerProject.data.title}
+            </a>
+          )
+        }
+      </li>
+      <li>
+        {
+          olderProject && (
+            <a href={`/${olderProject.id}/`}>
+              {olderProject.data.title} <span class="fas fa-angle-right" />
+            </a>
+          )
+        }
+      </li>
+    </ul>
+  </nav>
+</Layout>
+
+<style>
+  .hero-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-row {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  .hero-image {
+    min-height: 50vh;
+  }
+</style>

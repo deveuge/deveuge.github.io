@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content"
 import Layout from "@/layouts/Layout.astro"
 import ProjectCard from "@/components/ProjectCard.astro"
+import ProjectGrid from "@/components/ProjectGrid.astro"
 import ProjectSearch from "@/components/islands/ProjectSearch"
 
 const projects = (await getCollection("projects")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -13,9 +14,9 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.date.va
   </div>
 
   <div class="row">
-    <div class="project-grid">
+    <ProjectGrid>
       {projects.map(project => <ProjectCard project={project} variant="grid" />)}
-    </div>
+    </ProjectGrid>
   </div>
 
   <div id="nav-buttons">
@@ -31,29 +32,6 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.date.va
     max-width: 900px;
     margin: 0 auto;
     padding: 0 1rem;
-  }
-
-  .project-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin: 2rem 0;
-  }
-
-  @media (min-width: 768px) {
-    .project-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .project-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .project-grid :global([data-project-card].hidden) {
-    display: none;
   }
 
   #nav-buttons {

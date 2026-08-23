@@ -1,0 +1,23 @@
+---
+import type { MarkdownHeading } from "astro"
+
+interface Props {
+  headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+const toc = headings.filter(heading => heading.depth <= 2)
+---
+
+<div id="post-toc">
+  <h2>Contents</h2>
+  <ul>
+    {
+      toc.map(heading => (
+        <li>
+          <a href={`#${heading.slug}`}>{heading.text}</a>
+        </li>
+      ))
+    }
+  </ul>
+</div>

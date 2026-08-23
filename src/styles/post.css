@@ -1,0 +1,321 @@
+#header-photo {
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 50vh;
+  height: 100%;
+}
+
+#header-photo > img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+#header-photo > img.current {
+  opacity: 1;
+}
+
+#header-photo > .row {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+#header-photo > .row > button {
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 5vh 1vw;
+  font-size: 2.5em;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.25s;
+}
+
+#header-photo > .row > button:hover {
+  background: var(--color-background);
+  color: var(--color-accent);
+}
+
+#post-summary {
+  background: var(--color-surface);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#post-summary h1 {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 2em;
+}
+
+#post-toc h2 {
+  display: flex;
+  flex-direction: row;
+  margin: 2rem 0 1rem 0;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 1.25em;
+  opacity: 0.75;
+}
+
+#post-toc h2::after {
+  content: "";
+  opacity: 0.75;
+  flex: 1 1;
+  border-bottom: 1px solid var(--color-text);
+  margin: auto;
+  margin-left: 0.5rem;
+}
+
+#post-toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#post-toc li {
+  margin-top: 0.5rem;
+  counter-increment: toc-entry;
+}
+
+#post-toc li::before {
+  float: left;
+  margin-right: 0.5rem;
+  opacity: 0.8;
+  font-weight: bold;
+  content: counter(toc-entry, decimal-leading-zero) ".";
+}
+
+#post-toc a {
+  text-decoration: none;
+  color: var(--color-text);
+  opacity: 0.7;
+  transition: 0.25s;
+}
+
+#post-toc a:hover {
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+#post-summary .project-controls {
+  display: flex;
+  justify-content: end;
+  margin-top: 2rem;
+}
+
+#post-summary .project-controls > a {
+  border: 1px solid var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.25s;
+}
+
+#post-summary .project-controls > a + a {
+  margin-left: 0.5rem;
+}
+
+#post-summary .project-controls > a:last-of-type {
+  margin-left: auto;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+#post-summary .project-controls > a:last-of-type:hover {
+  background-color: transparent;
+  color: var(--color-primary);
+}
+
+#post-summary .project-controls > a:not(:last-of-type):hover {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+#post-summary .project-controls a > span::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 700;
+}
+
+#post-summary .project-controls a:nth-of-type(1) > span::before {
+  content: "\f121";
+}
+
+#post-summary .project-controls a:nth-of-type(2) > span::before {
+  content: "\f06e";
+}
+
+#post-summary .project-controls > a.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  filter: grayscale(1);
+  opacity: 0.5 !important;
+}
+
+#article-content {
+  max-width: 1000px;
+  margin: 2rem auto 0;
+  box-shadow: 0 0 5px -3px black;
+  background-color: var(--color-surface);
+  padding: 5vw;
+  line-height: 1.5rem;
+}
+
+#article-content h1,
+#article-content h2,
+#article-content h3,
+#article-content h4,
+#article-content h5,
+#article-content h6 {
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  scroll-margin-top: 3em;
+}
+
+#article-content h1 {
+  font-size: 2rem;
+}
+
+#article-content h2 {
+  margin-top: 2rem;
+}
+
+#article-content h4 + p,
+#article-content h5 + p,
+#article-content h6 + p {
+  margin-top: 0;
+}
+
+#article-content hr {
+  opacity: 0.25;
+  border-bottom: none;
+  margin: 1rem 0;
+}
+
+#article-content a {
+  font-weight: bold;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+#article-content a:hover {
+  color: var(--color-accent);
+}
+
+#article-content ul {
+  padding-left: 1.1rem;
+}
+
+#article-content ul > li {
+  padding-left: 0.25rem;
+}
+
+#article-content ul > li > p {
+  margin: 0;
+}
+
+#article-content table {
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
+#article-content table th,
+#article-content table td {
+  padding: 5px;
+  border: 1px solid var(--color-primary);
+}
+
+#article-content img {
+  max-width: 100%;
+}
+
+#article-content pre {
+  border-radius: 0.2em;
+  padding: 1em;
+  overflow: auto;
+}
+
+#article-content :not(pre) > code {
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 0.2em;
+  padding: 0.2em 0.4em;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+#tags {
+  margin-top: 2rem;
+}
+
+#tags > a {
+  display: inline-block;
+  width: auto;
+  color: var(--color-on-accent);
+  padding: 0.25rem 0.5rem;
+  font-weight: normal;
+  background: var(--color-accent);
+  margin-top: 0.5rem;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+#tags > a:hover {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+#tags > a + a {
+  margin-left: 0.5rem;
+}
+
+#tags > a::before {
+  content: "\f02b";
+  font-family: "Font Awesome 6 Free";
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+#pagination > ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  max-width: 1000px;
+  padding: 2rem 1rem 0;
+  margin: auto;
+}
+
+#pagination > ul > li > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: 0.25s;
+  filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, 0.25));
+}
+
+#pagination > ul > li > a:hover {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
