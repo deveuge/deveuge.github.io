@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content"
+import Layout from "@/layouts/Layout.astro"
+import ProjectCard from "@/components/ProjectCard.astro"
+import ProjectSearch from "@/components/islands/ProjectSearch"
+
+const projects = (await getCollection("projects")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+---
+
+<Layout title="Projects">
+  <div class="row">
+    <ProjectSearch client:load />
+  </div>
+
+  <div class="row">
+    <div class="project-grid">
+      {projects.map(project => <ProjectCard project={project} variant="grid" />)}
+    </div>
+  </div>
+
+  <div id="nav-buttons">
+    <a href="/"><span class="fa-solid fa-angles-left"></span> Home</a>
+    <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">
+      <span class="fa-solid fa-book"></span> Project Wiki
+    </a>
+  </div>
+</Layout>
+
+<style>
+  .row {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  @media (min-width: 768px) {
+    .project-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .project-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .project-grid :global([data-project-card].hidden) {
+    display: none;
+  }
+
+  #nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  #nav-buttons > a {
+    border: 1px solid var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.25s;
+  }
+
+  #nav-buttons > a:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+  }
+</style>

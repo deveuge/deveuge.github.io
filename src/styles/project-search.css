@@ -1,0 +1,40 @@
+#input-search {
+  position: relative;
+  background: var(--color-surface);
+  box-shadow: 0 3px 10px 0 rgb(0 0 0 / 10%);
+  margin: 2rem 0;
+}
+
+#input-search::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: 2px;
+  background: linear-gradient(to right, #f2be92, #ee8623, #b97be3, #7201c5, #f2be92, #ee8623);
+  background-size: 500% auto;
+  animation: project-search-gradient 3s linear infinite;
+}
+
+#input-search > input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 0;
+  outline: 0;
+  padding: 1rem 1.5rem;
+}
+
+@keyframes project-search-gradient {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}

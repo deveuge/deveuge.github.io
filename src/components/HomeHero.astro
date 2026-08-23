@@ -1,0 +1,156 @@
+---
+import { Image } from "astro:assets"
+import avatar from "@/assets/avatar.svg"
+---
+
+<header id="home-hero">
+  <div class="waves"></div>
+  <div>
+    <Image src={avatar} alt="Deveuge" width={128} height={128} />
+    <div class="title">
+      <h1>deveuge<span class="fa-solid fa-code fa-beat"></span></h1>
+    </div>
+    <div class="role">
+      <p>Software Developer</p>
+    </div>
+  </div>
+</header>
+
+<style>
+  #home-hero {
+    position: relative;
+    background-image: url(/img/header.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: 2rem;
+    margin-bottom: -0.5rem;
+  }
+
+  #home-hero > div {
+    z-index: 1;
+  }
+
+  :global(#home-hero img) {
+    display: block;
+    margin: 0 auto;
+    border-radius: 100%;
+    box-shadow: 0 2px 5px -3px black;
+    border: 5px solid #b390c9;
+    background-image: linear-gradient(to top, #ddc5ed 0%, #81599b 100%);
+  }
+
+  :global([data-theme="dark"] #home-hero img) {
+    border-color: var(--color-accent);
+    background-image: linear-gradient(to top, #ffdc84 0%, #e7a400 100%);
+  }
+
+  .title,
+  .role {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title::after,
+  .role::after {
+    content: "";
+    width: 0;
+    height: 100%;
+    position: absolute;
+    animation: home-hero-reveal 2s cubic-bezier(0.74, 0.06, 0.4, 0.92) forwards;
+  }
+
+  .title::after {
+    background: var(--color-accent);
+  }
+
+  .role::after {
+    background: var(--color-text);
+    animation-delay: 2s;
+  }
+
+  .title > h1 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: lowercase;
+    animation: home-hero-fade-in 2s forwards;
+    animation-delay: 1.6s;
+    opacity: 0;
+  }
+
+  .role > p {
+    position: relative;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin: 0;
+    opacity: 0;
+    animation: home-hero-fade-in 2s forwards;
+    animation-delay: 3.2s;
+  }
+
+  @keyframes home-hero-reveal {
+    0% {
+      width: 0;
+      left: 0;
+    }
+    50% {
+      width: 100%;
+      left: 0;
+    }
+    100% {
+      width: 0;
+      left: 100%;
+    }
+  }
+
+  @keyframes home-hero-fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .waves {
+    transition: 500ms;
+  }
+
+  .waves::before,
+  .waves::after {
+    content: "";
+    width: 150vw;
+    height: 150vw;
+    position: absolute;
+    left: 50%;
+    margin-top: 100%;
+  }
+
+  .waves::before {
+    border-radius: 44%;
+    background: var(--color-background);
+    animation: home-hero-waves 8s linear infinite;
+  }
+
+  .waves::after {
+    border-radius: 42%;
+    background: var(--color-background);
+    animation: home-hero-waves 15s linear infinite;
+    opacity: 0.5;
+  }
+
+  @keyframes home-hero-waves {
+    0% {
+      transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -75%) rotate(360deg);
+    }
+  }
+</style>

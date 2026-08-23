@@ -1,0 +1,280 @@
+---
+import { Image } from "astro:assets"
+import type { CollectionEntry } from "astro:content"
+
+interface Props {
+  project: CollectionEntry<"projects">
+  variant?: "featured" | "grid"
+}
+
+const { project, variant = "grid" } = Astro.props
+const { title, description, imagePreview, codePreview, livePreview, tags } = project.data
+const href = `/${project.id}/`
+const search = `${title} ${description} ${tags.join(" ")}`.toLowerCase()
+---
+
+<article
+  class:list={["project-card", `project-card--${variant}`]}
+  data-project-card
+  data-search={search}
+>
+  <div class="img">
+    <Image src={imagePreview} alt={title} />
+  </div>
+  <h3>{title}</h3>
+  <div class="content">
+    <p>{description}</p>
+    <div class="project-controls">
+      <a
+        href={codePreview}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="See code"
+        class="hint--top"><span></span></a
+      >
+      <a
+        href={livePreview}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Live demo"
+        class:list={["hint--top", { disabled: !livePreview }]}><span></span></a
+      >
+      <a href={href} aria-label="Details" class="hint--top">Learn more</a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    position: relative;
+  }
+
+  .project-card > .img {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card > .img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--color-primary);
+    mix-blend-mode: color;
+    opacity: 0.5;
+    transition: 0.25s;
+  }
+
+  .project-card:hover > .img::after {
+    opacity: 0;
+  }
+
+  .project-card > .img img {
+    width: 100%;
+    object-fit: cover;
+    transition: 0.25s;
+  }
+
+  .project-card > .content p {
+    margin-top: 0;
+    line-height: 1.5;
+  }
+
+  .project-controls {
+    display: flex;
+    justify-content: end;
+    margin-top: auto;
+  }
+
+  .project-controls a + a {
+    margin-left: 0.5rem;
+  }
+
+  .project-controls > a {
+    border: 1px solid var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.25s;
+  }
+
+  .project-controls > a:last-of-type {
+    margin-left: auto;
+    background-color: var(--color-primary);
+    color: var(--color-background);
+  }
+
+  .project-controls > a:last-of-type:hover {
+    background-color: transparent;
+    color: var(--color-primary);
+  }
+
+  .project-controls > a:not(:last-of-type):hover {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+  }
+
+  .project-controls a > span::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 700;
+  }
+
+  .project-controls a:nth-of-type(1) > span::before {
+    content: "\f121";
+  }
+
+  .project-controls a:nth-of-type(2) > span::before {
+    content: "\f06e";
+  }
+
+  .project-controls > a.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: grayscale(1);
+    opacity: 0.5 !important;
+  }
+
+  /* Featured variant: large horizontal card used on the home page */
+  .project-card--featured {
+    margin-top: 3rem;
+  }
+
+  .project-card--featured > h3 {
+    font-size: 2em;
+    margin: 0 0 1rem;
+    line-height: 1em;
+  }
+
+  @media (min-width: 40em) {
+    .project-card--featured {
+      display: grid;
+      grid-template-rows: repeat(3, auto);
+      grid-template-columns: 2fr 1fr 4fr;
+      grid-template-areas: ". . title" "img img content" "img img .";
+    }
+
+    .project-card--featured::before {
+      content: "";
+      grid-area: 1 / 2 / 3 / -1;
+      border: 2px dotted var(--color-primary);
+      z-index: -1;
+      margin: 1rem 1rem -1rem -1rem;
+      opacity: 0.5;
+    }
+
+    .project-card--featured::after {
+      content: "";
+      grid-area: 1 / 2 / 3 / -1;
+      position: relative;
+      z-index: -1;
+      background: var(--color-surface);
+      box-shadow: rgb(61 48 41 / 20%) 0 0.2em 1em;
+      border-right: 0.25rem solid var(--color-accent);
+      border-bottom: 0.25rem solid var(--color-accent);
+    }
+
+    .project-card--featured > .img {
+      grid-area: img;
+      box-shadow: 0 0.2em 1.2em rgb(61 48 41 / 10%);
+      margin-top: -2rem;
+    }
+
+    .project-card--featured > h3 {
+      grid-area: title;
+      padding-top: 3rem;
+      padding-left: 3rem;
+    }
+
+    .project-card--featured > .content {
+      grid-area: content;
+      padding-bottom: 3rem;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+
+  @media (max-width: 40em) {
+    .project-card--featured {
+      background-color: var(--color-surface);
+      border-bottom: 0.25rem solid var(--color-accent);
+    }
+
+    .project-card--featured > h3,
+    .project-card--featured > .content {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .project-card--featured > h3 {
+      padding-top: 2rem;
+    }
+
+    .project-card--featured > .content {
+      padding-bottom: 2rem;
+    }
+  }
+
+  .project-card--featured > .img img {
+    height: 100%;
+  }
+
+  .project-card--featured:hover > .img img {
+    transform: scale(1.5);
+  }
+
+  /* Grid variant: compact card used on the projects listing */
+  .project-card--grid {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--color-surface);
+    box-shadow: rgb(61 48 41 / 20%) 0 0.2em 1em;
+    border-bottom: 0.25rem solid var(--color-accent);
+  }
+
+  .project-card--grid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px dotted var(--color-primary);
+    z-index: -1;
+    margin: 1rem 1rem -1rem -1rem;
+    opacity: 0.5;
+  }
+
+  .project-card--grid > .img {
+    flex: 0 1 auto;
+  }
+
+  .project-card--grid > .img img {
+    width: 150%;
+    height: 9rem;
+    object-position: center center;
+  }
+
+  .project-card--grid:hover > .img img {
+    width: 100%;
+  }
+
+  .project-card--grid > h3 {
+    font-size: 1.5em;
+    margin: 0;
+    padding: 1rem 1rem 0;
+  }
+
+  .project-card--grid > .content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .project-card--grid > .content > p {
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0.75;
+  }
+</style>
