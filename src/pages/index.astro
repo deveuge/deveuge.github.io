@@ -12,13 +12,13 @@ const featuredProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.da
   <HomeHero />
 
   <div class="row">
-    <blockquote>
+    <blockquote data-reveal="up">
       <p>
         Building and evolving complex enterprise systems with focus on architecture, scalability and production
         stability.
       </p>
     </blockquote>
-    <a href="/about/">Professional background <span class="fa-solid fa-angles-right"></span></a>
+    <a href="/about/" data-reveal="left">Professional background <span class="fa-solid fa-angles-right"></span></a>
   </div>
 
   <div class="row">
@@ -26,10 +26,10 @@ const featuredProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.da
     {featuredProjects.map(project => <ProjectCard project={project} variant="featured" />)}
 
     <div id="nav-buttons">
-      <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">
+      <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer" data-reveal="right">
         <span class="fa-solid fa-book"></span> Project Wiki
       </a>
-      <a href="/projects/">All projects <span class="fa-solid fa-angles-right"></span></a>
+      <a href="/projects/" data-reveal="left">All projects <span class="fa-solid fa-angles-right"></span></a>
     </div>
   </div>
 </Layout>

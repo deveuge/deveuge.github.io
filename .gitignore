@@ -4,6 +4,8 @@ node_modules/
 # Build output
 dist/
 .astro/
+public/fonts/devicon-subset.woff2
+public/css/devicon-subset.css
 
 # Logs
 npm-debug.log*

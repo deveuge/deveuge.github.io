@@ -19,6 +19,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/icon-512.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#9d6fbb" />
     <link rel="canonical" href={canonicalURL} />
 
     <title>{title} | {SITE.title}</title>
@@ -36,6 +39,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
     <link rel="stylesheet" href="/css/fontawesome-all.min.css" />
     <link rel="stylesheet" href="/css/hint.min.css" />
+    <slot name="head" />
 
     <script is:inline>
       // Blocking, runs before first paint to avoid a flash of the wrong theme.
@@ -56,6 +60,38 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     </main>
 
     <ScrollToTop />
+
+    <script>
+      const progressBar = document.querySelector<HTMLProgressElement>("progress")
+      if (progressBar) {
+        const updateProgress = () => {
+          progressBar.max = document.documentElement.scrollHeight - window.innerHeight
+          progressBar.value = window.scrollY
+        }
+        updateProgress()
+        window.addEventListener("scroll", updateProgress)
+        window.addEventListener("resize", updateProgress)
+      }
+
+      const revealEls = document.querySelectorAll<HTMLElement>("[data-reveal]")
+      if (revealEls.length > 0) {
+        if ("IntersectionObserver" in window) {
+          const observer = new IntersectionObserver(
+            entries => {
+              for (const entry of entries) {
+                if (!entry.isIntersecting) continue
+                entry.target.classList.add("is-revealed")
+                observer.unobserve(entry.target)
+              }
+            },
+            { threshold: 0.15 },
+          )
+          revealEls.forEach(el => observer.observe(el))
+        } else {
+          revealEls.forEach(el => el.classList.add("is-revealed"))
+        }
+      }
+    </script>
   </body>
 </html>
 

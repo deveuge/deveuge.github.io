@@ -1,8 +1,12 @@
 ---
+import { getImage } from "astro:assets"
 import { SITE } from "@/lib/site"
+import headerSrc from "@/assets/header.jpg"
+
+const headerImage = await getImage({ src: headerSrc, width: 1920, format: "webp" })
 ---
 
-<div id="footer-section">
+<div id="footer-section" style={`--header-bg: url(${headerImage.src})`}>
   <div class="waves"></div>
 </div>
 
@@ -83,7 +87,7 @@ import { SITE } from "@/lib/site"
 
   #footer-section {
     position: relative;
-    background-image: url(/img/header.jpg);
+    background-image: var(--header-bg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;

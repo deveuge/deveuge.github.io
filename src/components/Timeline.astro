@@ -4,7 +4,7 @@ import { experience, certifications, education } from "@/lib/timeline"
 
 <div class="row">
   <ul class="timeline">
-    <li class="timeline-item period">
+    <li class="timeline-item period" data-reveal="up">
       <div class="timeline-info"></div>
       <div class="timeline-marker"></div>
       <div class="timeline-content">
@@ -13,7 +13,7 @@ import { experience, certifications, education } from "@/lib/timeline"
     </li>
     {
       experience.map(item => (
-        <li class="timeline-item">
+        <li class="timeline-item" data-reveal="up">
           <div class="timeline-info">
             <span>{item.period}</span>
           </div>
@@ -30,7 +30,7 @@ import { experience, certifications, education } from "@/lib/timeline"
       ))
     }
 
-    <li class="timeline-item period">
+    <li class="timeline-item period" data-reveal="up">
       <div class="timeline-info"></div>
       <div class="timeline-marker"></div>
       <div class="timeline-content">
@@ -39,7 +39,7 @@ import { experience, certifications, education } from "@/lib/timeline"
     </li>
     {
       certifications.map(item => (
-        <li class="timeline-item">
+        <li class="timeline-item" data-reveal="up">
           <div class="timeline-info">
             <span>{item.date}</span>
           </div>
@@ -52,7 +52,7 @@ import { experience, certifications, education } from "@/lib/timeline"
       ))
     }
 
-    <li class="timeline-item period">
+    <li class="timeline-item period" data-reveal="up">
       <div class="timeline-info"></div>
       <div class="timeline-marker"></div>
       <div class="timeline-content">
@@ -61,7 +61,7 @@ import { experience, certifications, education } from "@/lib/timeline"
     </li>
     {
       education.map(item => (
-        <li class="timeline-item">
+        <li class="timeline-item" data-reveal="up">
           <div class="timeline-info" />
           <div class="timeline-marker" />
           <div class="timeline-content">
@@ -76,7 +76,7 @@ import { experience, certifications, education } from "@/lib/timeline"
       ))
     }
 
-    <li class="timeline-item period">
+    <li class="timeline-item period" data-reveal="up">
       <div class="timeline-info"></div>
       <div class="timeline-marker"></div>
       <div class="timeline-content">

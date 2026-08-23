@@ -1,13 +1,17 @@
 ---
+import { getImage } from "astro:assets"
+import headerSrc from "@/assets/header.jpg"
+
 interface Props {
   title: string
   subtitle: string
 }
 
 const { title, subtitle } = Astro.props
+const headerImage = await getImage({ src: headerSrc, width: 1920, format: "webp" })
 ---
 
-<header id="header-section">
+<header id="header-section" data-reveal="up" style={`--header-bg: url(${headerImage.src})`}>
   <div class="waves"></div>
   <div>
     <h1>{title}</h1>
@@ -18,7 +22,7 @@ const { title, subtitle } = Astro.props
 <style>
   #header-section {
     position: relative;
-    background-image: url(/img/header.jpg);
+    background-image: var(--header-bg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;

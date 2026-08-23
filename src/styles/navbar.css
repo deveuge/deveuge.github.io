@@ -86,7 +86,7 @@
   justify-content: flex-end;
 }
 
-#menu-icon > span {
+#menu-icon > .bar {
   position: relative;
   width: 100%;
   height: 4px;
@@ -94,8 +94,8 @@
   transition: 0.5s;
 }
 
-#menu-icon > span::before,
-#menu-icon > span::after {
+#menu-icon > .bar::before,
+#menu-icon > .bar::after {
   content: "";
   position: absolute;
   width: inherit;
@@ -110,25 +110,25 @@
   background-color: var(--color-primary);
 }
 
-#menu-icon > span::before {
+#menu-icon > .bar::before {
   transform: translateY(-10px);
 }
 
-#menu-icon > span::after {
+#menu-icon > .bar::after {
   transform: translateY(10px);
 }
 
-#nav-toggle:checked ~ .navbar #menu-icon > span {
+#nav-toggle:checked ~ .navbar #menu-icon > .bar {
   transform: rotate(90deg);
   background-color: transparent;
 }
 
-#nav-toggle:checked ~ .navbar #menu-icon > span::before {
+#nav-toggle:checked ~ .navbar #menu-icon > .bar::before {
   background-color: var(--color-accent);
   transform: translateY(0) rotate(45deg);
 }
 
-#nav-toggle:checked ~ .navbar #menu-icon > span::after {
+#nav-toggle:checked ~ .navbar #menu-icon > .bar::after {
   background-color: var(--color-accent);
   transform: translateY(0) rotate(-45deg);
 }

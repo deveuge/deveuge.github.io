@@ -40,10 +40,10 @@ const slideshowImages = slides.map(image => ({
 <Layout title={title} description={description}>
   <article id="post">
     <div class="hero-row">
-      <div class="hero-image">
+      <div class="hero-image" data-reveal="right">
         <ImageSlideshow client:load images={slideshowImages} alt={title} />
       </div>
-      <div id="post-summary">
+      <div id="post-summary" data-reveal="left">
         <div>
           <h1>{title}</h1>
           <em>{description}</em>
@@ -52,7 +52,7 @@ const slideshowImages = slides.map(image => ({
         <div class="project-controls">
           <a href={codePreview} target="_blank" rel="noreferrer" aria-label="See code"><span></span> See code</a>
           <a
-            href={livePreview}
+            href={livePreview || "#"}
             target="_blank"
             rel="noreferrer"
             aria-label="Live preview"
@@ -62,7 +62,7 @@ const slideshowImages = slides.map(image => ({
       </div>
     </div>
 
-    <div id="article-content">
+    <div id="article-content" data-reveal="up">
       <Content />
       <div id="tags">
         {tags.map(tag => <a href={`/tags/${slugifyTag(tag)}/`}>{tag}</a>)}

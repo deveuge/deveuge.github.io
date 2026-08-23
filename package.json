@@ -8,35 +8,37 @@
     "npm": ">=11.16.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "npm run icons:subset && astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "npm run icons:subset && astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint .",
-    "format": "prettier --write \"**/*.{astro,ts,tsx,js,jsx,json,md}\""
+    "format": "prettier --write \"**/*.{astro,ts,tsx,js,jsx,json,md}\"",
+    "icons:subset": "node scripts/build-devicon-subset.mjs"
   },
   "dependencies": {
-    "astro": "^7.2.4",
     "@astrojs/react": "^6.0.4",
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/vite": "^4.3.3",
-    "tailwindcss": "^4.3.3",
-    "devicon": "^2.15.1",
+    "astro": "^7.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@eslint/js": "^10.0.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "typescript": "^6.0.3",
+    "devicon": "^2.15.1",
     "eslint": "^10.9.0",
-    "@eslint/js": "^10.0.1",
     "eslint-plugin-astro": "^3.1.0",
-    "typescript-eslint": "^8.67.0",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.8.1"
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "subset-font": "^2.5.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0"
   }
 }

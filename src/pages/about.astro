@@ -1,5 +1,4 @@
 ---
-import "devicon/devicon.min.css"
 import Layout from "@/layouts/Layout.astro"
 import HeaderSection from "@/components/HeaderSection.astro"
 import Timeline from "@/components/Timeline.astro"
@@ -8,9 +7,14 @@ import { skills } from "@/lib/skills"
 ---
 
 <Layout title="About me">
+  <Fragment slot="head">
+    <!-- Subset of devicon.min.css with only the glyphs used in skills.ts; see scripts/build-devicon-subset.mjs. -->
+    <link rel="stylesheet" href="/css/devicon-subset.css" />
+  </Fragment>
+
   <HeaderSection title="About me" subtitle="Curriculum Vitae" />
 
-  <div class="cv-links">
+  <div class="cv-links" data-reveal="up">
     <a href="https://drive.google.com/file/d/1b0u6c3pwhoY1xpmOcDiYXAbxkgR9Sklt/view?usp=sharing" target="_blank" rel="noreferrer">
       <span class="fa-regular fa-file-pdf"></span> Descargar CV
     </a>
@@ -21,11 +25,11 @@ import { skills } from "@/lib/skills"
 
   <Timeline />
 
-  <div class="skills-section">
+  <div class="skills-section" data-reveal="up">
     <SkillsFilter skills={skills} client:visible />
   </div>
 
-  <div class="cv-links">
+  <div class="cv-links" data-reveal="up">
     <a href="https://drive.google.com/file/d/1b0u6c3pwhoY1xpmOcDiYXAbxkgR9Sklt/view?usp=sharing" target="_blank" rel="noreferrer">
       <span class="fa-regular fa-file-pdf"></span> Descargar CV
     </a>

@@ -1,9 +1,12 @@
 ---
-import { Image } from "astro:assets"
+import { Image, getImage } from "astro:assets"
 import avatar from "@/assets/avatar.svg"
+import headerSrc from "@/assets/header.jpg"
+
+const headerImage = await getImage({ src: headerSrc, width: 1920, format: "webp" })
 ---
 
-<header id="home-hero">
+<header id="home-hero" style={`--header-bg: url(${headerImage.src})`}>
   <div class="waves"></div>
   <div>
     <Image src={avatar} alt="Deveuge" width={128} height={128} />
@@ -19,7 +22,7 @@ import avatar from "@/assets/avatar.svg"
 <style>
   #home-hero {
     position: relative;
-    background-image: url(/img/header.jpg);
+    background-image: var(--header-bg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;

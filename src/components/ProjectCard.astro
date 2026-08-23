@@ -17,6 +17,7 @@ const search = `${title} ${description} ${tags.join(" ")}`.toLowerCase()
   class:list={["project-card", `project-card--${variant}`]}
   data-project-card
   data-search={search}
+  data-reveal="up"
 >
   <div class="img">
     <Image src={imagePreview} alt={title} />
@@ -33,13 +34,13 @@ const search = `${title} ${description} ${tags.join(" ")}`.toLowerCase()
         class="hint--top"><span></span></a
       >
       <a
-        href={livePreview}
+        href={livePreview || "#"}
         target="_blank"
         rel="noreferrer"
         aria-label="Live demo"
         class:list={["hint--top", { disabled: !livePreview }]}><span></span></a
       >
-      <a href={href} aria-label="Details" class="hint--top">Learn more</a>
+      <a href={href}>Learn more<span class="sr-only"> about {title}</span></a>
     </div>
   </div>
 </article>

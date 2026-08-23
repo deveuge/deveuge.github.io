@@ -25,7 +25,7 @@
 }
 
 [data-theme="dark"] {
-  --color-primary: #b084cd;
+  --color-primary: #c49bdb;
   --color-accent: #f3bc34;
   --color-text: #f5f5f5;
   --color-background: #262626;
@@ -48,6 +48,7 @@
 @import "./post.css";
 @import "./timeline.css";
 @import "./skills.css";
+@import "./reveal.css";
 
 @layer base {
   html {
