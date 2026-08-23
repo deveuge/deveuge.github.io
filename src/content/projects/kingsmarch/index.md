@@ -4,16 +4,11 @@ date: "2021-01-06T00:00:00.000Z"
 description: "Spring Boot Application. Single and multiplayer chess web game. Implements the use of websockets and custom AI logic."
 tags: ["Java", "Spring Boot", "Thymeleaf", "Websockets"]
 
-imagePreview: "img/projects/kingsmarch-00.jpg"
+imagePreview: "./preview.jpg"
 codePreview: "https://github.com/deveuge/kingsmarch"
 livePreview: "https://kingsmarch.onrender.com/"
 
-images:
-  [
-    "img/projects/kingsmarch-00.png",
-    "img/projects/kingsmarch-01.png",
-    "img/projects/kingsmarch-02.png",
-  ]
+images: ["./gallery-1.png", "./gallery-2.png", "./gallery-3.png"]
 ---
 
 # Kingsmarch

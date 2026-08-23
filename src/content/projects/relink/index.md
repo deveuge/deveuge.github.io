@@ -4,15 +4,10 @@ date: "2021-01-05T00:00:00.000Z"
 description: "Java Spring based shortening service. Allows you to convert long URLs into shorter, more manageable versions."
 tags: ["Java", "Spring", "System design"]
 
-imagePreview: "img/projects/relink-00.jpg"
+imagePreview: "./preview.jpg"
 codePreview: "https://github.com/deveuge/relink"
 
-images:
-  [
-    "img/projects/relink-00.png",
-    "img/projects/relink-01.png",
-    "img/projects/relink-02.png",
-  ]
+images: ["./gallery-1.png", "./gallery-2.png", "./gallery-3.png"]
 ---
 
 # Relink - URL Shortener

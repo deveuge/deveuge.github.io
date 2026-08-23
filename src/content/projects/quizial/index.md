@@ -4,16 +4,16 @@ date: "2021-01-04T00:00:00.000Z"
 description: "Spring CRUD Application. Create online quizzes, share them with your friends and discover your identity through engaging personality quizzes from other users."
 tags: ["Java", "Spring", "Thymeleaf"]
 
-imagePreview: "img/projects/quizial-00.png"
+imagePreview: "./preview.png"
 codePreview: "https://github.com/deveuge/quizial"
 
 images:
   [
-    "img/projects/quizial-00.png",
-    "img/projects/quizial-01.png",
-    "img/projects/quizial-02.png",
-    "img/projects/quizial-03.png",
-    "img/projects/quizial-04.png",
+    "./preview.png",
+    "./gallery-1.png",
+    "./gallery-2.png",
+    "./gallery-3.png",
+    "./gallery-4.png",
   ]
 ---
 

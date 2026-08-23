@@ -4,10 +4,10 @@ date: "2026-01-01T00:00:00.000Z"
 description: "AI-powered incident response system that automates alert classification, prioritization, and resolution for IT operations and cybersecurity teams."
 tags: ["Java", "Apache Kafka", "Hexagonal Architecture", "AI", "LLM", "React"]
 
-imagePreview: "img/projects/sentinelAI-00.jpg"
+imagePreview: "./preview.jpg"
 codePreview: "https://github.com/deveuge/SentinelAI"
 
-images: ["img/projects/sentinelAI-01.jpg"]
+images: ["./gallery-1.jpg"]
 ---
 
 # SentinelAI
