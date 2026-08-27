@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+/*
+ * Dark mode is toggled via a `data-theme="dark"` attribute on <html>
+ * (set from localStorage / prefers-color-scheme in Phase 3), not the
+ * `.dark` class Tailwind uses by default — matches the pre-existing
+ * theme-toggler behavior so no markup/script changes are needed here.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Source Serif 4", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+:root {
+  --color-background: #eef0f3;
+  --color-surface: #ffffff;
+  --color-surface-2: #ccd4de;
+  --color-line: #b8c1cd;
+  --color-text: #161a22;
+  --color-text-muted: #4b5568;
+  --color-text-faint: #5f6b81;
+  --color-primary: #24406b;
+  --color-on-primary: #ffffff;
+  /* Darkened from the approved #b06a1c to clear 4.5:1 AA both as text on
+     --color-background and as a fill under white --color-on-accent text. */
+  --color-accent: #9a5d18;
+  --color-on-accent: #ffffff;
+  --color-status-live: #3a7049;
+  --color-status-progress: var(--color-accent);
+  --color-status-source: var(--color-text-muted);
+  --color-radar-4: #5b4a8a;
+}
+
+[data-theme="dark"] {
+  --color-background: #0f131a;
+  --color-surface: #171c26;
+  --color-surface-2: #1e2430;
+  --color-line: #2b323f;
+  --color-text: #e9e7e0;
+  --color-text-muted: #a2aabb;
+  --color-text-faint: #8791a3;
+  --color-primary: #8fa9d6;
+  --color-on-primary: #0f131a;
+  --color-accent: #e0a34c;
+  --color-on-accent: #14100a;
+  --color-status-live: #7fbd93;
+  --color-status-progress: var(--color-accent);
+  --color-status-source: var(--color-text-muted);
+  --color-radar-4: #a996df;
+}
+
+@theme inline {
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-2: var(--color-surface-2);
+  --color-line: var(--color-line);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-faint: var(--color-text-faint);
+  --color-primary: var(--color-primary);
+  --color-on-primary: var(--color-on-primary);
+  --color-accent: var(--color-accent);
+  --color-on-accent: var(--color-on-accent);
+  --color-status-live: var(--color-status-live);
+  --color-status-progress: var(--color-status-progress);
+  --color-status-source: var(--color-status-source);
+}
+
+@import "./navbar.css";
+@import "./scroll-to-top.css";
+@import "./project-search.css";
+@import "./post.css";
+@import "./timeline.css";
+@import "./skills.css";
+@import "./tech-radar.css";
+@import "./reveal.css";
+@import "./dino-game.css";
+@import "./container.css";
+@import "./terminal.css";
+@import "./keyboard-shortcuts.css";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchor-jump targets (index rail, TOC, tag headings, etc.) clear
+       of the sticky navbar (~65px tall) with visible breathing room above
+       the heading, instead of landing flush under it. */
+    scroll-padding-top: 6.5rem;
+  }
+
+  body {
+    margin: 0;
+    /* Distinct from --color-background (used by #main and the nav overlay):
+       gives the content card a visible backdrop, same in both themes. */
+    background-color: #c3cbd6;
+  }
+
+  /*
+   * Tailwind's preflight resets heading font-size/font-weight to `inherit`.
+   * The original site relied on the browser's default heading sizes/weight
+   * for headings without their own explicit rule (e.g. Timeline job titles),
+   * so restore those defaults here — components with an explicit rule still
+   * win the cascade.
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: bold;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1.17em;
+  }
+
+  h4 {
+    font-size: 1em;
+  }
+
+  h5 {
+    font-size: 0.83em;
+  }
+
+  h6 {
+    font-size: 0.67em;
+  }
+
+  ::selection {
+    color: var(--color-text);
+    background: var(--color-accent);
+  }
+
+  strong {
+    position: relative;
+  }
+
+  strong::after {
+    content: "";
+    position: absolute;
+    bottom: -0.2rem;
+    left: -0.25rem;
+    right: -0.25rem;
+    height: 0.5rem;
+    z-index: -1;
+    background-image: url("/img/underline.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.5em;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+  }
+}

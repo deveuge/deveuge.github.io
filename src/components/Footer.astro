@@ -1,0 +1,60 @@
+---
+import { SITE } from "@/lib/site"
+---
+
+<footer class="site-footer">
+  <span>&copy; 2022–{new Date().getFullYear()} deveuge. All rights reserved.</span>
+  <span class="socials">
+    <a href={`https://github.com/${SITE.social.github}`} target="_blank" rel="noreferrer">GitHub</a>
+    <a href={`https://www.linkedin.com/in/${SITE.social.linkedin}`} target="_blank" rel="noreferrer">LinkedIn</a>
+    <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">Wiki</a>
+  </span>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    /* Extra right padding keeps the socials list clear of the fixed
+       back-to-top button (~2.75rem + 1rem offset) that sits over this
+       corner of the page. */
+    padding: 2rem 5rem 2rem 2.5rem;
+    border-top: 1px solid var(--color-line);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-text-faint);
+  }
+
+  @media (min-width: 768px) {
+    .site-footer {
+      margin-top: 3rem;
+      padding: 2.2rem 6rem 2.2rem 4rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .site-footer {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  .socials {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .site-footer a {
+    color: var(--color-text-faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .site-footer a:hover {
+    color: var(--color-accent);
+  }
+</style>

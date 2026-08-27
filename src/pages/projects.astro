@@ -1,0 +1,78 @@
+---
+import { getCollection } from "astro:content"
+import Layout from "@/layouts/Layout.astro"
+import ProjectCard from "@/components/ProjectCard.astro"
+import ProjectGrid from "@/components/ProjectGrid.astro"
+import ProjectSearch from "@/components/islands/ProjectSearch"
+
+const projects = (await getCollection("projects")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+---
+
+<Layout title="Projects">
+  <div class="row container-66">
+    <p class="eyebrow">// all projects</p>
+    <h1 class="section-title">Every entry</h1>
+    <ProjectSearch client:load />
+  </div>
+
+  <div class="row container-66">
+    <ProjectGrid>
+      {projects.map(project => <ProjectCard project={project} variant="grid" />)}
+    </ProjectGrid>
+  </div>
+
+  <div id="nav-buttons" class="container-66">
+    <a href="/" data-reveal="right"><span class="fa-solid fa-angles-left"></span> Home</a>
+    <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer" data-reveal="left">
+      <span class="fa-solid fa-book"></span> Project Wiki
+    </a>
+  </div>
+</Layout>
+
+<style>
+  .row {
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .eyebrow {
+    margin: 2.5rem 0 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .section-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  #nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  #nav-buttons > a {
+    border: 1px solid var(--color-primary);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.6rem 1.1rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: 0.25s;
+  }
+
+  #nav-buttons > a:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+</style>

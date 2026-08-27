@@ -1,0 +1,120 @@
+---
+const pathname = Astro.url.pathname
+const isIndex = pathname === "/"
+
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/about/", label: "About" },
+  { href: "/projects/", label: "Work" },
+]
+---
+
+<input type="checkbox" id="nav-toggle" />
+
+<nav class="navbar">
+  <a class="logo" href="/">
+    <span class="logo-dot" aria-hidden="true"></span>
+    <span>deveuge<span class="logo-cursor" aria-hidden="true">_</span></span>
+  </a>
+  <div class="navbar-end">
+    <ul id="desktop-nav">
+      {
+        links.map(link => (
+          <li>
+            <a href={link.href} aria-current={pathname === link.href ? "page" : undefined}>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">
+          Wiki <span aria-hidden="true">↗</span>
+        </a>
+      </li>
+    </ul>
+    <button
+      class="theme-toggle"
+      id="theme-toggle"
+      title="Toggle theme"
+      aria-label="light"
+      aria-live="polite"
+    >
+      <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+        <mask class="moon" id="moon-mask">
+          <rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
+          <circle cx="24" cy="10" r="6" fill="black"></circle>
+        </mask>
+        <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor"
+        ></circle>
+        <g class="sun-beams" stroke="currentColor">
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </g>
+      </svg>
+    </button>
+    <label id="menu-icon" for="nav-toggle"><span class="sr-only">Toggle menu</span><span class="bar" aria-hidden="true"></span></label>
+  </div>
+</nav>
+
+{!isIndex && <progress value="0"></progress>}
+
+<label id="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+
+<aside id="nav-container">
+  <p class="nav-eyebrow">// menu</p>
+  <ul id="navigation">
+    {
+      links.map((link, i) => (
+        <li>
+          <a href={link.href} aria-current={pathname === link.href ? "page" : undefined}>
+            <span class="nav-index" aria-hidden="true">// {String(i + 1).padStart(2, "0")}</span>
+            {link.label.toLowerCase()}
+          </a>
+        </li>
+      ))
+    }
+    <li class="nav-external">
+      <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">
+        <span class="nav-index" aria-hidden="true">// {String(links.length + 1).padStart(2, "0")}</span>
+        wiki <span aria-hidden="true">↗</span>
+      </a>
+    </li>
+  </ul>
+</aside>
+
+<script>
+  // Theme is already applied by the blocking anti-flash script in Layout.astro's
+  // <head>; this only wires up toggling and keeps localStorage in sync.
+  const storageKey = "theme-preference"
+  const toggleButton = document.querySelector("#theme-toggle")
+
+  const reflectPreference = (value: string) => {
+    document.documentElement.setAttribute("data-theme", value)
+    toggleButton?.setAttribute("aria-label", value)
+  }
+
+  reflectPreference(document.documentElement.getAttribute("data-theme") ?? "light")
+
+  toggleButton?.addEventListener("click", () => {
+    const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light"
+    localStorage.setItem(storageKey, next)
+    reflectPreference(next)
+  })
+
+  // target="_blank" links (e.g. Wiki) don't navigate the current page, so the
+  // checkbox-hack menu never gets its usual reset-on-navigation and stays open
+  // behind the new tab. Close it manually for those links only.
+  const navToggle = document.querySelector<HTMLInputElement>("#nav-toggle")
+  document.querySelector("#nav-container")?.querySelectorAll('a[target="_blank"]').forEach(link => {
+    link.addEventListener("click", () => {
+      if (navToggle) navToggle.checked = false
+    })
+  })
+</script>

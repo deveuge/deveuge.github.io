@@ -1,0 +1,550 @@
+---
+import { getCollection } from "astro:content"
+import Layout from "@/layouts/Layout.astro"
+import HomeHero from "@/components/HomeHero.astro"
+import ProjectCard from "@/components/ProjectCard.astro"
+import IndexRail from "@/components/IndexRail.astro"
+import CommitGraph from "@/components/CommitGraph.astro"
+import { experience } from "@/lib/timeline"
+import { skills } from "@/lib/skills"
+import { proficiencyWidth, skillTime } from "@/lib/skillsDisplay"
+import { metrics } from "@/lib/metrics"
+
+const allProjects = await getCollection("projects")
+const featuredProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3)
+
+const recentExperience = experience.slice(0, 3)
+
+/**
+ * Curated highlights for the home teaser, not just "top 3 by years used" —
+ * raw tenure alone buries recent, differentiating skills (React, GraphQL,
+ * Microservices) under whichever core language/server has the most years.
+ * Grouped into 4 broad buckets for the teaser, independent of the finer
+ * SkillCategory split used to filter the full matrix at /about/#skills.
+ */
+const CAPABILITY_HIGHLIGHTS: { label: string; names: string[] }[] = [
+  { label: "Language", names: ["Java", "JavaScript", "PL/SQL"] },
+  { label: "Framework", names: ["Spring", "Hibernate", "React"] },
+  { label: "Database", names: ["MS SQL Server", "Informix", "PostgreSQL"] },
+  { label: "Infrastructure", names: ["Apache", "Tomcat", "Microservices"] },
+]
+
+const skillGroups = CAPABILITY_HIGHLIGHTS.map(group => ({
+  label: group.label,
+  skills: group.names
+    .map(name => skills.find(skill => skill.name === name))
+    .filter((skill): skill is (typeof skills)[number] => Boolean(skill)),
+}))
+
+const railItems = [
+  { href: "#intro", label: "// 01 intro" },
+  { href: "#about", label: "// 02 about" },
+  { href: "#featured-work", label: "// 03 featured work" },
+  { href: "#career-changelog", label: "// 04 changelog" },
+  { href: "#capability-matrix", label: "// 05 skills" },
+  { href: "#impact", label: "// 06 impact" },
+  { href: "#activity", label: "// 07 activity" },
+]
+---
+
+<Layout title="Home">
+  <HomeHero />
+
+  <div class="row container-66 quote-row" id="about">
+    <p class="eyebrow" data-reveal="up">// professional background</p>
+    <blockquote data-reveal="up">
+      <p>
+        "Building and evolving complex enterprise systems with focus on architecture, scalability and production
+        stability."
+      </p>
+    </blockquote>
+    <p class="about-bio" data-reveal="up">
+      Eight years in backend engineering — four of them leading architecture for a centralized healthcare billing
+      platform used across Galicia's public health system, and now building enterprise workflow software for the
+      healthcare sector. I care about systems that stay boring in production: clear ownership and code the next
+      engineer can actually read.
+    </p>
+    <footer data-reveal="up">
+      <a href="/about/">about me →</a>
+    </footer>
+  </div>
+
+  <div class="row container-66" id="featured-work">
+    <div class="section-heading-row" data-reveal="up">
+      <h2>Featured work</h2>
+      <a href="/projects/">all projects →</a>
+    </div>
+    <p class="section-lede" data-reveal="up">A closer look at my recent builds, end to end.</p>
+    {featuredProjects.map(project => <ProjectCard project={project} variant="featured" />)}
+  </div>
+
+  <div class="row container-66" id="career-changelog">
+    <div class="section-heading-row" data-reveal="up">
+      <h2>Career changelog</h2>
+      <a href="/about/#experience">full CV →</a>
+    </div>
+    <p class="section-lede" data-reveal="up">My most recent roles, newest first — the full history lives on the CV.</p>
+    <div class="commitlog">
+      {
+        recentExperience.map((item, i) => {
+          const isHead = i === 0 && item.period.endsWith("PRESENT")
+          return (
+            <div class:list={["commit", { head: isHead }]} data-reveal="up">
+              <div class="meta">
+                <span class="period">{item.period}</span>
+                {isHead && <span class="head-badge">HEAD</span>}
+              </div>
+              <h3>{item.title}</h3>
+              <div class="company">{item.company}</div>
+              <p class="desc">{item.description}</p>
+            </div>
+          )
+        })
+      }
+    </div>
+  </div>
+
+  <div class="row container-66" id="capability-matrix">
+    <div class="section-heading-row" data-reveal="up">
+      <h2>Capability matrix</h2>
+      <a href="/about/#skills">all skills →</a>
+    </div>
+    <p class="section-lede" data-reveal="up">Core languages, frameworks and infrastructure across the stack.</p>
+    <div class="matrix">
+      {
+        skillGroups.map(group => (
+          <div class="matrix-group" data-reveal="up">
+            <div class="cat">{group.label}</div>
+            {group.skills.map(skill => (
+              <div class="skill-teaser-row">
+                <span class={`icon ${skill.icon}`} aria-hidden="true"></span>
+                <span class="name">{skill.name}</span>
+                <span class="bar-track">
+                  <span class="bar-fill" style={{ width: `${proficiencyWidth(skill)}%` }} />
+                </span>
+                <span class="time">{skillTime(skill)}</span>
+              </div>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="row container-66" id="impact">
+    <div class="section-heading-row" data-reveal="up">
+      <h2>Impact in numbers</h2>
+      <a href="/about/#experience">full CV →</a>
+    </div>
+    <p class="section-lede" data-reveal="up">Career milestones from leading architecture and development on a large-scale healthcare platform.</p>
+    <div class="stats">
+      {
+        metrics.map(metric => (
+          <div class="stat" data-reveal="up">
+            <div class="value" data-count={metric.value}>{metric.value}</div>
+            <div class="label">{metric.label}</div>
+            <p class="detail">{metric.detail}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="row container-66" id="activity">
+    <div class="section-heading-row" data-reveal="up">
+      <h2>Years in the field</h2>
+    </div>
+    <p class="section-lede" data-reveal="up">A commit graph for the career itself — each role gets its own color, filling in the changelog above.</p>
+    <CommitGraph />
+  </div>
+
+  <div class="index-rail-slot">
+    <IndexRail items={railItems} />
+  </div>
+</Layout>
+
+<script>
+  // Counts each impact stat up from 0 to its real value once the section
+  // scrolls into view, instead of on page load — same trigger point as the
+  // data-reveal fade-ins above.
+  const statValues = document.querySelectorAll<HTMLElement>(".stat .value")
+  const statsContainer = document.querySelector<HTMLElement>(".stats")
+
+  if (statValues.length > 0 && statsContainer && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const DURATION = 1200
+
+    const animateCount = (el: HTMLElement) => {
+      const target = el.dataset.count ?? ""
+      const match = target.match(/^([\d,]+)(.*)$/)
+      if (!match) return
+
+      const endValue = Number(match[1].replace(/,/g, ""))
+      const suffix = match[2]
+      const useCommas = match[1].includes(",")
+      const format = (n: number) => (useCommas ? Math.round(n).toLocaleString("en-US") : String(Math.round(n)))
+
+      const start = performance.now()
+      const step = (now: number) => {
+        const progress = Math.min((now - start) / DURATION, 1)
+        const eased = 1 - Math.pow(1 - progress, 3)
+        el.textContent = `${format(endValue * eased)}${suffix}`
+        if (progress < 1) requestAnimationFrame(step)
+        else el.textContent = target
+      }
+      requestAnimationFrame(step)
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return
+        statValues.forEach(animateCount)
+        observer.disconnect()
+      },
+      { rootMargin: "0px 0px -10% 0px" },
+    )
+    observer.observe(statsContainer)
+  }
+</script>
+
+<style>
+  .row {
+    max-width: 900px;
+    margin: 0 auto 5rem;
+    padding: 0 1rem;
+  }
+
+  .quote-row {
+    position: relative;
+    margin-top: 5rem;
+    margin-bottom: 0;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .quote-row::before {
+    content: "\201C";
+    position: absolute;
+    top: 3.5rem;
+    left: -1.5rem;
+    z-index: -1;
+    font-family: var(--font-heading);
+    font-size: clamp(5rem, 10vw, 8rem);
+    line-height: 1;
+    color: var(--color-primary);
+    opacity: 0.14;
+    pointer-events: none;
+  }
+
+  /* One line between each pair of sections — quote-row already carries its
+     own (hero -> about); the rest get theirs from being preceded by another
+     .row. */
+  .row + .row {
+    border-top: 1px solid var(--color-line);
+    padding-top: 3rem;
+  }
+
+  .quote-row > .eyebrow {
+    margin: 0 0 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  blockquote {
+    margin: 0;
+  }
+
+  blockquote > p {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-text);
+  }
+
+  .about-bio {
+    margin: 1.5rem 0 0;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+  }
+
+  .quote-row > footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .quote-row > footer > a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .quote-row > footer > a:hover {
+    color: var(--color-accent);
+  }
+
+  .section-heading-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 2rem;
+  }
+
+  .section-heading-row h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .section-heading-row > a {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .section-heading-row > a:hover {
+    color: var(--color-accent);
+  }
+
+  /* Career changelog: most recent entries, same visual language as the full
+     timeline in Timeline.astro (HEAD badge, mono period) — the full history
+     lives at /about/#experience. */
+  .commitlog {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.6rem;
+  }
+
+  .commitlog::before {
+    content: "";
+    position: absolute;
+    left: -1.32rem;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 1px;
+    background: var(--color-line);
+  }
+
+  .commit {
+    position: relative;
+    padding: 1.1rem 0;
+  }
+
+  .commit:first-child {
+    padding-top: 0;
+  }
+
+  .commit::before {
+    content: "";
+    position: absolute;
+    left: -1.6rem;
+    top: 1.5rem;
+    width: 0.56rem;
+    height: 0.56rem;
+    border-radius: 50%;
+    background: var(--color-background);
+    border: 2px solid var(--color-text-faint);
+  }
+
+  .commit:first-child::before {
+    top: 0.4rem;
+  }
+
+  .commit.head::before {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+  }
+
+  .commit .meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-faint);
+  }
+
+  .commit h3 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .commit .company {
+    margin-top: 0.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-faint);
+  }
+
+  .commit .desc {
+    margin: 0.6rem 0 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  /* Capability matrix: skills grouped by category, same data source as the
+     full filterable matrix at /about/#skills. */
+  .matrix {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.2rem 3rem;
+  }
+
+  @media (max-width: 700px) {
+    .matrix {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .matrix-group .cat {
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-line);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .skill-teaser-row {
+    display: grid;
+    grid-template-columns: 1.1rem minmax(0, 1fr) minmax(60px, 2fr) 70px;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem 0;
+  }
+
+  .skill-teaser-row .icon {
+    font-size: 1rem;
+    text-align: center;
+    color: var(--color-text-faint);
+  }
+
+  .skill-teaser-row .name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .skill-teaser-row .bar-track {
+    height: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--color-surface-2);
+  }
+
+  .skill-teaser-row .bar-track .bar-fill {
+    display: block;
+    height: 100%;
+    background: var(--color-primary);
+  }
+
+  .skill-teaser-row .time {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .section-lede {
+    margin: -1rem 0 2rem;
+    max-width: 46rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  /* Impact stats: same card-less, line-separated language as the capability
+     matrix above it — big mono figure, mono label, sans detail. */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.4rem 2.4rem;
+  }
+
+  @media (max-width: 860px) {
+    .stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .stats {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .stat {
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .stat .value {
+    font-family: var(--font-mono);
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-primary);
+  }
+
+  .stat .label {
+    margin-top: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .stat .detail {
+    margin: 0.7rem 0 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+  }
+
+  /* Only shown once there's real spare gutter beyond the centered content
+     column (.row caps at 900px) so it never risks overlapping the page
+     content. */
+  .index-rail-slot {
+    display: none;
+  }
+
+  @media (min-width: 1380px) {
+    .index-rail-slot {
+      display: block;
+      position: fixed;
+      top: 8rem;
+      left: 1.25rem;
+    }
+  }
+
+  /* The wrapper above is already pinned to the viewport via `fixed`, so
+     cancel IndexRail's own internal `sticky` positioning to avoid stacking
+     two positioning schemes on the same element. */
+  .index-rail-slot :global(.index-rail ol) {
+    position: static;
+  }
+</style>

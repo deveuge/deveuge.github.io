@@ -1,0 +1,102 @@
+---
+import { experience, certifications, education } from "@/lib/timeline"
+import { techTags } from "@/lib/techTags"
+---
+
+<div class="row container-50">
+  <ul class="timeline">
+    <li id="experience" class="timeline-item period" data-reveal="up">
+      <div class="timeline-info"></div>
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <h2>Experience</h2>
+      </div>
+    </li>
+    {
+      experience.map(item => {
+        const isHead = item.period.endsWith("PRESENT")
+        return (
+          <li class:list={["timeline-item", { "is-head": isHead }]} data-reveal="up">
+            <div class="timeline-info">
+              <span>{item.period}</span>
+            </div>
+            <div class="timeline-marker" />
+            <div class="timeline-content">
+              <h3>
+                {item.title}
+                {isHead && <span class="head-badge">HEAD</span>}
+              </h3>
+              <h4>{item.company}</h4>
+              <p>{item.description}</p>
+              <p class="tech-label">Technologies</p>
+              <ul class="tech-tags">
+                {techTags(item.technologies).map(tag => <li class="tech-tag">{tag}</li>)}
+              </ul>
+            </div>
+          </li>
+        )
+      })
+    }
+
+    <li id="certifications" class="timeline-item period" data-reveal="up">
+      <div class="timeline-info"></div>
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <h2>Certifications</h2>
+      </div>
+    </li>
+    {
+      certifications.map(item => (
+        <li class="timeline-item" data-reveal="up">
+          <div class="timeline-info">
+            <span>{item.date}</span>
+          </div>
+          <div class="timeline-marker" />
+          <div class="timeline-content">
+            <h3>{item.title}</h3>
+            <h4>{item.company}</h4>
+          </div>
+        </li>
+      ))
+    }
+
+    <li id="education" class="timeline-item period" data-reveal="up">
+      <div class="timeline-info"></div>
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <h2>Education</h2>
+      </div>
+    </li>
+    {
+      education.map(item => (
+        <li class="timeline-item" data-reveal="up">
+          <div class="timeline-info" />
+          <div class="timeline-marker" />
+          <div class="timeline-content">
+            <h3>{item.title}</h3>
+            <h4>{item.school}</h4>
+            <p>{item.description}</p>
+            <p>
+              Graduated with {item.withHonors ? "honors and" : "an"} average grade of <strong>{item.grade}</strong>.
+            </p>
+          </div>
+        </li>
+      ))
+    }
+
+    <li id="skills" class="timeline-item period" data-reveal="up">
+      <div class="timeline-info"></div>
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <h2>Skills</h2>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<style>
+  .row {
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+</style>

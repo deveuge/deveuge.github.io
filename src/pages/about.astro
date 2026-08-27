@@ -1,0 +1,150 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import HeaderSection from "@/components/HeaderSection.astro"
+import Timeline from "@/components/Timeline.astro"
+import SkillsFilter from "@/components/islands/SkillsFilter"
+import TechRadar from "@/components/islands/TechRadar"
+import IndexRail from "@/components/IndexRail.astro"
+import { skills } from "@/lib/skills"
+
+const railItems = [
+  { href: "#experience", label: "// 01 experience" },
+  { href: "#certifications", label: "// 02 certifications" },
+  { href: "#education", label: "// 03 education" },
+  { href: "#skills", label: "// 04 skills" },
+  { href: "#tech-radar", label: "// 05 tech radar" },
+]
+---
+
+<Layout title="About me">
+  <HeaderSection title="About me" subtitle="Curriculum Vitae" />
+
+  <div class="cv-links container-50" data-reveal="up">
+    <a href="https://drive.google.com/file/d/1b0u6c3pwhoY1xpmOcDiYXAbxkgR9Sklt/view?usp=sharing" target="_blank" rel="noreferrer">
+      <span class="fa-regular fa-file-pdf"></span> Descargar CV
+    </a>
+    <a href="https://drive.google.com/file/d/1ZCOJ7zBwYxlsNO0ajXR4Rz31T2FY4OYw/view?usp=sharing" target="_blank" rel="noreferrer">
+      Download CV <span class="fa-solid fa-file-pdf"></span>
+    </a>
+  </div>
+
+  <Timeline />
+
+  <div class="skills-section container-50" data-reveal="up">
+    <SkillsFilter skills={skills} client:visible />
+  </div>
+
+  <div class="radar-heading container-50" data-reveal="up">
+    <ul class="timeline">
+      <li id="tech-radar" class="timeline-item period">
+        <div class="timeline-info"></div>
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h2>Tech radar</h2>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="radar-section container-50" data-reveal="up">
+    <TechRadar
+      intro="The list above is proficiency — years spent with each tool. This is opinion: where I'd point a new project today, ThoughtWorks-radar style."
+      client:visible
+    />
+  </div>
+
+  <div class="index-rail-slot">
+    <IndexRail items={railItems} />
+  </div>
+
+  <div class="cv-links container-50" data-reveal="up">
+    <a href="https://drive.google.com/file/d/1b0u6c3pwhoY1xpmOcDiYXAbxkgR9Sklt/view?usp=sharing" target="_blank" rel="noreferrer">
+      <span class="fa-regular fa-file-pdf"></span> Descargar CV
+    </a>
+    <a href="https://drive.google.com/file/d/1ZCOJ7zBwYxlsNO0ajXR4Rz31T2FY4OYw/view?usp=sharing" target="_blank" rel="noreferrer">
+      Download CV <span class="fa-solid fa-file-pdf"></span>
+    </a>
+  </div>
+</Layout>
+
+<style>
+  .cv-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .cv-links > a {
+    border: 1px solid var(--color-primary);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.6rem 1.1rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: 0.25s;
+  }
+
+  .cv-links > a:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  .skills-section {
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+
+  /* Reuses the CV timeline's own ".period" row markup/styles (from
+     timeline.css) for the "Tech radar" heading, same as the "Skills" row
+     above it — a standalone one-item <ul class="timeline"> so it isn't
+     forced to sit at the very end of the CV timeline, ahead of the actual
+     skills content. */
+  .radar-heading {
+    padding: 0 1rem;
+  }
+
+  /* This heading lives in its own single-row <ul class="timeline">, so its
+     desktop table auto-sizes the (empty) info column independently from the
+     CV timeline above — it would otherwise collapse to 0 and shift the dot
+     marker/title left of "Skills". Pin it to roughly the width the CV
+     timeline's info column gets from its widest date ("JUN 2026 – PRESENT",
+     19 monospace chars) so both markers land on the same vertical. */
+  @media (min-width: 768px) {
+    .radar-heading .timeline-info {
+      width: calc(19ch + 0.75em);
+    }
+  }
+
+  .radar-section {
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+
+  /* Only shown once there's real spare gutter beyond the centered content
+     column (container-50 caps at 50% viewport width above 1024px) so it
+     never risks overlapping the page content. */
+  .index-rail-slot {
+    display: none;
+  }
+
+  @media (min-width: 1380px) {
+    .index-rail-slot {
+      display: block;
+      position: fixed;
+      top: 8rem;
+      left: 1.25rem;
+    }
+  }
+
+  /* The wrapper above is already pinned to the viewport via `fixed`, so
+     cancel IndexRail's own internal `sticky` positioning to avoid stacking
+     two positioning schemes on the same element. */
+  .index-rail-slot :global(.index-rail ol) {
+    position: static;
+  }
+</style>

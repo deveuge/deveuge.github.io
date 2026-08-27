@@ -1,0 +1,118 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import DinoGame from "@/components/islands/DinoGame"
+---
+
+<Layout title="404">
+  <article class="not-found">
+    <div class="intro">
+      <p class="eyebrow">// 404</p>
+      <span class="status">NOT FOUND</span>
+      <h1>This entry doesn't exist in the log.</h1>
+      <p class="lede">
+        The page you're looking for has moved, been renamed, or never existed in the first place.
+      </p>
+      <a href="/" class="back-link">&larr; Back to home</a>
+    </div>
+
+    <div class="game-panel">
+      <p class="eyebrow game-hint">// lost, but not bored — go ahead and play</p>
+      <DinoGame client:load />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .not-found {
+    width: 91.6667%;
+    margin: 0 auto;
+    padding: 4.5rem 1rem 5rem;
+  }
+
+  .intro,
+  .game-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .not-found {
+      width: 66.6667%;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 3rem;
+    }
+
+    .intro {
+      flex: 1;
+    }
+
+    .game-panel {
+      flex: 1;
+      padding-top: 3.5rem;
+    }
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .status {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--color-accent);
+    border-radius: 3px;
+    color: var(--color-accent);
+  }
+
+  h1 {
+    margin: 0.75rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    max-width: 20ch;
+  }
+
+  .lede {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 46ch;
+  }
+
+  .game-hint {
+    margin-top: 1.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    border: 1px solid var(--color-primary);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.6rem 1.1rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: 0.25s;
+  }
+
+  .back-link:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+</style>
