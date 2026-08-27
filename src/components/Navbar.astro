@@ -1,14 +1,11 @@
 ---
-import { Image } from "astro:assets"
-import logo from "@/assets/icon.png"
-
 const pathname = Astro.url.pathname
 const isIndex = pathname === "/"
 
 const links = [
   { href: "/", label: "Home" },
   { href: "/about/", label: "About" },
-  { href: "/projects/", label: "Projects" },
+  { href: "/projects/", label: "Work" },
 ]
 ---
 
@@ -16,10 +13,26 @@ const links = [
 
 <nav class="navbar">
   <a class="logo" href="/">
-    <Image src={logo} alt="Logo" width={48} height={48} />
-    <span>deveuge</span>
+    <span class="logo-dot" aria-hidden="true"></span>
+    <span>deveuge<span class="logo-cursor" aria-hidden="true">_</span></span>
   </a>
-  <div class="flex items-center">
+  <div class="navbar-end">
+    <ul id="desktop-nav">
+      {
+        links.map(link => (
+          <li>
+            <a href={link.href} aria-current={pathname === link.href ? "page" : undefined}>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">
+          Wiki <span aria-hidden="true">↗</span>
+        </a>
+      </li>
+    </ul>
     <button
       class="theme-toggle"
       id="theme-toggle"
@@ -55,18 +68,23 @@ const links = [
 <label id="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
 
 <aside id="nav-container">
+  <p class="nav-eyebrow">// menu</p>
   <ul id="navigation">
     {
-      links.map(link => (
+      links.map((link, i) => (
         <li>
           <a href={link.href} aria-current={pathname === link.href ? "page" : undefined}>
-            {link.label}
+            <span class="nav-index" aria-hidden="true">// {String(i + 1).padStart(2, "0")}</span>
+            {link.label.toLowerCase()}
           </a>
         </li>
       ))
     }
-    <li>
-      <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">Wiki</a>
+    <li class="nav-external">
+      <a href="https://deveuge.gitbook.io/projects" target="_blank" rel="noreferrer">
+        <span class="nav-index" aria-hidden="true">// {String(links.length + 1).padStart(2, "0")}</span>
+        wiki <span aria-hidden="true">↗</span>
+      </a>
     </li>
   </ul>
 </aside>
@@ -90,8 +108,13 @@ const links = [
     reflectPreference(next)
   })
 
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
-    if (localStorage.getItem(storageKey)) return
-    reflectPreference(matches ? "dark" : "light")
+  // target="_blank" links (e.g. Wiki) don't navigate the current page, so the
+  // checkbox-hack menu never gets its usual reset-on-navigation and stays open
+  // behind the new tab. Close it manually for those links only.
+  const navToggle = document.querySelector<HTMLInputElement>("#nav-toggle")
+  document.querySelector("#nav-container")?.querySelectorAll('a[target="_blank"]').forEach(link => {
+    link.addEventListener("click", () => {
+      if (navToggle) navToggle.checked = false
+    })
   })
 </script>

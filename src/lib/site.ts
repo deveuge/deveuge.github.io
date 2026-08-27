@@ -1,11 +1,10 @@
 export const SITE = {
   title: "Deveuge",
   description:
-    "Full-Stack web developer, always learning. Experienced with technologies such as Java, Spring, Hibernate and SQL Server to build responsive web and mobile applications tailored to each client's needs.",
+    "Senior Java/Spring backend engineer — eight years rebuilding legacy systems, leading architecture, and shipping reliable software.",
   url: "https://deveuge.github.io/",
   social: {
-    twitter: "deveuge",
+    linkedin: "maria-balsamo",
     github: "deveuge",
-    email: "deveuge@gmail.com",
   },
 } as const

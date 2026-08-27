@@ -1,0 +1,315 @@
+---
+import { getCommitGraphData } from "@/lib/commitGraph"
+
+const data = getCommitGraphData()
+const dayLabels = ["", "Mon", "", "Wed", "", "Fri", ""]
+---
+
+<div class="commit-graph" data-reveal="up">
+  <div class="grid">
+    <div class="day-labels">
+      {dayLabels.map(label => <span>{label}</span>)}
+    </div>
+    <div class="graph-scroll">
+      <div class="months">
+        {data.monthLabels.map(({ weekIndex, label }) => <span style={{ gridColumnStart: weekIndex + 1 }}>{label}</span>)}
+      </div>
+      <div class="weeks">
+        {
+          data.weeks.map(week => (
+            <div class="week">
+              {week.map(day => <span class:list={["dot", day.hue]} style={day.intensity > 0 ? { opacity: day.intensity } : undefined} />)}
+            </div>
+          ))
+        }
+      </div>
+      <div class="job-labels" style={{ gridTemplateColumns: `repeat(${data.weeks.length}, 10px)` }}>
+        {
+          data.jobs.map(job => (
+            <div class:list={["job-label", job.hue]} style={{ gridRow: 1, gridColumn: `${job.startWeekIndex + 1} / ${job.endWeekIndex + 2}` }}>
+              <span class="job" title={`${job.title} · ${job.company}`}>
+                {job.title} <span class="company">· {job.company}</span>
+              </span>
+              <span class="period">{job.period}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <div class="caption-row">
+    <p class="caption">A decorative log of {data.rangeLabel} in the industry, same story as the career changelog — density is illustrative, the role boundaries are real.</p>
+    <button type="button" class="open-terminal-btn" id="open-terminal-btn">> Open terminal</button>
+  </div>
+</div>
+
+<script>
+  document.querySelector<HTMLButtonElement>("#open-terminal-btn")?.addEventListener("click", () => {
+    window.dispatchEvent(new Event("terminal:open"))
+  })
+</script>
+
+<script>
+  import { getCommitGraphData } from "@/lib/commitGraph"
+
+  // Re-run the same build-time generator with the browser's current date,
+  // so the graph keeps assuming the open-ended "PRESENT" role continues
+  // and grows into new months without needing a rebuild of the site.
+  const fresh = getCommitGraphData()
+
+  document.querySelectorAll<HTMLElement>(".commit-graph").forEach(root => {
+    const monthsEl = root.querySelector<HTMLElement>(".months")
+    const weeksEl = root.querySelector<HTMLElement>(".weeks")
+    const jobLabelsEl = root.querySelector<HTMLElement>(".job-labels")
+    const captionEl = root.querySelector<HTMLElement>(".caption")
+    const scrollEl = root.querySelector<HTMLElement>(".graph-scroll")
+    if (!monthsEl || !weeksEl || !jobLabelsEl || !captionEl || !scrollEl) return
+
+    if (weeksEl.children.length !== fresh.weeks.length) {
+      monthsEl.replaceChildren(
+        ...fresh.monthLabels.map(({ weekIndex, label }) => {
+          const span = document.createElement("span")
+          span.style.gridColumnStart = String(weekIndex + 1)
+          span.textContent = label
+          return span
+        }),
+      )
+
+      weeksEl.replaceChildren(
+        ...fresh.weeks.map(week => {
+          const column = document.createElement("div")
+          column.className = "week"
+          column.append(
+            ...week.map(day => {
+              const dot = document.createElement("span")
+              dot.className = ["dot", day.hue].filter(Boolean).join(" ")
+              if (day.intensity > 0) dot.style.opacity = String(day.intensity)
+              return dot
+            }),
+          )
+          return column
+        }),
+      )
+
+      jobLabelsEl.style.gridTemplateColumns = `repeat(${fresh.weeks.length}, 10px)`
+      jobLabelsEl.replaceChildren(
+        ...fresh.jobs.map(job => {
+          const div = document.createElement("div")
+          div.className = ["job-label", job.hue].join(" ")
+          div.style.gridRow = "1"
+          div.style.gridColumn = `${job.startWeekIndex + 1} / ${job.endWeekIndex + 2}`
+
+          const jobSpan = document.createElement("span")
+          jobSpan.className = "job"
+          jobSpan.title = `${job.title} · ${job.company}`
+          jobSpan.append(`${job.title} `)
+          const companySpan = document.createElement("span")
+          companySpan.className = "company"
+          companySpan.textContent = `· ${job.company}`
+          jobSpan.append(companySpan)
+
+          const periodSpan = document.createElement("span")
+          periodSpan.className = "period"
+          periodSpan.textContent = job.period
+
+          div.append(jobSpan, periodSpan)
+          return div
+        }),
+      )
+
+      captionEl.textContent = `A decorative log of ${fresh.rangeLabel} in the industry, same story as the career changelog — density is illustrative, the role boundaries are real.`
+    }
+
+    // Open the graph scrolled all the way to the right so the most recent
+    // role is what's visible before the user scrolls back through history.
+    scrollEl.scrollLeft = scrollEl.scrollWidth
+  })
+</script>
+
+<style>
+  .commit-graph {
+    margin-top: 2.5rem;
+  }
+
+  /* Same scrollbar treatment as the page's own vertical scrollbar
+     (src/styles/global.css), just laid out horizontally. */
+  .graph-scroll {
+    overflow-x: auto;
+    min-width: 0;
+    padding-bottom: 0.5em;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-background);
+  }
+
+  .graph-scroll::-webkit-scrollbar {
+    height: 0.5em;
+  }
+
+  .graph-scroll::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+
+  .graph-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+  }
+
+  .graph-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+  }
+
+  .months {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 13px;
+    height: 0.75rem;
+    margin: 0 0 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    line-height: 0.75rem;
+    color: var(--color-text-faint);
+    white-space: nowrap;
+  }
+
+  /* Day labels live outside .graph-scroll entirely, as a plain static
+     column next to it — simpler and cleaner than pinning an overlay in
+     place of the scrolling grid behind it. */
+  .grid {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .day-labels {
+    display: grid;
+    grid-template-rows: repeat(7, 10px);
+    gap: 3px;
+    margin-top: calc(0.75rem + 0.4rem);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--color-text-faint);
+    text-align: right;
+    width: 1.6rem;
+    flex-shrink: 0;
+  }
+
+  .day-labels > span {
+    line-height: 10px;
+  }
+
+  .weeks {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 10px;
+    gap: 3px;
+  }
+
+  .week {
+    display: grid;
+    grid-template-rows: repeat(7, 10px);
+    gap: 3px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-line) 70%, transparent);
+  }
+
+  /* Active days carry an inline opacity (see CommitGraph.ts) for a
+     continuous gradient of shade instead of a handful of fixed steps. */
+  .dot.primary {
+    background: var(--color-primary);
+  }
+
+  .dot.accent {
+    background: var(--color-accent);
+  }
+
+  .caption-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .caption {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-faint);
+  }
+
+  .open-terminal-btn {
+    display: none;
+  }
+
+  /* Same bordered-pill treatment as the CV/project nav buttons elsewhere on
+     the site (see about.astro's .cv-links, projects.astro's #nav-buttons). */
+  @media (min-width: 1024px) {
+    .open-terminal-btn {
+      display: inline-block;
+      flex-shrink: 0;
+      border: 1px solid var(--color-primary);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.6rem 1.1rem;
+      background: transparent;
+      color: var(--color-primary);
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .open-terminal-btn:hover {
+      background-color: var(--color-primary);
+      color: var(--color-on-primary);
+    }
+  }
+
+  /* Mirrors .weeks' column grid exactly (same track width + gap) so each
+     label spans precisely under the dots for its role's date range. */
+  .job-labels {
+    display: grid;
+    column-gap: 3px;
+    margin-top: 0.6rem;
+  }
+
+  .job-label {
+    min-width: 0;
+    padding-left: 0.45rem;
+    border-left: 2px solid var(--color-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .job-label.accent {
+    border-left-color: var(--color-accent);
+  }
+
+  .job-label .job {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--color-text);
+    font-weight: 500;
+    font-size: 0.72rem;
+    line-height: 1.25;
+    cursor: default;
+  }
+
+  .job-label .company {
+    color: var(--color-text-faint);
+    font-weight: 400;
+  }
+
+  .job-label .period {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--color-text-faint);
+    white-space: nowrap;
+  }
+</style>

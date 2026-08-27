@@ -1,0 +1,54 @@
+---
+import { getCollection } from "astro:content"
+import Terminal from "@/components/islands/Terminal"
+
+const terminalProjects = (await getCollection("projects")).map(project => ({
+  id: project.id,
+  title: project.data.title,
+}))
+---
+
+<div id="terminal-overlay" class="terminal-overlay" hidden>
+  <div class="terminal-modal">
+    <Terminal projects={terminalProjects} client:idle />
+  </div>
+</div>
+
+<script>
+  const overlay = document.querySelector<HTMLDivElement>("#terminal-overlay")
+
+  const isTypingTarget = (target: EventTarget | null) => {
+    if (!(target instanceof HTMLElement)) return false
+    return target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable
+  }
+
+  const isOpen = () => !overlay?.hasAttribute("hidden")
+
+  const open = () => {
+    overlay?.removeAttribute("hidden")
+    window.setTimeout(() => overlay?.querySelector<HTMLInputElement>(".terminal-input")?.focus(), 0)
+  }
+  const close = () => overlay?.setAttribute("hidden", "")
+  const toggle = () => (isOpen() ? close() : open())
+
+  overlay?.addEventListener("click", e => {
+    if (e.target === overlay) close()
+  })
+
+  // Lets other components (e.g. CommitGraph's "Open terminal" button) open
+  // the modal without reaching into this script's internals.
+  window.addEventListener("terminal:open", open)
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && isOpen()) {
+      close()
+      return
+    }
+    if (e.key === ">" && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      // Inside the terminal's own input, ">" types a ">" — only toggle from outside it.
+      if (isOpen() && isTypingTarget(e.target)) return
+      e.preventDefault()
+      toggle()
+    }
+  })
+</script>

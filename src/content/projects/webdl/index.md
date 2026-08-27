@@ -14,8 +14,6 @@ images: ["./preview.png"]
 
 _Java desktop app - Custom protocol handler for downloading webpages in different formats_
 
-[![Download](https://img.shields.io/badge/Download-0078D6?style=for-the-badge&logo=windows&logoColor=white)](WebDL_1.0.0-SNAPSHOT.exe)
-
 ---
 
 ## Features

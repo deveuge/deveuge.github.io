@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets"
 import type { CollectionEntry } from "astro:content"
+import { slugifyTag } from "@/lib/tags"
 
 interface Props {
   project: CollectionEntry<"projects">
@@ -8,9 +9,15 @@ interface Props {
 }
 
 const { project, variant = "grid" } = Astro.props
-const { title, description, imagePreview, codePreview, livePreview, tags } = project.data
+const { title, description, imagePreview, codePreview, livePreview, inProgress, tags } = project.data
 const href = `/${project.id}/`
 const search = `${title} ${description} ${tags.join(" ")}`.toLowerCase()
+
+const status = livePreview ? "live" : inProgress ? "progress" : "source"
+const statusLabel = { live: "LIVE", progress: "IN PROGRESS", source: "SOURCE" }[status]
+
+/** Two-letter monogram for the featured-row icon (e.g. "SentinelAI" -> "SE"), same idea as the mockup's flat thumb badge. */
+const initials = title.replace(/[^A-Za-z]/g, "").slice(0, 2).toUpperCase()
 ---
 
 <article
@@ -19,266 +26,432 @@ const search = `${title} ${description} ${tags.join(" ")}`.toLowerCase()
   data-search={search}
   data-reveal="up"
 >
-  <div class="img">
-    <Image src={imagePreview} alt={title} />
-  </div>
-  <h3>{title}</h3>
-  <div class="content">
-    <p>{description}</p>
-    <div class="project-controls">
-      <a
-        href={codePreview}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="See code"
-        class="hint--top"><span></span></a
-      >
-      <a
-        href={livePreview || "#"}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Live demo"
-        class:list={["hint--top", { disabled: !livePreview }]}><span></span></a
-      >
-      <a href={href} aria-label={variant === "featured" ? "Details" : "Learn more"} class="hint--top">
-        {variant === "featured" ? "Learn more" : "Details"}
-        <span class="sr-only"> about {title}</span>
-      </a>
+  {
+    variant === "featured" ? (
+      <div class="thumb-col">
+        <div class="thumb thumb-icon" aria-hidden="true">
+          {initials}
+        </div>
+        <div class="project-controls">
+          <a href={codePreview} target="_blank" rel="noreferrer" aria-label="See code" class="icon-btn icon-btn--code hint--top">
+            <span />
+          </a>
+          <a
+            href={livePreview || "#"}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Live demo"
+            class:list={["icon-btn icon-btn--live hint--top", { disabled: !livePreview }]}
+          >
+            <span />
+          </a>
+        </div>
+      </div>
+    ) : (
+      <div class="thumb">
+        <Image src={imagePreview} alt={title} width={480} />
+      </div>
+    )
+  }
+
+  <div class="card-body">
+    <div class="card-head">
+      <h3><a href={href}>{title}</a></h3>
+      {variant !== "featured" && <span class={`status status--${status}`}>{statusLabel}</span>}
     </div>
+
+    <p class="description">{description}</p>
+
+    {
+      variant === "featured" ? (
+        <div class="tags-row">
+          <ul class="tags">
+            {tags.map(tag => (
+              <li>
+                <a href={`/tags/${slugifyTag(tag)}/`}>{tag}</a>
+              </li>
+            ))}
+          </ul>
+          <a href={href} aria-label="Details" class="icon-btn icon-btn--details hint--top">
+            <span />
+            <span class="sr-only"> about {title}</span>
+          </a>
+        </div>
+      ) : (
+        <ul class="tags">
+          {tags.map(tag => (
+            <li>
+              <a href={`/tags/${slugifyTag(tag)}/`}>{tag}</a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    {
+      variant !== "featured" && (
+        <div class="project-controls">
+          <a href={codePreview} target="_blank" rel="noreferrer" aria-label="See code" class="icon-btn icon-btn--code hint--top">
+            <span />
+          </a>
+          <a
+            href={livePreview || "#"}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Live demo"
+            class:list={["icon-btn icon-btn--live hint--top", { disabled: !livePreview }]}
+          >
+            <span />
+          </a>
+          <a href={href} aria-label="Details" class="details-link">
+            Details <span class="details-arrow" aria-hidden="true">→</span>
+            <span class="sr-only"> about {title}</span>
+          </a>
+        </div>
+      )
+    }
   </div>
 </article>
 
 <style>
   .project-card {
     position: relative;
-  }
-
-  .project-card > .img {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
     overflow: hidden;
   }
 
-  .project-card > .img::after {
+  .thumb {
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-surface-2);
+  }
+
+  .thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .project-card:hover .thumb img {
+    transform: scale(1.08);
+  }
+
+  /* Constant color-matched tint over every screenshot so the wildly
+     different source images read as one consistent set instead of a
+     collage — luminance/detail stay, hue gets pulled to the theme color.
+     Fades away on hover to reveal the image's real colors underneath. */
+  .thumb:not(.thumb-icon)::after {
     content: "";
     position: absolute;
     inset: 0;
     background: var(--color-primary);
     mix-blend-mode: color;
-    opacity: 0.5;
-    transition: 0.25s;
+    opacity: 0.7;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
   }
 
-  .project-card:hover > .img::after {
+  .project-card:hover .thumb:not(.thumb-icon)::after {
     opacity: 0;
   }
 
-  .project-card > .img img {
-    width: 100%;
-    object-fit: cover;
-    transition: 0.25s;
+  /* Featured-row icon: a flat monogram badge instead of the project
+     screenshot, matching the mockup's changelog-entry thumb. */
+  .thumb-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-primary);
+    border: 1px solid var(--color-line);
   }
 
-  .project-card > .content p {
-    margin-top: 0;
-    line-height: 1.5;
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.85rem;
+    padding: 1.25rem;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .card-head h3 {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .card-head h3 a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .card-head h3 a:hover {
+    color: var(--color-primary);
+  }
+
+  .status {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .status--live {
+    color: var(--color-status-live);
+  }
+
+  .status--progress {
+    color: var(--color-status-progress);
+  }
+
+  .status--source {
+    color: var(--color-status-source);
+  }
+
+  .description {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Featured variant only: keeps the details icon button in line with the
+     tags, pushed all the way to the right edge of the row. */
+  .tags-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .tags-row .icon-btn {
+    flex-shrink: 0;
+  }
+
+  .tags a {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    background: var(--color-surface-2);
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
+    transition:
+      color 0.2s,
+      background-color 0.2s;
+  }
+
+  .tags a:hover {
+    color: var(--color-on-accent);
+    background-color: var(--color-accent);
   }
 
   .project-controls {
     display: flex;
-    justify-content: end;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.35rem;
     margin-top: auto;
+    padding-top: 0.5rem;
   }
 
-  .project-controls a + a {
-    margin-left: 0.5rem;
-  }
-
-  .project-controls > a {
-    border: 1px solid var(--color-primary);
-    font-size: 0.85rem;
-    font-weight: 700;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    color: var(--color-primary);
+  /* Ghost icon buttons: same treatment as the navbar's theme-toggle/hamburger
+     (transparent by default, hairline border + surface tint on hover)
+     instead of the previous solid-primary pill pair. */
+  .icon-btn {
+    --size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--size) + 0.9rem + 2px);
+    height: calc(var(--size) + 0.9rem + 2px);
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: 0.4rem;
+    color: var(--color-text-muted);
+    font-size: var(--size);
     text-decoration: none;
-    text-transform: uppercase;
-    transition: 0.25s;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s,
+      color 0.2s;
   }
 
-  .project-controls > a:last-of-type {
-    margin-left: auto;
-    background-color: var(--color-primary);
-    color: var(--color-background);
+  .icon-btn:hover {
+    border-color: var(--color-line);
+    background: var(--color-surface-2);
+    color: var(--color-accent);
   }
 
-  .project-controls > a:last-of-type:hover {
-    background-color: transparent;
-    color: var(--color-primary);
-  }
-
-  .project-controls > a:not(:last-of-type):hover {
-    background-color: var(--color-primary);
-    color: var(--color-background);
-  }
-
-  .project-controls a > span::before {
+  .icon-btn > span::before {
     font-family: "Font Awesome 6 Free";
     font-weight: 700;
   }
 
-  .project-controls a:nth-of-type(1) > span::before {
+  .icon-btn--code > span::before {
     content: "\f121";
   }
 
-  .project-controls a:nth-of-type(2) > span::before {
+  .icon-btn--live > span::before {
     content: "\f06e";
   }
 
-  .project-controls > a.disabled {
+  .icon-btn--details > span::before {
+    content: "\f061";
+  }
+
+  .icon-btn--details {
+    border-radius: 50%;
+    border-color: var(--color-line);
+    background: var(--color-surface);
+    color: var(--color-primary);
+  }
+
+  .icon-btn--details:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  .icon-btn.disabled {
     pointer-events: none;
     cursor: not-allowed;
     filter: grayscale(1);
     opacity: 0.5 !important;
   }
 
-  /* Featured variant: large horizontal card used on the home page */
+  /* Details: a mono text link with a sliding arrow, matching the site's
+     other wayfinding links (nav rail, tags) instead of a solid button. */
+  .details-link {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding: 0.4rem 0.2rem;
+    transition: color 0.2s;
+  }
+
+  .details-link:hover {
+    color: var(--color-accent);
+  }
+
+  .details-arrow {
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+
+  .details-link:hover .details-arrow {
+    transform: translateX(0.2rem);
+  }
+
   .project-card--featured {
-    margin-top: 3rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.25rem;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-line);
+    padding: 1.5rem 0;
+    overflow: visible;
   }
 
-  .project-card--featured > h3 {
-    font-size: 2em;
-    margin: 0 0 1rem;
-    line-height: 1em;
+  .project-card--featured:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
   }
 
-  @media (min-width: 40em) {
-    .project-card--featured {
-      display: grid;
-      grid-template-rows: repeat(3, auto);
-      grid-template-columns: 2fr 1fr 4fr;
-      grid-template-areas: ". . title" "img img content" "img img .";
-    }
-
-    .project-card--featured::before {
-      content: "";
-      grid-area: 1 / 2 / 3 / -1;
-      border: 2px dotted var(--color-primary);
-      z-index: -1;
-      margin: 1rem 1rem -1rem -1rem;
-      opacity: 0.5;
-    }
-
-    .project-card--featured::after {
-      content: "";
-      grid-area: 1 / 2 / 3 / -1;
-      position: relative;
-      z-index: -1;
-      background: var(--color-surface);
-      box-shadow: rgb(61 48 41 / 20%) 0 0.2em 1em;
-      border-right: 0.25rem solid var(--color-accent);
-      border-bottom: 0.25rem solid var(--color-accent);
-    }
-
-    .project-card--featured > .img {
-      grid-area: img;
-      box-shadow: 0 0.2em 1.2em rgb(61 48 41 / 10%);
-      margin-top: -2rem;
-    }
-
-    .project-card--featured > h3 {
-      grid-area: title;
-      padding-top: 3rem;
-      padding-left: 3rem;
-    }
-
-    .project-card--featured > .content {
-      grid-area: content;
-      padding-bottom: 3rem;
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
-  }
-
-  @media (max-width: 40em) {
-    .project-card--featured {
-      background-color: var(--color-surface);
-      border-bottom: 0.25rem solid var(--color-accent);
-    }
-
-    .project-card--featured > h3,
-    .project-card--featured > .content {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-
-    .project-card--featured > h3 {
-      padding-top: 2rem;
-    }
-
-    .project-card--featured > .content {
-      padding-bottom: 2rem;
-    }
-  }
-
-  .project-card--featured > .img img {
-    height: 100%;
-  }
-
-  .project-card--featured:hover > .img img {
-    transform: scale(1.5);
-  }
-
-  /* Grid variant: compact card used on the projects listing */
-  .project-card--grid {
+  /* Avatar + controls stack together as their own column, to the left of
+     the title/description/tags column — so the buttons live under the
+     thumb instead of competing with the text for space. */
+  .project-card--featured .thumb-col {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    background-color: var(--color-surface);
-    box-shadow: rgb(61 48 41 / 20%) 0 0.2em 1em;
-    border-bottom: 0.25rem solid var(--color-accent);
+    align-items: center;
+    flex-shrink: 0;
+    gap: 0.5rem;
   }
 
-  .project-card--grid::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border: 2px dotted var(--color-primary);
-    z-index: -1;
-    margin: 1rem 1rem -1rem -1rem;
-    opacity: 0.5;
+  .project-card--featured .thumb {
+    width: 5rem;
+    height: 5rem;
+    aspect-ratio: 1;
+    border-radius: 9px;
   }
 
-  .project-card--grid > .img {
-    flex: 0 1 auto;
+  .project-card--featured .card-body {
+    padding: 0;
   }
 
-  .project-card--grid > .img img {
-    width: 150%;
-    height: 9rem;
-    object-position: center center;
+  .project-card--featured .project-controls {
+    margin-top: 0;
+    padding-top: 0;
+    justify-content: center;
+    gap: 0.3rem;
   }
 
-  .project-card--grid:hover > .img img {
-    width: 100%;
+  .project-card--featured .icon-btn {
+    --size: 0.8rem;
   }
 
-  .project-card--grid > h3 {
-    font-size: 1.5em;
-    margin: 0;
-    padding: 1rem 1rem 0;
+  .project-card--featured .icon-btn--details {
+    --size: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
   }
 
-  .project-card--grid > .content {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-  }
-
-  .project-card--grid > .content > p {
-    font-size: 0.9rem;
-    font-style: italic;
-    opacity: 0.75;
+  .project-card--grid .project-controls {
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    margin-bottom: -1.25rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--color-surface-2);
+    border-top: 1px solid var(--color-line);
+    box-shadow: inset 0 6px 8px -8px rgba(0, 0, 0, 0.35);
   }
 </style>

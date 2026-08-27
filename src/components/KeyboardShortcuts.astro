@@ -1,0 +1,97 @@
+<p class="shortcuts-hint" id="shortcuts-hint">Press <kbd>?</kbd> for shortcuts</p>
+
+<div id="shortcuts-overlay" class="shortcuts-overlay" hidden>
+  <div class="shortcuts-panel" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title">
+    <div class="shortcuts-head">
+      <h2 id="shortcuts-title">Keyboard shortcuts</h2>
+      <button type="button" id="shortcuts-close" aria-label="Close">✕</button>
+    </div>
+    <dl class="shortcuts-list">
+      <div><dt><kbd>?</kbd></dt><dd>Toggle this panel</dd></div>
+      <div><dt><kbd>Esc</kbd></dt><dd>Close this panel</dd></div>
+      <div><dt><kbd>g</kbd> <kbd>h</kbd></dt><dd>Go home</dd></div>
+      <div><dt><kbd>g</kbd> <kbd>a</kbd></dt><dd>Go to about</dd></div>
+      <div><dt><kbd>g</kbd> <kbd>w</kbd></dt><dd>Go to work</dd></div>
+      <div><dt><kbd>t</kbd></dt><dd>Toggle light / dark theme</dd></div>
+      <div><dt><kbd>&gt;</kbd></dt><dd>Toggle the terminal</dd></div>
+    </dl>
+  </div>
+</div>
+
+<script>
+  const overlay = document.querySelector<HTMLDivElement>("#shortcuts-overlay")
+  const closeButton = document.querySelector<HTMLButtonElement>("#shortcuts-close")
+
+  const isTypingTarget = (target: EventTarget | null) => {
+    if (!(target instanceof HTMLElement)) return false
+    return target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable
+  }
+
+  const open = () => overlay?.removeAttribute("hidden")
+  const close = () => overlay?.setAttribute("hidden", "")
+  const toggle = () => (overlay?.hasAttribute("hidden") ? open() : close())
+
+  closeButton?.addEventListener("click", close)
+  overlay?.addEventListener("click", e => {
+    if (e.target === overlay) close()
+  })
+
+  let pendingG = false
+  let pendingGTimeout: number | undefined
+
+  document.addEventListener("keydown", e => {
+    if (isTypingTarget(e.target) || e.metaKey || e.ctrlKey || e.altKey) return
+
+    if (e.key === "Escape") {
+      if (!overlay?.hasAttribute("hidden")) close()
+      return
+    }
+
+    if (pendingG) {
+      pendingG = false
+      window.clearTimeout(pendingGTimeout)
+      if (e.key === "h") window.location.href = "/"
+      else if (e.key === "a") window.location.href = "/about/"
+      else if (e.key === "w") window.location.href = "/projects/"
+      return
+    }
+
+    if (e.key === "?") {
+      toggle()
+    } else if (e.key === "g") {
+      pendingG = true
+      pendingGTimeout = window.setTimeout(() => (pendingG = false), 600)
+    } else if (e.key === "t") {
+      document.querySelector<HTMLButtonElement>("#theme-toggle")?.click()
+    }
+  })
+
+  // The hint is `position: fixed` normally, but that would sit on top of the
+  // footer once it scrolls into view — dock it to `position: absolute`,
+  // parked just above the footer's top edge, whenever the fixed spot would
+  // overlap it.
+  const hint = document.querySelector<HTMLParagraphElement>("#shortcuts-hint")
+  const footer = document.querySelector<HTMLElement>(".site-footer")
+  const GAP = 20
+
+  let dockRaf: number | undefined
+  const updateDock = () => {
+    dockRaf = undefined
+    if (!hint || !footer) return
+    const footerTop = footer.getBoundingClientRect().top
+    const overlapsFixedSpot = footerTop < window.innerHeight - GAP
+    hint.classList.toggle("is-docked", overlapsFixedSpot)
+    hint.style.top = overlapsFixedSpot
+      ? `${footerTop + window.scrollY - hint.offsetHeight - GAP}px`
+      : ""
+  }
+  const scheduleUpdateDock = () => {
+    if (dockRaf === undefined) dockRaf = requestAnimationFrame(updateDock)
+  }
+
+  if (hint && footer) {
+    updateDock()
+    window.addEventListener("scroll", scheduleUpdateDock, { passive: true })
+    window.addEventListener("resize", scheduleUpdateDock)
+  }
+</script>

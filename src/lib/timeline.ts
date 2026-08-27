@@ -22,7 +22,16 @@ export interface EducationItem {
 
 export const experience: ExperienceItem[] = [
   {
-    period: "FEB 2022 – PRESENT",
+    period: "JUN 2026 – PRESENT",
+    title: "Senior Java Software Developer",
+    company: "Ingubu – Spain",
+    description:
+      "Backend development, in a Java Spring microservices environment, of a BPM module for bespoke healthcare software, built on the Flowable workflow engine and its process-modelling editors.",
+    technologies:
+      "Java Spring, Hibernate, GraphQL and REST web services, JUnit, SonarQube. PostgreSQL. Flowable. BPM. React on specific occasions. Playwright and Cucumber for test automation.",
+  },
+  {
+    period: "FEB 2022 – JUN 2026",
     title: "Senior Java Software Engineer",
     company: "Bahia Software – Galicia (Spain)",
     description:
@@ -46,7 +55,7 @@ export const experience: ExperienceItem[] = [
     description:
       "Development of web and Android solutions for logistics and mobility operations, aimed at enterprise clients such as Iveco, Renault, and Viscofan.",
     technologies:
-      "Java Spring (MVC, Security, JPA), SOAP and REST web services. Android Studio, SQL Server, ZPL markup language, barcode treatment, Leaflet. HTML5, CSS3, Javascript and JQuery with Thymeleaf and Bootstrap.",
+      "Java Spring (MVC, Security, JPA), SOAP and REST web services. Android Studio, SQL Server, ZPL markup language, barcode treatment, Leaflet. HTML5, CSS3, Javascript, JQuery, Thymeleaf, Bootstrap.",
   },
   {
     period: "APR 2018 – JUL 2018",

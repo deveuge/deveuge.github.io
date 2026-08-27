@@ -6,6 +6,9 @@ dist/
 .astro/
 public/fonts/devicon-subset.woff2
 public/css/devicon-subset.css
+public/fonts/fa-solid-subset.woff2
+public/fonts/fa-regular-subset.woff2
+public/css/fontawesome-subset.css
 
 # Logs
 npm-debug.log*

@@ -1,10 +1,11 @@
 ---
 import { experience, certifications, education } from "@/lib/timeline"
+import { techTags } from "@/lib/techTags"
 ---
 
 <div class="row container-50">
   <ul class="timeline">
-    <li class="timeline-item period" data-reveal="up">
+    <li id="experience" class="timeline-item period" data-reveal="up">
       <div class="timeline-info"></div>
       <div class="timeline-marker"></div>
       <div class="timeline-content">
@@ -12,25 +13,32 @@ import { experience, certifications, education } from "@/lib/timeline"
       </div>
     </li>
     {
-      experience.map(item => (
-        <li class="timeline-item" data-reveal="up">
-          <div class="timeline-info">
-            <span>{item.period}</span>
-          </div>
-          <div class="timeline-marker" />
-          <div class="timeline-content">
-            <h3>{item.title}</h3>
-            <h4>{item.company}</h4>
-            <p>{item.description}</p>
-            <p>
-              <strong>Technologies</strong>: {item.technologies}
-            </p>
-          </div>
-        </li>
-      ))
+      experience.map(item => {
+        const isHead = item.period.endsWith("PRESENT")
+        return (
+          <li class:list={["timeline-item", { "is-head": isHead }]} data-reveal="up">
+            <div class="timeline-info">
+              <span>{item.period}</span>
+            </div>
+            <div class="timeline-marker" />
+            <div class="timeline-content">
+              <h3>
+                {item.title}
+                {isHead && <span class="head-badge">HEAD</span>}
+              </h3>
+              <h4>{item.company}</h4>
+              <p>{item.description}</p>
+              <p class="tech-label">Technologies</p>
+              <ul class="tech-tags">
+                {techTags(item.technologies).map(tag => <li class="tech-tag">{tag}</li>)}
+              </ul>
+            </div>
+          </li>
+        )
+      })
     }
 
-    <li class="timeline-item period" data-reveal="up">
+    <li id="certifications" class="timeline-item period" data-reveal="up">
       <div class="timeline-info"></div>
       <div class="timeline-marker"></div>
       <div class="timeline-content">
@@ -52,7 +60,7 @@ import { experience, certifications, education } from "@/lib/timeline"
       ))
     }
 
-    <li class="timeline-item period" data-reveal="up">
+    <li id="education" class="timeline-item period" data-reveal="up">
       <div class="timeline-info"></div>
       <div class="timeline-marker"></div>
       <div class="timeline-content">
@@ -76,7 +84,7 @@ import { experience, certifications, education } from "@/lib/timeline"
       ))
     }
 
-    <li class="timeline-item period" data-reveal="up">
+    <li id="skills" class="timeline-item period" data-reveal="up">
       <div class="timeline-info"></div>
       <div class="timeline-marker"></div>
       <div class="timeline-content">

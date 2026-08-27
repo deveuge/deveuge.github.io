@@ -32,8 +32,8 @@ export default function ImageSlideshow({ images, alt }: Props) {
       ))}
 
       <div className="row">
-        <button className="fas fa-angle-left" aria-label="Previous image" onClick={() => shift(-1)} />
-        <button className="fas fa-angle-right" aria-label="Next image" onClick={() => shift(1)} />
+        <button className="fa-solid fa-angle-left" aria-label="Previous image" onClick={() => shift(-1)} />
+        <button className="fa-solid fa-angle-right" aria-label="Next image" onClick={() => shift(1)} />
       </div>
     </div>
   )

@@ -1,21 +1,25 @@
 #input-search {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   background: var(--color-surface);
-  box-shadow: 0 3px 10px 0 rgb(0 0 0 / 10%);
+  border: 1px solid var(--color-line);
   margin: 2rem 0;
+  padding: 0 1.25rem;
+  transition: border-color 0.2s;
 }
 
-#input-search::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  height: 2px;
-  background: linear-gradient(to right, #f2be92, #ee8623, #b97be3, #7201c5, #f2be92, #ee8623);
-  background-size: 500% auto;
-  animation: project-search-gradient 3s linear infinite;
+#input-search:focus-within {
+  border-color: var(--color-primary);
+}
+
+#input-search::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f002";
+  flex-shrink: 0;
+  color: var(--color-text-faint);
 }
 
 #input-search > input {
@@ -23,18 +27,15 @@
   width: 100%;
   box-sizing: border-box;
   font: inherit;
-  background: var(--color-surface);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  background: transparent;
   color: var(--color-text);
   border: 0;
   outline: 0;
-  padding: 1rem 1.5rem;
+  padding: 1rem 0;
 }
 
-@keyframes project-search-gradient {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 100% 0;
-  }
+#input-search > input::placeholder {
+  color: var(--color-text-faint);
 }

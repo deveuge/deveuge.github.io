@@ -3,6 +3,8 @@ import "@/styles/global.css"
 import Navbar from "@/components/Navbar.astro"
 import Footer from "@/components/Footer.astro"
 import ScrollToTop from "@/components/ScrollToTop.astro"
+import KeyboardShortcuts from "@/components/KeyboardShortcuts.astro"
+import TerminalModal from "@/components/TerminalModal.astro"
 import { SITE } from "@/lib/site"
 
 interface Props {
@@ -21,7 +23,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/icon-512.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#9d6fbb" />
+    <meta name="theme-color" content="#24406b" />
     <link rel="canonical" href={canonicalURL} />
 
     <title>{title} | {SITE.title}</title>
@@ -33,7 +35,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <meta property="og:url" content={canonicalURL} />
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:creator" content={`@${SITE.social.twitter}`} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
@@ -41,18 +42,32 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Lato:300,400|Poppins:300,400,800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700;8..60,900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      media="print"
+      onload="this.media='all'"
     />
 
-    <link rel="stylesheet" href="/css/fontawesome-all.min.css" />
-    <link rel="stylesheet" href="/css/hint.min.css" />
+    <!-- Subset of Font Awesome with only the glyphs used across src/; see scripts/build-fa-subset.mjs. -->
+    <link rel="stylesheet" href="/css/fontawesome-subset.css" media="print" onload="this.media='all'" />
+    <!-- Subset of Devicon with only the glyphs used across src/; see scripts/build-devicon-subset.mjs. -->
+    <link rel="stylesheet" href="/css/devicon-subset.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/css/hint.min.css" media="print" onload="this.media='all'" />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700;8..60,900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      />
+      <link rel="stylesheet" href="/css/fontawesome-subset.css" />
+      <link rel="stylesheet" href="/css/devicon-subset.css" />
+      <link rel="stylesheet" href="/css/hint.min.css" />
+    </noscript>
     <slot name="head" />
 
     <script is:inline>
       // Blocking, runs before first paint to avoid a flash of the wrong theme.
       const storageKey = "theme-preference"
       const stored = localStorage.getItem(storageKey)
-      const preferred = stored ?? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      const preferred = stored ?? "dark"
       document.documentElement.setAttribute("data-theme", preferred)
     </script>
   </head>
@@ -67,8 +82,30 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     </main>
 
     <ScrollToTop />
+    <KeyboardShortcuts />
+    <TerminalModal />
 
     <script>
+      import { SITE } from "@/lib/site"
+
+      const asciiArt = String.raw`
+██████╗ ███████╗██╗   ██╗███████╗██╗   ██╗ ██████╗ ███████╗
+██╔══██╗██╔════╝██║   ██║██╔════╝██║   ██║██╔════╝ ██╔════╝
+██║  ██║█████╗  ██║   ██║█████╗  ██║   ██║██║  ███╗█████╗
+██║  ██║██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║   ██║██║   ██║██╔══╝
+██████╔╝███████╗ ╚████╔╝ ███████╗╚██████╔╝╚██████╔╝███████╗
+╚═════╝ ╚══════╝  ╚═══╝  ╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝`
+
+      console.log(
+        "%c" +
+          asciiArt +
+          "%c\n\n// relax, this console.log is not a bug — it's a feature\n\nSenior Java/Spring backend engineer, still shipping this very site in phases. If you read the console, you probably read diffs too.\n\ngithub   → https://github.com/%s\nlinkedin → https://www.linkedin.com/in/%s\n\nAnyway, back to your own bugs.",
+        "color:#8fa9d6;font-family:monospace;font-size:9px;line-height:1.1;font-weight:700;white-space:pre;",
+        "color:#a2aabb;font-family:monospace;font-size:12px;line-height:1.6;",
+        SITE.social.github,
+        SITE.social.linkedin,
+      )
+
       const progressBar = document.querySelector<HTMLProgressElement>("progress")
       if (progressBar) {
         const updateProgress = () => {
@@ -108,13 +145,30 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     overflow: hidden;
     box-shadow: 0 1px 10px -5px rgba(0, 0, 0, 0.5);
     transition: transform 0.5s;
-    background-color: var(--color-background);
     margin: 0;
     padding: 0;
     z-index: 1;
     min-height: calc(100vh - 4rem);
     display: flex;
     flex-direction: column;
+
+    /* Muted "workspace" backdrop for the actual page surface: a
+       --color-primary blob (ink-blue — dark blue in light mode, light blue
+       in dark mode) plus a --color-accent blob at very low alpha for a
+       second hue the gradient actually reads, over a wide-spaced dot grid.
+       Pinned to the viewport (background-attachment: fixed) instead of
+       scrolling with the page. */
+    background-color: var(--color-background);
+    background-image:
+      radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 55%),
+      radial-gradient(circle at 88% 92%, color-mix(in srgb, var(--color-accent) 6%, transparent), transparent 55%),
+      radial-gradient(circle, color-mix(in srgb, var(--color-line) 70%, transparent) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      100% 100%,
+      34px 34px;
+    background-repeat: no-repeat, no-repeat, repeat;
+    background-attachment: fixed, fixed, fixed;
   }
 
   #main > .main-container {

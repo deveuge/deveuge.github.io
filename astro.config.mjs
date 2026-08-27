@@ -6,6 +6,9 @@ import tailwindcss from "@tailwindcss/vite"
 export default defineConfig({
   site: "https://deveuge.github.io",
   integrations: [react(), sitemap()],
+  build: {
+    inlineStylesheets: "always",
+  },
   vite: {
     plugins: [tailwindcss()],
   },

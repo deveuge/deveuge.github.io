@@ -15,7 +15,7 @@
     "check": "astro check",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{astro,ts,tsx,js,jsx,json,md}\"",
-    "icons:subset": "node scripts/build-devicon-subset.mjs"
+    "icons:subset": "node scripts/build-devicon-subset.mjs && node scripts/build-fa-subset.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.4",

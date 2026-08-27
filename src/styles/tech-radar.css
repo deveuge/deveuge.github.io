@@ -1,0 +1,208 @@
+.tech-radar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+#radar-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  padding-bottom: 0.25rem;
+}
+
+#radar-filters button {
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  padding: 0.4rem 0.9rem;
+  transition: 0.25s;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+#radar-filters button:hover,
+#radar-filters button.is-checked {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+
+.radar-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 780px) {
+  .radar-layout {
+    grid-template-columns: minmax(0, 3fr) minmax(220px, 2fr);
+    align-items: start;
+  }
+}
+
+.tech-radar svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ring-circle {
+  fill: none;
+  stroke: var(--color-line);
+  stroke-width: 1;
+}
+
+.axis-line {
+  stroke: var(--color-line);
+  stroke-width: 1;
+}
+
+.quadrant-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  fill: var(--color-text-faint);
+}
+
+.dot {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.dot.dimmed {
+  opacity: 0.25;
+}
+
+.dot .hit-area {
+  fill: transparent;
+}
+
+.dot .dot-fill {
+  fill: var(--dot-color);
+  stroke: var(--color-surface);
+  stroke-width: 2;
+  transition: r 0.15s;
+}
+
+.dot:hover .dot-fill,
+.dot:focus-visible .dot-fill,
+.dot.is-selected .dot-fill {
+  r: 9;
+}
+
+.dot:focus-visible .hit-area {
+  outline: none;
+}
+
+.dot:focus-visible .dot-fill {
+  stroke: var(--color-accent);
+  stroke-width: 3;
+}
+
+.radar-detail {
+  min-height: 8rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-surface);
+}
+
+.detail-intro {
+  margin: 0 0 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.detail-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--color-text-faint);
+}
+
+.detail-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+
+.detail-head .icon {
+  font-size: 1.1rem;
+  color: var(--color-text-faint);
+}
+
+.detail-name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ring-badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  color: var(--color-on-primary);
+  background: var(--color-text-faint);
+}
+
+.ring-badge.ring-adopt {
+  background: var(--color-status-live);
+}
+
+.ring-badge.ring-trial {
+  background: var(--color-primary);
+}
+
+.ring-badge.ring-assess {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.ring-badge.ring-hold {
+  background: var(--color-text-faint);
+}
+
+.detail-blurb {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.radar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.legend-item .swatch {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}

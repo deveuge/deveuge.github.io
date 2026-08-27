@@ -1,0 +1,128 @@
+.shortcuts-hint {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .shortcuts-hint {
+    display: block;
+    position: fixed;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 40;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-faint);
+    opacity: 0.75;
+  }
+
+  /* Toggled by KeyboardShortcuts.astro's script once the footer scrolls
+     close enough to the fixed spot to overlap it: swaps to an absolute,
+     document-relative `top` (set inline) parked just above the footer,
+     instead of floating on top of it. */
+  .shortcuts-hint.is-docked {
+    position: absolute;
+    bottom: auto;
+  }
+
+  .shortcuts-hint kbd {
+    font-family: var(--font-mono);
+    padding: 0.05rem 0.35rem;
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+    background: var(--color-surface);
+  }
+}
+
+.shortcuts-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: color-mix(in srgb, var(--color-background) 70%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.shortcuts-overlay[hidden] {
+  display: none;
+}
+
+.shortcuts-panel {
+  width: 100%;
+  max-width: 26rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.shortcuts-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.shortcuts-head h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+
+.shortcuts-head button {
+  background: transparent;
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  color: var(--color-text-muted);
+  width: 1.75rem;
+  height: 1.75rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.shortcuts-head button:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.shortcuts-list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.shortcuts-list > div {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.shortcuts-list dt {
+  flex-shrink: 0;
+  min-width: 4.5rem;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.shortcuts-list dd {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.shortcuts-list kbd {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--color-line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--color-surface-2);
+  color: var(--color-text);
+}

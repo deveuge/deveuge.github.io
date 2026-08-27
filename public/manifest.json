@@ -2,8 +2,8 @@
   "name": "Deveuge Portfolio",
   "short_name": "Deveuge",
   "start_url": "/",
-  "background_color": "#f5f5f5",
-  "theme_color": "#9d6fbb",
+  "background_color": "#eef0f3",
+  "theme_color": "#24406b",
   "display": "minimal-ui",
   "icons": [
     {

@@ -40,10 +40,10 @@ const slideshowImages = slides.map(image => ({
 <Layout title={title} description={description}>
   <article id="post">
     <div class="hero-row">
-      <div class="hero-image" data-reveal="right">
+      <div class="hero-image">
         <ImageSlideshow client:load images={slideshowImages} alt={title} />
       </div>
-      <div id="post-summary" data-reveal="left">
+      <div id="post-summary">
         <div>
           <h1>{title}</h1>
           <em>{description}</em>
@@ -76,7 +76,7 @@ const slideshowImages = slides.map(image => ({
         {
           newerProject && (
             <a href={`/${newerProject.id}/`}>
-              <span class="fas fa-angle-left" /> {newerProject.data.title}
+              <span class="fa-solid fa-angle-left" /> {newerProject.data.title}
             </a>
           )
         }
@@ -85,7 +85,7 @@ const slideshowImages = slides.map(image => ({
         {
           olderProject && (
             <a href={`/${olderProject.id}/`}>
-              {olderProject.data.title} <span class="fas fa-angle-right" />
+              {olderProject.data.title} <span class="fa-solid fa-angle-right" />
             </a>
           )
         }

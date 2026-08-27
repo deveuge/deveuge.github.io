@@ -1,0 +1,94 @@
+---
+/**
+ * Sticky section wayfinding for long editorial pages (home, about). Not wired
+ * into any page yet — Fase R1 builds the shell only; Fases R2/R5 pass the
+ * real anchors once those pages' sections exist.
+ */
+interface Props {
+  items: { href: string; label: string }[]
+  activeHref?: string
+}
+
+const { items, activeHref } = Astro.props
+---
+
+<nav class="index-rail" aria-label="Section index">
+  <ol>
+    {
+      items.map(item => (
+        <li class:list={{ "is-active": item.href === activeHref }}>
+          <a href={item.href} aria-current={item.href === activeHref ? "true" : undefined}>
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .index-rail {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-faint);
+  }
+
+  @media (min-width: 860px) {
+    .index-rail {
+      display: block;
+    }
+  }
+
+  .index-rail ol {
+    position: sticky;
+    top: 6rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .index-rail li {
+    margin-bottom: 0.7rem;
+  }
+
+  .index-rail a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s;
+  }
+
+  .index-rail a:hover {
+    color: var(--color-accent);
+  }
+
+  .index-rail li.is-active {
+    color: var(--color-accent);
+  }
+</style>
+
+<script>
+  // Highlights the rail entry for whichever section is currently in view.
+  document.querySelectorAll<HTMLElement>(".index-rail").forEach(rail => {
+    const links = [...rail.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')]
+    const sections = links
+      .map(a => document.querySelector<HTMLElement>(a.getAttribute("href")!))
+      .filter((el): el is HTMLElement => el !== null)
+    if (sections.length === 0) return
+
+    const setActive = (id: string) => {
+      links.forEach(a => a.parentElement?.classList.toggle("is-active", a.getAttribute("href") === `#${id}`))
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible.length > 0) setActive(visible[0].target.id)
+      },
+      { rootMargin: "-20% 0px -70% 0px" },
+    )
+    sections.forEach(section => observer.observe(section))
+  })
+</script>

@@ -1,96 +1,37 @@
 ---
-import { getImage } from "astro:assets"
-import headerSrc from "@/assets/header.jpg"
-
 interface Props {
   title: string
   subtitle: string
 }
 
 const { title, subtitle } = Astro.props
-const headerImage = await getImage({ src: headerSrc, width: 1920, format: "webp" })
 ---
 
-<header id="header-section" data-reveal="up" style={`--header-bg: url(${headerImage.src})`}>
-  <div class="waves"></div>
-  <div>
-    <h1>{title}</h1>
-    <p>{subtitle}</p>
-  </div>
+<header id="header-section">
+  <p class="eyebrow">// {subtitle}</p>
+  <h1>{title}</h1>
 </header>
 
 <style>
   #header-section {
-    position: relative;
-    background-image: var(--header-bg);
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 22vh;
-    overflow: hidden;
-    margin-bottom: -2rem;
+    text-align: center;
+    padding: 3rem 1rem 1rem;
   }
 
-  #header-section > div {
-    z-index: 1;
-    text-align: center;
+  .eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
   }
 
   #header-section h1 {
-    text-transform: lowercase;
-  }
-
-  #header-section p {
-    font-size: 0.75em;
-    font-weight: normal;
-    text-transform: uppercase;
-    letter-spacing: 5px;
     margin: 0;
-  }
-
-  .waves {
-    transition: 500ms;
-  }
-
-  .waves::before,
-  .waves::after {
-    content: "";
-    width: 150vw;
-    height: 150vw;
-    position: absolute;
-    left: 50%;
-    margin-top: 90%;
-  }
-
-  .waves::before {
-    border-radius: 44%;
-    background: var(--color-background);
-    animation: header-section-waves 8s linear infinite;
-  }
-
-  .waves::after {
-    border-radius: 42%;
-    background: var(--color-background);
-    animation: header-section-waves 15s linear infinite;
-    opacity: 0.5;
-  }
-
-  @keyframes header-section-waves {
-    0% {
-      transform: translate(-50%, -75%) rotate(0deg);
-    }
-    100% {
-      transform: translate(-50%, -75%) rotate(360deg);
-    }
-  }
-
-  @media (min-width: 768px) {
-    .waves::before,
-    .waves::after {
-      margin-top: 100%;
-    }
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
   }
 </style>

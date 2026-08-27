@@ -13,6 +13,8 @@ const projects = defineCollection({
       imagePreview: image(),
       codePreview: z.url(),
       livePreview: z.url().optional(),
+      /** Only set when a project has no live/source-only status yet (see REDESIGN-PLAN.md § 2.4). */
+      inProgress: z.boolean().optional(),
       images: z.array(image()),
     }),
 })

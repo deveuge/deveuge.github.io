@@ -1,148 +1,118 @@
 ---
 import Layout from "@/layouts/Layout.astro"
+import DinoGame from "@/components/islands/DinoGame"
 ---
 
 <Layout title="404">
-  <article class="flex min-h-full flex-col items-center justify-center text-center">
-    <div class="stack">
-      <span>PAGE NOT FOUND</span>
-      <span>PAGE NOT FOUND</span>
-      <span>PAGE NOT FOUND</span>
+  <article class="not-found">
+    <div class="intro">
+      <p class="eyebrow">// 404</p>
+      <span class="status">NOT FOUND</span>
+      <h1>This entry doesn't exist in the log.</h1>
+      <p class="lede">
+        The page you're looking for has moved, been renamed, or never existed in the first place.
+      </p>
+      <a href="/" class="back-link">&larr; Back to home</a>
     </div>
-    <p class="mt-0 mb-8 italic opacity-75">Sorry! The page you are looking for does not exist.</p>
-    <a href="/" class="not-found-link">Back to home</a>
+
+    <div class="game-panel">
+      <p class="eyebrow game-hint">// lost, but not bored — go ahead and play</p>
+      <DinoGame client:load />
+    </div>
   </article>
 </Layout>
 
 <style>
-  .not-found-link {
-    position: relative;
-    padding: 0.5rem 1rem;
-    background: var(--color-primary);
-    color: var(--color-background);
+  .not-found {
+    width: 91.6667%;
+    margin: 0 auto;
+    padding: 4.5rem 1rem 5rem;
+  }
+
+  .intro,
+  .game-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .not-found {
+      width: 66.6667%;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 3rem;
+    }
+
+    .intro {
+      flex: 1;
+    }
+
+    .game-panel {
+      flex: 1;
+      padding-top: 3.5rem;
+    }
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .status {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--color-accent);
+    border-radius: 3px;
+    color: var(--color-accent);
+  }
+
+  h1 {
+    margin: 0.75rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    max-width: 20ch;
+  }
+
+  .lede {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 46ch;
+  }
+
+  .game-hint {
+    margin-top: 1.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    border: 1px solid var(--color-primary);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.6rem 1.1rem;
+    color: var(--color-primary);
     text-decoration: none;
-    filter: drop-shadow(1px 3px 1px rgba(0, 0, 0, 0.25));
     transition: 0.25s;
   }
 
-  .not-found-link::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -1rem;
-    border-style: solid;
-    border-width: 1.1rem 1rem 1.1rem 0;
-    border-color: transparent var(--color-primary) transparent transparent;
-    transition: 0.25s;
-  }
-
-  .not-found-link:hover {
-    background: var(--color-accent);
-  }
-
-  .not-found-link:hover::after {
-    border-color: transparent var(--color-accent) transparent transparent;
-  }
-
-  .stack {
-    display: grid;
-    grid-template-columns: 1fr;
-    --stacks: 3;
-    animation: not-found-float 6s ease-in-out infinite;
-  }
-
-  .stack > span:nth-child(1) {
-    --index: 0;
-  }
-
-  .stack > span:nth-child(2) {
-    --index: 1;
-  }
-
-  .stack > span:nth-child(3) {
-    --index: 2;
-  }
-
-  .stack span {
-    font-family: "Poppins";
-    font-weight: bold;
-    grid-row-start: 1;
-    grid-column-start: 1;
-    font-size: 4rem;
-    line-height: 4rem;
-    --stack-height: calc(100% / var(--stacks) - 1px);
-    --inverse-index: calc(calc(var(--stacks) - 1) - var(--index));
-    --clip-top: calc(var(--stack-height) * var(--index));
-    --clip-bottom: calc(var(--stack-height) * var(--inverse-index));
-    clip-path: inset(var(--clip-top) 0 var(--clip-bottom) 0);
-    animation:
-      not-found-stack 340ms cubic-bezier(0.46, 0.29, 0, 1.24) 1 backwards
-        calc(var(--index) * 120ms),
-      not-found-glitch 2s ease infinite 2s alternate-reverse;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(to right, var(--color-primary) 0%, var(--color-accent) 100%);
-  }
-
-  .stack span:nth-child(odd) {
-    --glitch-translate: 8px;
-  }
-  .stack span:nth-child(even) {
-    --glitch-translate: -8px;
-  }
-
-  @keyframes not-found-stack {
-    0% {
-      opacity: 0;
-      transform: translateX(-50%);
-      text-shadow:
-        -2px 3px 0 var(--color-primary),
-        2px -3px 0 var(--color-accent);
-    }
-    60% {
-      opacity: 0.5;
-      transform: translateX(50%);
-    }
-    80% {
-      transform: none;
-      opacity: 1;
-      text-shadow:
-        2px -3px 0 var(--color-primary),
-        -2px 3px 0 var(--color-accent);
-    }
-    100% {
-      text-shadow: none;
-    }
-  }
-
-  @keyframes not-found-glitch {
-    0% {
-      text-shadow:
-        -2px 3px 0 var(--color-primary),
-        2px -3px 0 var(--color-accent);
-      transform: translate(var(--glitch-translate));
-    }
-    2% {
-      text-shadow:
-        2px -3px 0 var(--color-primary),
-        -2px 3px 0 var(--color-accent);
-    }
-    4%,
-    100% {
-      text-shadow: none;
-      transform: none;
-    }
-  }
-
-  @keyframes not-found-float {
-    0% {
-      transform: translatey(0);
-    }
-    50% {
-      transform: translatey(-1rem);
-    }
-    100% {
-      transform: translatey(0);
-    }
+  .back-link:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
   }
 </style>
