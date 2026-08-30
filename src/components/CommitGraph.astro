@@ -65,10 +65,22 @@ const dayLabels = ["", "Mon", "", "Wed", "", "Fri", ""]
     const scrollEl = root.querySelector<HTMLElement>(".graph-scroll")
     if (!monthsEl || !weeksEl || !jobLabelsEl || !captionEl || !scrollEl) return
 
+    // Astro scopes this component's <style> block by stamping a
+    // data-astro-cid-* attribute on every element in the template and
+    // compiling the CSS selectors to require it. Elements created here via
+    // document.createElement don't get that attribute automatically, so it
+    // has to be copied over by hand or these nodes silently fall outside
+    // the scoped styles.
+    const scopeAttr = root.getAttributeNames().find(name => name.startsWith("data-astro-cid-"))
+    const scoped = <E extends HTMLElement>(el: E): E => {
+      if (scopeAttr) el.setAttribute(scopeAttr, "")
+      return el
+    }
+
     if (weeksEl.children.length !== fresh.weeks.length) {
       monthsEl.replaceChildren(
         ...fresh.monthLabels.map(({ weekIndex, label }) => {
-          const span = document.createElement("span")
+          const span = scoped(document.createElement("span"))
           span.style.gridColumnStart = String(weekIndex + 1)
           span.textContent = label
           return span
@@ -77,11 +89,11 @@ const dayLabels = ["", "Mon", "", "Wed", "", "Fri", ""]
 
       weeksEl.replaceChildren(
         ...fresh.weeks.map(week => {
-          const column = document.createElement("div")
+          const column = scoped(document.createElement("div"))
           column.className = "week"
           column.append(
             ...week.map(day => {
-              const dot = document.createElement("span")
+              const dot = scoped(document.createElement("span"))
               dot.className = ["dot", day.hue].filter(Boolean).join(" ")
               if (day.intensity > 0) dot.style.opacity = String(day.intensity)
               return dot
@@ -94,21 +106,21 @@ const dayLabels = ["", "Mon", "", "Wed", "", "Fri", ""]
       jobLabelsEl.style.gridTemplateColumns = `repeat(${fresh.weeks.length}, 10px)`
       jobLabelsEl.replaceChildren(
         ...fresh.jobs.map(job => {
-          const div = document.createElement("div")
+          const div = scoped(document.createElement("div"))
           div.className = ["job-label", job.hue].join(" ")
           div.style.gridRow = "1"
           div.style.gridColumn = `${job.startWeekIndex + 1} / ${job.endWeekIndex + 2}`
 
-          const jobSpan = document.createElement("span")
+          const jobSpan = scoped(document.createElement("span"))
           jobSpan.className = "job"
           jobSpan.title = `${job.title} · ${job.company}`
           jobSpan.append(`${job.title} `)
-          const companySpan = document.createElement("span")
+          const companySpan = scoped(document.createElement("span"))
           companySpan.className = "company"
           companySpan.textContent = `· ${job.company}`
           jobSpan.append(companySpan)
 
-          const periodSpan = document.createElement("span")
+          const periodSpan = scoped(document.createElement("span"))
           periodSpan.className = "period"
           periodSpan.textContent = job.period
 
