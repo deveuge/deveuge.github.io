@@ -89,6 +89,10 @@
        of the sticky navbar (~65px tall) with visible breathing room above
        the heading, instead of landing flush under it. */
     scroll-padding-top: 6.5rem;
+    /* Firefox ignores the ::-webkit-scrollbar rules below entirely, so
+       without this it falls back to the OS default scrollbar. */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-background);
   }
 
   body {
